@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/sign_in_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:gravity="center"
+             android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="@string/sign_in"
+        android:id="@+id/sign_in_header"
+        android:inputType="textPersonName"
+        android:contextClickable="false"
+        android:enabled="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="התחל"
+        android:id="@+id/sign_in_button"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <EditText
+        android:layout_width="271dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_text"
+        android:layout_gravity="center"
+        android:hint="שם"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"/>
+
+</FrameLayout>
