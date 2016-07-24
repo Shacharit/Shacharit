@@ -10,6 +10,7 @@ public class User {
     public ArrayList<String> selfDefs;
     public ArrayList<String> otherDefs;
     public Map<String, List<String>> interests;
+    public String regId;
 
     public User(String uid) {
         this.uid = uid;

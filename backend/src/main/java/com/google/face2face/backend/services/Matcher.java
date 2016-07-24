@@ -16,9 +16,13 @@ public class Matcher {
 
         for (int i = 0; i < users.size(); i++) {
             for (int j = i + 1; j < users.size(); j++) {
-                double score = interestsScore(users.get(i).interests.get("movies"), users.get(j).interests.get
-                        ("movies"));
-                score += interestsScore(users.get(i).interests.get("hobbies"), users.get(j).interests.get("hobbies"));
+                List<String> intersection = listUtils.intersection(users.get(i).otherDefs, users.get(j).selfDefs);
+                if (intersection.size() == 0) continue;
+
+                double score = interestsScore(users.get(i).interests.get("movies"),
+                        users.get(j).interests.get("movies"));
+                score += interestsScore(users.get(i).interests.get("hobbies"),
+                        users.get(j).interests.get("hobbies"));
                 scoreMatrix[i][j] = score;
                 scoreMatrix[j][i] = score;
             }
@@ -38,7 +42,7 @@ public class Matcher {
 
     public int getMatchForUser(int userIndex, double[][] scoreMatrix) {
         double maxMatch = -1;
-        int userWithMaxMatch = 0;
+        int userWithMaxMatch = -1;
         for (int i = 0; i < scoreMatrix.length; i++) {
             if (i == userIndex) continue;
             double v = scoreMatrix[i][userIndex];

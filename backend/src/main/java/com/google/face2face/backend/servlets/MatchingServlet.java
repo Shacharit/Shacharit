@@ -29,6 +29,8 @@ public class MatchingServlet extends HttpServlet {
     public static final String SELF_DEFINITIONS = "self-definitions";
     public static final String OTHER_DEFINITIONS = "other-definitions";
     public static final String INTERESTS = "interests";
+    public static final String REG_ID = "reg_id";
+    public HashMap dbUsersMap = new HashMap();
 
     // Firebase keys shared with client applications
     private DatabaseReference firebase;
@@ -68,8 +70,17 @@ public class MatchingServlet extends HttpServlet {
                 List<User> users = new ArrayList<User>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
+
+
                 for (DataSnapshot ds : children) {
+                    dbUsersMap.put(ds.getKey(), ds);
+
+
                     User user = new User(ds.getKey());
+
+                    if (ds.hasChild(REG_ID)) {
+                        user.regId = ds.child(REG_ID).getValue().toString();
+                    }
 
                     user.selfDefs = new ArrayList<String>();
                     if (!ds.hasChild(SELF_DEFINITIONS)) {
@@ -115,14 +126,16 @@ public class MatchingServlet extends HttpServlet {
                 double[][] scores = matcher.matchUsers(users);
 
                 for (int i = 0; i < users.size(); i++) {
-                    int matchForUser = matcher.getMatchForUser(i, scores);
-                    User currentUser = users.get(i);
-                    User buddy = users.get(matchForUser);
+                    int indexOfBuddy = matcher.getMatchForUser(i, scores);
+                    if (indexOfBuddy == -1) continue;
+                    final User currentUser = users.get(i);
+                    final User buddy = users.get(indexOfBuddy);
 
-                    firebase.child("users").child(currentUser.uid).child("buddy")
-                            .setValue(buddy.uid);
+//                    Object dbBuddy = dbUsersMap.get(buddy.uid);
+//                    firebase.child("users").child(currentUser.uid).child("buddy").setValue(dbBuddy);
+                    firebase.child("users").child(currentUser.uid).child("buddy").setValue(buddy);
+
                 }
-
             }
 
             @Override
