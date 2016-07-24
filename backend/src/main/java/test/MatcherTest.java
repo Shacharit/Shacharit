@@ -5,7 +5,6 @@ import com.google.face2face.backend.services.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import UserFactory;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
