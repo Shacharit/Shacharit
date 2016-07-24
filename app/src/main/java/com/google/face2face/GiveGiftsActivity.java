@@ -13,7 +13,6 @@ public class GiveGiftsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_give_gifts);
         Set<String> keys = getIntent().getExtras().keySet();
 
-        return;
 
     }
 }
