@@ -85,6 +85,7 @@ public class OtherDefinitionFragment extends Fragment {
             ToggleButton button = createButton(container, name);
             flowContainer.addItem(button);
         }
+
         return view;
     }
 
@@ -106,5 +107,4 @@ public class OtherDefinitionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 }
