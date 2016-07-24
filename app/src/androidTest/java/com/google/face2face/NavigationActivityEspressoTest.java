@@ -30,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityEspressoTest {
+public class NavigationActivityEspressoTest {
 
     @Rule
     public ActivityTestRule<NavigationActivity> mActivityRule =
