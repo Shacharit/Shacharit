@@ -11,7 +11,9 @@ public class GiveGiftsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give_gifts);
-        // Set<String> keys = getIntent().getExtras().keySet();
+        Set<String> keys = getIntent().getExtras().keySet();
+
+        return;
 
     }
 }

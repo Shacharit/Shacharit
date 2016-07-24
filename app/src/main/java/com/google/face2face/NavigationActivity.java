@@ -34,8 +34,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Set;
-
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener {
@@ -101,7 +99,9 @@ public class NavigationActivity extends AppCompatActivity
         }
 
         if (getIntent().getStringExtra("giveGifts") != null) {
-            startActivity(new Intent(this, GiveGiftsActivity.class));
+            Intent intent = new Intent(this, GiveGiftsActivity.class);
+            intent.putExtras(getIntent().getExtras());
+            startActivity(intent);
             return;
         }
 
