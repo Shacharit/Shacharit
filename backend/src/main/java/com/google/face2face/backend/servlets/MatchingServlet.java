@@ -1,10 +1,10 @@
-package com.google.face2face.backend.servlets;
 /*
    For step-by-step instructions on connecting your Android application to this backend module,
    see "App Engine Java Servlet Module" template documentation at
    https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloWorld
 */
 
+package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.User;
 import com.google.firebase.FirebaseApp;
@@ -94,7 +94,7 @@ public class MatchingServlet extends HttpServlet {
                     }
                     for (DataSnapshot interests_ds : ds.child(INTERESTS).getChildren()) {
                         String interest = interests_ds.getKey();
-                        user.interests.put(interest, new ArrayList<String>());
+                        user.interests.put(interest,new ArrayList<String>());
 
                         for (DataSnapshot interest_inner_ds : interests_ds.getChildren()) {
                             System.out.println("Found 1");
