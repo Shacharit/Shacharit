@@ -3,33 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_choose_other"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="@string/nav_choose_other"/>
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_who_am_I"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="@string/nav_who_am_I"/>
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="@string/nav_profile"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/nav_group_interactions">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_my_friends"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/nav_my_friends"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_my_received_gifts"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/nav_my_received_gifts"/>
+            <item
+                android:id="@+id/nav_my_sent_gifts"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/nav_my_sent_gifts"/>
         </menu>
     </item>
 
