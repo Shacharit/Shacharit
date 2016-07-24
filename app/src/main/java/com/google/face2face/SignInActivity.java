@@ -52,6 +52,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity implements
         View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -103,6 +104,13 @@ public class SignInActivity extends AppCompatActivity implements
         mSignInButton.setScopes(gso.getScopeArray());
 
         mSignInButton.setOnClickListener(this);
+
+        // Check for a logged-in user.
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Log.i(TAG, "SignInActivity onCreate(): currentUser == " + currentUser);
+        if (currentUser != null) {
+            goToNavigation(getIntent().getExtras());
+        }
     }
 
     @Override
@@ -183,12 +191,23 @@ public class SignInActivity extends AppCompatActivity implements
                                         .child("reg_id").setValue(token);
                             }
 
-                            // Open NavigationActivity
-                            Intent intent = new Intent(SignInActivity.this, NavigationActivity.class);
-                            intent.putExtra("mode", "RedirectToFillProfile");
-                            startActivity(intent);
+                            Bundle bundle = getIntent().getExtras();
+                            if (bundle == null) {  // No extras were given to us. Create a new one.
+                                bundle = new Bundle();
+                            }
+                            bundle.putString("mode", "RedirectToFillProfile");
+                            goToNavigation(bundle);
                         }
                     }
                 });
+    }
+
+    // Open NavigationActivity. If the given Bundle is not null, it is used as Extras.
+    private void goToNavigation(Bundle extras) {
+        Intent intent = new Intent(SignInActivity.this, NavigationActivity.class);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        startActivity(intent);
     }
 }
