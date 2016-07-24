@@ -10,6 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +28,13 @@ public class OtherDefinitionFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final int MAX_CHECKED = 3;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private int nChecked = 0;
 
     public OtherDefinitionFragment() {
         // Required empty public constructor
@@ -57,11 +67,34 @@ public class OtherDefinitionFragment extends Fragment {
         }
     }
 
+    private View createDummyTextView(String text) {
+        TextView textView = new TextView(this.getContext());
+        textView.setText(text);
+        return textView;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_other_definition, container, false);
+        View view = inflater.inflate(R.layout.fragment_other_definition, container, false);
+        FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
+        flowContainer.setMaxItems(MAX_CHECKED);
+        String[] names = { "שלום", "להתראות", "בחמש", "קם", "צייד", "ויצא", "את", "ביתו"};
+        for (String name : names) {
+            ToggleButton button = createButton(container, name);
+            flowContainer.addItem(button);
+        }
+        return view;
+    }
+
+    ToggleButton createButton(ViewGroup container, String text) {
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+        ToggleButton button = (ToggleButton) inflater.inflate(R.layout.button_pill, container, false);
+        button.setTextOff(text);
+        button.setTextOn(text);
+        button.setText(text);
+        return button;
     }
 
     @Override
@@ -73,4 +106,5 @@ public class OtherDefinitionFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
