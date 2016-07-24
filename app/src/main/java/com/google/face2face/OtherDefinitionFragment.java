@@ -15,6 +15,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Locale;
 
 /**
@@ -35,9 +41,11 @@ public class OtherDefinitionFragment extends Fragment {
     private String mParam2;
 
     private int nChecked = 0;
+    private DatabaseReference mFirebaseDatabaseReference;
 
     public OtherDefinitionFragment() {
         // Required empty public constructor
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     /**
@@ -74,18 +82,27 @@ public class OtherDefinitionFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_definition, container, false);
-        FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
+        final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
         flowContainer.setMaxItems(MAX_CHECKED);
-        String[] names = { "שלום", "להתראות", "בחמש", "קם", "צייד", "ויצא", "את", "ביתו"};
-        for (String name : names) {
-            ToggleButton button = createButton(container, name);
-            flowContainer.addItem(button);
-        }
+        mFirebaseDatabaseReference.child("self-definitions").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Create button for each definition.
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    ToggleButton button = createButton(container, data.getKey());
+                    flowContainer.addItem(button);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         return view;
     }
 
