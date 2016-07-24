@@ -68,7 +68,7 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void signIn() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NavigationActivity.class);
         intent.putExtra("username",mUsernameText.getText().toString());
         startActivity(intent);
     }
