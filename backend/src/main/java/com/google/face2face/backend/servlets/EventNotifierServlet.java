@@ -87,7 +87,7 @@ public class EventNotifierServlet extends HttpServlet {
                         for(DataSnapshot user_ds : dataSnapshot.getChildren()) {
                             // Check if buddy has relevant events
                             DataSnapshot buddy_snapshot = user_ds.child("buddy");
-                            Object name = user_ds.child("name").getValue();
+                            Object name = user_ds.child("display_name").getValue();
 
                             if (name == null) {
                                 // User has no name
@@ -96,8 +96,8 @@ public class EventNotifierServlet extends HttpServlet {
 
                             String buddyName = name.toString();
                             String buddyToken = user_ds.child("reg_id").getValue().toString();
-                            for(DataSnapshot ds_def : buddy_snapshot.child("self-definitions").getChildren()) {
-                                String definition = ds_def.getKey();
+                            for(DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
+                                String definition = ds_def.getValue().toString();
                                 if (!defsToEvents.containsKey(definition)) {
                                     continue;
                                 }
