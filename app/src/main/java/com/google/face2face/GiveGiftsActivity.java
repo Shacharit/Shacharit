@@ -76,6 +76,5 @@ public class GiveGiftsActivity extends AppCompatActivity {
                 mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
             }
         });
-
     }
 }
