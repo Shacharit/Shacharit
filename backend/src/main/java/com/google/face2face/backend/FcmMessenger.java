@@ -1,7 +1,6 @@
 package com.google.face2face.backend;
 
 import com.google.appengine.repackaged.com.google.gson.Gson;
-import com.google.face2face.backend.Content;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -9,11 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 public class FcmMessenger {
-    public static void sendPushMessage(String token) throws IOException {
+    public static void sendPushMessage(String token, String title, String message, Map<String,String> extras) throws IOException {
         try {
-            Content content = new Content(token, "Rafi!!", "Rafi!");
+            Content content = new Content(token, title, message, extras);
 
             // 1. URL
             URL url = new URL("https://fcm.googleapis.com/fcm/send");

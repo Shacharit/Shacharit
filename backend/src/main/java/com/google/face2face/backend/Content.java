@@ -16,7 +16,7 @@ public class Content implements Serializable {
     public Content() {
     }
 
-    public Content(String regId, String title, String message) {
+    public Content(String regId, String title, String message, Map<String, String> extraData) {
         addRegId(regId);
         notification.put("title", title);
         notification.put("body", message);
@@ -24,6 +24,11 @@ public class Content implements Serializable {
         notification.put("badge", "0");
         data.put("title", title);
         data.put("message", message);
+
+        for (Map.Entry<String, String> entry : extraData.entrySet()) {
+            data.put(entry.getKey(), entry.getValue());
+        }
+
     }
 
     public void addRegId(String regId) {

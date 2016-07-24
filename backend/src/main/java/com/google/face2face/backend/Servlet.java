@@ -7,6 +7,8 @@
 package com.google.face2face.backend;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.*;
 
@@ -25,7 +27,8 @@ public class Servlet extends HttpServlet {
             throws IOException {
         String name = req.getParameter("name");
         String token = "dnRQfgby6jk:APA91bHLTo6XluH1fo-AdIvx4kgQcn_q5WnprsaimszK2afWl3-5mDIVm0hIRkLVeCeEQ6XBG8m36DA3QKqULaF6AkcIFA-58GCHDmGPISHUID_IZEqMzoKpdR1PM_Twy0SFqzgcB8TT";
+        Map<String, String> extras = new HashMap<>();
 
-        sendPushMessage(token);
+        sendPushMessage(token, "Rafi!!", "Rafi!", extras);
     }
 }
