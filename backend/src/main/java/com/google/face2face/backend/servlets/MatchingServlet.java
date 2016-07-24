@@ -69,8 +69,7 @@ public class MatchingServlet extends HttpServlet {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot ds : children) {
-                    User user = new User();
-                    user.uid = ds.getKey();
+                    User user = new User(ds.getKey());
 
                     user.selfDefs = new ArrayList<String>();
                     if (!ds.hasChild(SELF_DEFINITIONS)) {
@@ -135,4 +134,3 @@ public class MatchingServlet extends HttpServlet {
     }
 
 }
-
