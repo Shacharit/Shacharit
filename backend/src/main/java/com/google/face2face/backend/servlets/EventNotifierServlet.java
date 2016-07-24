@@ -66,8 +66,9 @@ public class EventNotifierServlet extends HttpServlet {
                         continue;
                     }
 
-                    String eventName = event_ds.getKey();
+                    String eventName = event_ds.child("event name").getValue().toString();
                     GiftEvent event = new GiftEvent(eventName);
+                    event.femaleText = event_ds.child("female text").getValue().toString();
 
                     System.out.println("Found event: " + eventName);
 
@@ -95,7 +96,7 @@ public class EventNotifierServlet extends HttpServlet {
                             }
 
                             String buddyName = name.toString();
-                            String buddyToken = user_ds.child("reg_id").getValue().toString();
+                            String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
                             for(DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                 String definition = ds_def.getValue().toString();
                                 if (!defsToEvents.containsKey(definition)) {
@@ -105,10 +106,10 @@ public class EventNotifierServlet extends HttpServlet {
                                 List<GiftEvent> giftEvents = defsToEvents.get(definition);
 
                                 for (GiftEvent giftEvent : giftEvents) {
-                                    String title = "שלח לחבר יומולדת";
+                                    String title = "שלח לחבר מתנה";
                                     String message = giftEvent.name + " " + giftEvent.femaleText + " " + buddyName;
 
-                                    Map<String, String> giftNames = new HashMap<String, String>();
+                                    Map<String, String> giftNames = new HashMap<>();
 
                                     for (int i = 0; i < giftEvent.gifts.length; i++) {
                                         giftNames.put("gift" + i, giftEvent.gifts[i]);
