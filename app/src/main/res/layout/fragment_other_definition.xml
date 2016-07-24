@@ -5,10 +5,46 @@
     tools:context=".OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom">
 
-    <AnalogClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/analogClock"
-        android:layout_gravity="center" />
+        <AnalogClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/analogClock"
+            android:layout_gravity="center" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ירושלים"
+            android:id="@+id/button2"
+            android:background="@drawable/roundbutton"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/otherLabel"
+            android:id="@+id/textViewOtherLabel"
+            android:layout_gravity="top|start" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="rtl">
+
+            <com.google.face2face.FlowLayout
+                android:id="@+id/flow_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:textDirection="rtl"
+                android:padding="20dp"/>
+        </ScrollView>
+
+    </LinearLayout>
 </FrameLayout>
