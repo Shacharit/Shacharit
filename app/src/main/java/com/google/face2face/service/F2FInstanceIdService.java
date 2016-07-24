@@ -9,7 +9,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class F2FInstanceIdService extends FirebaseInstanceIdService {
 
     private static final String TAG = "F2FInstanceIdService";
-    private static final String FRIENDLY_ENGAGE_TOPIC = "friendly_engage";
+    private static final String F2F_ENGAGE_TOPIC = "f2f_engage";
 
     /**
      * The Application's current Instance ID token is no longer valid
@@ -24,6 +24,6 @@ public class F2FInstanceIdService extends FirebaseInstanceIdService {
 
         // Once a token is generated, we subscribe to topic.
         FirebaseMessaging.getInstance()
-                .subscribeToTopic(FRIENDLY_ENGAGE_TOPIC);
+                .subscribeToTopic(F2F_ENGAGE_TOPIC);
     }
 }
