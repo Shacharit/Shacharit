@@ -15,6 +15,62 @@
       },
       "oauth_client": [
         {
+          "client_id": "539475951317-i4kt4fq2ipn6uljpmkdtvd3fqk1psqek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "3B9ABC5C5EA5B4250F437C6A576B4A2E5DA367CE"
+          }
+        },
+        {
+          "client_id": "539475951317-nqc3j81njbrn3f6dpku8uf241i8u6lid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "93E6D28D99BFF27E8918193C36300543AC05BA08"
+          }
+        },
+        {
+          "client_id": "539475951317-rpqobq1c81sid9v1ijlilphdo7tnni0e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "BDF8460F07950FFEE72CAA701119D0BC9635034A"
+          }
+        },
+        {
+          "client_id": "539475951317-4eh2smsu891jkcak9qbsga44htaavgo1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "1700D2C3C71C09A819A4F4A8B9A9DD4431D6DE0D"
+          }
+        },
+        {
+          "client_id": "539475951317-oihg7su2rnihu5vidqteshblruinspo8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "987E2C976F236DD4E25626C6444E01D87B550E2C"
+          }
+        },
+        {
+          "client_id": "539475951317-7l919j882nc4l1tek9nc0rejcrejp2bn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "0A8F91BA51F8F729DE7A97B0EF19759D8F0D9AAA"
+          }
+        },
+        {
+          "client_id": "539475951317-tg3rhavt8p835n0gf62tbg8sfdhcsjd5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "3B81D147920D8E1107DEF6887497CDE089BC0DCF"
+          }
+        },
+        {
           "client_id": "539475951317-knhvp72sbjuck7nidvet4muipkeq0pr6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

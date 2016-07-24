@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
 public class NavigationActivity extends AppCompatActivity
@@ -24,6 +26,7 @@ public class NavigationActivity extends AppCompatActivity
     private static final String TAG = "NavigationActivity";
     public static SharedPreferences mSharedPreferences;
     public static String mUsername;
+    public static boolean mRedirectToFillProfile = false;
 
     // Firebase instance variables
     public static DatabaseReference mFirebaseDatabaseReference;
@@ -48,9 +51,9 @@ public class NavigationActivity extends AppCompatActivity
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Set default username is anonymous.
-        String intentUsername = getIntent().getStringExtra("username");
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (intentUsername == null) {
+        if (currentUser == null) {
             startActivity(new Intent(this, SignInActivity.class));
             return;
         }
@@ -61,12 +64,20 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
             return;
         }
+        if ("RedirectToFillProfile".equals(getIntent().getStringExtra("mode"))) {
+            mRedirectToFillProfile = true;
+        }
 
-        mUsername = intentUsername;
+        mUsername = currentUser.getUid();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Init the default fragment
-        displayView(R.id.nav_default);
+        if (mRedirectToFillProfile) {
+            displayView(R.id.nav_choose_other);
+        }
+        else {
+            displayView(R.id.nav_default);
+        }
 
         // Push token
         String push_token = mSharedPreferences.getString(Constants.PUSH_TOKEN, null);
