@@ -149,22 +149,43 @@ public class SignInActivity extends AppCompatActivity implements
             // Google Sign In was successful, authenticate with Firebase
             GoogleSignInAccount account = result.getSignInAccount();
             firebaseAuthWithGoogle(account);
-
-            /*Plus.PeopleApi.load(mGoogleApiClient, account.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
-                @Override
-                public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
-                    Log.d(TAG, "loadPeopleResult: " + loadPeopleResult);
-                    Person person = loadPeopleResult.getPersonBuffer().get(0);
-                    Log.d(TAG, person.getName().getGivenName());
-                    Log.d(TAG, ""+person.getGender());
-                }
-            });*/
         } else {
             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT);
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void addUserInfo(GoogleSignInAccount acct) {
+        String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString("push_token", null);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference user = mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid());
+
+        if (token != null) {
+            user.child("reg_id").setValue(token);
+        }
+
+        Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
+            @Override
+            public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
+                Log.d(TAG, "loadPeopleResult: " + loadPeopleResult);
+                Person person = loadPeopleResult.getPersonBuffer().get(0);
+                DatabaseReference gender = user.child(Constants.GENDER);
+                switch (person.getGender()) {
+                    case 0:
+                        gender.setValue(Constants.GENDER_MALE);
+                        break;
+                    case 1:
+                        gender.setValue(Constants.GENDER_FEMALE);
+                        break;
+                    case 2:
+                        gender.setValue(Constants.GENDER_OTHER);
+                        break;
+                }
+                user.child(Constants.DISPLAY_NAME).setValue(person.getDisplayName());
+            }
+        });
+    }
+
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -184,12 +205,7 @@ public class SignInActivity extends AppCompatActivity implements
                         }
                         else {
                             // Save user token
-                            String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString("push_token", null);
-                            if (token != null) {
-                                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
-                                        .child("reg_id").setValue(token);
-                            }
+                            addUserInfo(acct);
 
                             Bundle bundle = getIntent().getExtras();
                             if (bundle == null) {  // No extras were given to us. Create a new one.

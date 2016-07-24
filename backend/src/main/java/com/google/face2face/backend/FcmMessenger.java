@@ -13,7 +13,11 @@ import java.util.Map;
 public class FcmMessenger {
     public static void sendPushMessage(String token, String title, String message, Map<String,String> extras) throws IOException {
         try {
-            Content content = new Content(token, title, message, extras);
+            final String encoding = "UTF-8";
+
+            Content content = new Content(token, title,
+                    message, extras);
+
 
             // 1. URL
             URL url = new URL("https://fcm.googleapis.com/fcm/send");
@@ -22,7 +26,7 @@ public class FcmMessenger {
             // 3. Specify POST method
             conn.setRequestMethod("POST");
             // 4. Set the headers
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             conn.setRequestProperty("Authorization", "key=" + "AIzaSyBgP8dRQC9xXN1z3piQ1CTuiTtvFy3ztTM");
             conn.setDoOutput(true);
             // 5. Add JSON data into POST request body
@@ -32,7 +36,9 @@ public class FcmMessenger {
             Gson gson = new Gson();
             String json = gson.toJson(content);
             // 5.3 Copy Content "JSON" into
-            wr.writeBytes(json);
+
+            wr.write(json.getBytes("UTF-8"));
+
             System.out.println("Sending: " + json);
             // 5.4 Send the request
             wr.flush();

@@ -2,12 +2,13 @@ package test;
 import com.google.common.collect.ImmutableList;
 import com.google.face2face.backend.User;
 import com.google.face2face.backend.services.Matcher;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class MatcherTest {
 

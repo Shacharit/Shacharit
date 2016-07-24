@@ -26,9 +26,9 @@ public class Servlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         String name = req.getParameter("name");
-        String token = "dnRQfgby6jk:APA91bHLTo6XluH1fo-AdIvx4kgQcn_q5WnprsaimszK2afWl3-5mDIVm0hIRkLVeCeEQ6XBG8m36DA3QKqULaF6AkcIFA-58GCHDmGPISHUID_IZEqMzoKpdR1PM_Twy0SFqzgcB8TT";
+        String token = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
         Map<String, String> extras = new HashMap<>();
 
-        sendPushMessage(token, "Rafi!!", "Rafi!", extras);
+        sendPushMessage(token, "רפי", "רפי", extras);
     }
 }

@@ -18,6 +18,20 @@
     <servlet>
         <servlet-name>MatchingServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.servlets.MatchingServlet</servlet-class>
+        <init-param>
+            <param-name>credential</param-name>
+            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
+        </init-param>
+        <init-param>
+            <param-name>databaseUrl</param-name>
+            <param-value>https://il-hackathon.firebaseio.com</param-value>
+        </init-param>
+
+    </servlet>
+
+    <servlet>
+        <servlet-name>EventNotifierServlet</servlet-name>
+        <servlet-class>com.google.face2face.backend.servlets.EventNotifierServlet</servlet-class>
 
         <init-param>
             <param-name>credential</param-name>
@@ -29,10 +43,10 @@
         </init-param>
 
     </servlet>
+
     <servlet>
         <servlet-name>GiftSendingServlet</servlet-name>
-        <servlet-class>com.google.face2face.backend.Servlet</servlet-class>
-
+        <servlet-class>com.google.face2face.backend.servlets.GiftSendingServlet</servlet-class>
         <init-param>
             <param-name>credential</param-name>
             <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
@@ -49,8 +63,16 @@
         <url-pattern>/hello</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>EventNotifierServlet</servlet-name>
+        <url-pattern>/event_handler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MatchingServlet</servlet-name>
         <url-pattern>/match</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GiftSendingServlet</servlet-name>
+        <url-pattern>/send_gift</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
