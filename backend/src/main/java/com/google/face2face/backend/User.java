@@ -3,10 +3,18 @@ package com.google.face2face.backend;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User {
     public String uid;
     public ArrayList<String> selfDefs;
     public ArrayList<String> otherDefs;
-    public HashMap<String, List<String>> interests;
+    public Map<String, List<String>> interests;
+
+    public User(String uid) {
+        this.uid = uid;
+        this.selfDefs = new ArrayList<>();
+        this.otherDefs = new ArrayList<>();
+        this.interests = new HashMap<>();
+    }
 }

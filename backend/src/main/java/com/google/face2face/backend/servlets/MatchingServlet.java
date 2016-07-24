@@ -7,6 +7,7 @@ package com.google.face2face.backend.servlets;
 
 
 import com.google.face2face.backend.User;
+import com.google.face2face.backend.services.Matcher;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
@@ -68,8 +69,7 @@ public class MatchingServlet extends HttpServlet {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot ds : children) {
-                    User user = new User();
-                    user.uid = ds.getKey();
+                    User user = new User(ds.getKey());
 
                     user.selfDefs = new ArrayList<String>();
                     if (!ds.hasChild(SELF_DEFINITIONS)) {
@@ -110,6 +110,19 @@ public class MatchingServlet extends HttpServlet {
                     System.out.println(user.otherDefs);
                     System.out.println(user.selfDefs);
                 }
+
+                Matcher matcher = new Matcher();
+                double[][] scores = matcher.matchUsers(users);
+
+                for (int i = 0; i < users.size(); i++) {
+                    int matchForUser = matcher.getMatchForUser(i, scores);
+                    User currentUser = users.get(i);
+                    User buddy = users.get(matchForUser);
+
+                    firebase.child("users").child(currentUser.uid).child("buddy")
+                            .setValue(buddy.uid);
+                }
+
             }
 
             @Override
@@ -121,4 +134,3 @@ public class MatchingServlet extends HttpServlet {
     }
 
 }
-
