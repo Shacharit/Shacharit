@@ -1,6 +1,7 @@
 package com.google.face2face.backend;
 
 import com.google.appengine.repackaged.com.google.gson.Gson;
+import com.google.face2face.backend.Content;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
