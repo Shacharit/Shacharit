@@ -15,7 +15,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="List Of Gifts!"
         android:id="@+id/textView_ListOfGifts"
-        android:layout_marginTop="93dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -23,8 +22,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send Gift"
-        android:id="@+id/button"
+        android:id="@+id/button_sendGift"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView_gifts"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_ListOfGifts" />
+
 </RelativeLayout>
