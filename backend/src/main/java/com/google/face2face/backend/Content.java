@@ -27,6 +27,7 @@ public class Content implements Serializable {
         data.put("action", "send_email");
         data.put("email", "mikofink@gmail.com");
 
+
         for (Map.Entry<String, String> entry : extraData.entrySet()) {
             data.put(entry.getKey(), entry.getValue());
         }

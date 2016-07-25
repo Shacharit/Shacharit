@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layoutDirection="rtl">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/buddy_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
