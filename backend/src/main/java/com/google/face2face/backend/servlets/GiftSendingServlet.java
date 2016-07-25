@@ -104,6 +104,8 @@ public class GiftSendingServlet extends HttpServlet {
                         Map<String, String> extras = new HashMap<>();
                         extras.put("event", gift.event);
                         extras.put("name", gift.name);
+                        extras.put("action", "receive_gift");
+                        extras.put("foobaz", gift.recipient);
 
                         try {
                             FcmMessenger.sendPushMessage(userRegId, title, message, extras);

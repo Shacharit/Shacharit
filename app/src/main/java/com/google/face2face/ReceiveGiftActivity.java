@@ -14,7 +14,7 @@ public class ReceiveGiftActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         textView = (TextView) findViewById(R.id.textView3);
 
-        textView.setText("username " + data.get("sender") + "\n" + data.get("name")
+        textView.setText("username " + data.get("foobaz") + "\n" + data.get("name")
         + "\nfor event " + data.get("event"));
     }
 }
