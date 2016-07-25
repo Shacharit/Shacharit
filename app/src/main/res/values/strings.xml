@@ -28,7 +28,6 @@
     <string name="otherLabel">את מי את/ה מחפש/ת</string>
     <string name="selfLabel">איך אתה מגדיר את עצמך</string>
 
-
     // Other Definition
     <string name="other_definition_pick_alert_message">אנא בחר הגדרה אחת</string>
     <string name="other_definition_pick_alert_title">בחירת האחר</string>
