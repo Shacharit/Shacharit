@@ -33,7 +33,7 @@ public class F2FMessagingService extends FirebaseMessagingService {
         Bitmap img = null;
         try {
              img = BitmapFactory.decodeStream((InputStream) new URL(
-                    "http://www.dkdiaries.com/wp-content/uploads/2012/02/For-the-Birds-Pixar.jpg").getContent());
+                     remoteMessage.getData().get("image_url")).getContent());
         } catch (IOException e) {
             // Loading a default image
             img = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
