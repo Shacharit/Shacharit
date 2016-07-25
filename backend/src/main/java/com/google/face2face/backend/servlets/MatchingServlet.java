@@ -6,8 +6,11 @@ package com.google.face2face.backend.servlets;
 */
 
 
+import com.google.face2face.backend.FcmMessenger;
 import com.google.face2face.backend.User;
+import com.google.face2face.backend.UserBasicInfo;
 import com.google.face2face.backend.services.Matcher;
+import com.google.face2face.backend.utils.ListUtils;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
@@ -18,9 +21,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class MatchingServlet extends HttpServlet {
@@ -33,9 +38,12 @@ public class MatchingServlet extends HttpServlet {
     public static final String AGE = "age";
     public static final String GENDER = "gender";
     public static final String IMAGE_URL = "image_url";
+    public static final String BUDDY = "buddy";
+    public static final String UID = "uid";
 
     // Firebase keys shared with client applications
     private DatabaseReference firebase;
+    private ListUtils listUtils;
 
 
     private static final Logger logger = Logger.getLogger(MatchingServlet.class.getName());
@@ -68,18 +76,20 @@ public class MatchingServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
-
         readFromDb();
+
     }
 
     private void readFromDb() {
         firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                StringBuilder sb = new StringBuilder();
 
-                sb.append("elad inside onDataChange. time: "+ System.currentTimeMillis());
-                firebase.child("logs").setValue(sb.toString());
+                List<String> logsInCallback = new ArrayList<String>();
+                logsInCallback.add("inside onDataChange. time: " + LocalDateTime.now());
+                List<UserBasicInfo> buddiesInDb = null;
+
+                firebase.child("logs").setValue(logsInCallback);
 
                 List<User> users = new ArrayList<User>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
@@ -88,9 +98,8 @@ public class MatchingServlet extends HttpServlet {
                 logger.info("children = " + children);
                 for (DataSnapshot ds : children) {
 
-
-                    sb.append("elad after dataSnapshot.getChildren(). time: "+ System.currentTimeMillis());
-                    firebase.child("logs").setValue(sb.toString());
+                    logsInCallback.add("after dataSnapshot.getChildren(). time: " + LocalDateTime.now());
+                    firebase.child("logs").setValue(logsInCallback);
 
 
                     System.out.println("user= " + ds.getKey());
@@ -113,7 +122,18 @@ public class MatchingServlet extends HttpServlet {
                         user.gender = ds.child(GENDER).getValue().toString();
                     }
 
-                    user.selfDefs = new ArrayList<String>();
+                    if (ds.hasChild(BUDDY)) {
+                        buddiesInDb = new ArrayList<UserBasicInfo>();
+                        for (DataSnapshot buddiesDs : ds.child(BUDDY).getChildren()) {
+
+                            String uid = buddiesDs.child(UID).getValue().toString();
+                            String imageUrl = buddiesDs.child(IMAGE_URL).getValue().toString();
+                            UserBasicInfo userBasicInfo = new UserBasicInfo();
+                            userBasicInfo.uid = uid;
+                            userBasicInfo.imageUrl = imageUrl;
+                            buddiesInDb.add(userBasicInfo);
+                        }
+                    }
                     if (!ds.hasChild(SELF_DEFINITIONS)) {
                         continue;
                     }
@@ -161,20 +181,35 @@ public class MatchingServlet extends HttpServlet {
 
                 for (int i = 0; i < users.size(); i++) {
                     List<Integer> indicesOfBuddies = matcher.getMatchesForUser(i, scores);
-                    List<User> buddies = new ArrayList<User>();
+                    List<User> newBuddies = new ArrayList<User>();
                     final User currentUser = users.get(i);
 
                     for (Integer buddyIndex : indicesOfBuddies) {
                         final User buddy = users.get(buddyIndex);
-                        buddies.add(buddy);
-                        logger.info("user: " + currentUser + " was added a buddy: " + buddy);
-                        System.out.println("user: " + currentUser + " was added a buddy: " + buddy);
+                        newBuddies.add(buddy);
+
+
+                        String msg = "user: " + currentUser + " was added a buddy: " + buddy + " time: " +
+                                LocalDateTime.now();
+                        logger.info(msg);
+                        logsInCallback.add(msg);
+                        firebase.child("logs").setValue(logsInCallback);
+
+                        System.out.println(msg);
                     }
 
-                    if (buddies.size() > 0) {
-                        firebase.child("users").child(currentUser.uid).child("buddy").setValue(buddies);
-                        logger.info("users: " + currentUser + " was added buddies: " + buddies);
-                        System.out.println("users: " + currentUser + " was added buddies: " + buddies);
+                    if (newBuddies.size() > 0) {
+                        List<User> disjunction = listUtils.nameDisjunction(buddiesInDb, newBuddies);
+
+                        sendPushAboutNewBuddies(currentUser.uid, disjunction);
+                        firebase.child("users").child(currentUser.uid).child("buddy").setValue(newBuddies);
+                        String msg = "users: " + currentUser + " was added buddiesInDb: " + newBuddies + " time: " +
+                                LocalDateTime.now();
+                        logsInCallback.add(msg);
+                        firebase.child("logs").setValue(logsInCallback);
+                        logger.info(msg);
+
+                        System.out.println("users: " + currentUser + " was added buddiesInDb: " + newBuddies);
                     }
                 }
 
@@ -187,4 +222,32 @@ public class MatchingServlet extends HttpServlet {
         });
     }
 
+    private void sendPushAboutNewBuddies(String uid, List<User> newBuddies) {
+        Map<String, String> extras = new HashMap();
+        for (User newUser : newBuddies) {
+            extras.put("uid", newUser.uid);
+            extras.put("image_url", newUser.imageUrl);
+            try {
+                FcmMessenger.sendPushMessage(uid, "new buddies", "say hi to him/her" ,extras);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private String buddiesToString(List<User> newBuddies) {
+
+
+        //The string builder used to construct the string
+        StringBuilder commaSepValueBuilder = new StringBuilder();
+
+        //Looping through the list
+        for (int i = 0; i < newBuddies.size(); i++){
+            //append the value into the builder
+            commaSepValueBuilder.append(newBuddies.get(i));
+
+        }
+        return commaSepValueBuilder.toString();
+    }
 }

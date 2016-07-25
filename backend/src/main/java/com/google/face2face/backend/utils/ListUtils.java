@@ -1,5 +1,8 @@
 package com.google.face2face.backend.utils;
 
+import com.google.face2face.backend.User;
+import com.google.face2face.backend.UserBasicInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +11,27 @@ public class ListUtils {
         List<String> list = new ArrayList<String>();
 
         for (String t : list1) {
-            if(list2.contains(t.trim())) {
+            if (list2.contains(t.trim())) {
                 list.add(t);
             }
         }
 
         return list;
+    }
+
+    public List<User> nameDisjunction(List<UserBasicInfo> buddiesInDb,
+                                               List<User> buddiesNew) {
+
+        List<User> toReturn = new ArrayList(buddiesNew);
+
+        for (User userNew : buddiesNew) {
+            for (UserBasicInfo userInDb : buddiesInDb) {
+                if (userNew.uid.equals(userInDb)) {
+                    toReturn.remove(userNew);
+                    continue;
+                }
+            }
+        }
+        return toReturn;
     }
 }

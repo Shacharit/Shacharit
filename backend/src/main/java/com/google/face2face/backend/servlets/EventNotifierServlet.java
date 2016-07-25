@@ -49,7 +49,7 @@ public class EventNotifierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. Go over all events and find what events there are today
-        // 2. Go over all users and send notifications to all users that have buddies with those
+        // 2. Go over all users and send notifications to all users that have buddiesBasicInfo with those
         // definitions
 
         firebase.child("events").addListenerForSingleValueEvent(new ValueEventListener() {
