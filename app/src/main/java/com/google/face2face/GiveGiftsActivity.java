@@ -63,8 +63,6 @@ public class GiveGiftsActivity extends AppCompatActivity {
             if (key.contains("gift")) {
                 Button button = (Button) LayoutInflater.from(this).inflate(R.layout.give_gift_button, ll).findViewById(R.id.sendMessageButton);
                 parseGift(button, data.getString(key), gift);
-                //Button button = parseGift(data.getString(key), gift);
-                //ll.addView(button);
             }
         }
     }
@@ -116,6 +114,14 @@ public class GiveGiftsActivity extends AppCompatActivity {
                 }
             });
         } else if(type.equals("video")) {
+            button.setText(cta);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                }
+            });
+        } else if(type.equals("gift")) {
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

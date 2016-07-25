@@ -44,6 +44,36 @@
 
             <include layout="@layout/buddy_message_layout"/>
 
+            <Button
+            android:id="@+id/sendMessageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10sp"
+            android:text="שלח הודעה"
+            android:textColor="@android:color/black"
+            android:background="@drawable/rectangle_button" />
+
+            <Button
+            android:id="@+id/sendVideoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3sp"
+            android:text="שלח סרטון"
+            android:background="@drawable/rectangle_button"
+            android:textColor="@android:color/black" />
+
+            <Button
+            android:id="@+id/sendGiftButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="3sp"
+            android:text="שלח מתנה"
+            android:background="@drawable/rectangle_button"
+            android:textColor="@android:color/black" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
