@@ -67,7 +67,7 @@ public class TvShowsFragment extends Fragment {
                                 // Create button for each definition.
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                                     ToggleButton button = createButton(container, data.getKey());
-                                    flowContainer.addItem(button, interests.contains(data.getKey()));
+                                    flowContainer.addItem(button, interests != null && interests.contains(data.getKey()));
                                 }
                                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                             }

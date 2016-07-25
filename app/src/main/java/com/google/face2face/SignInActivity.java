@@ -185,7 +185,11 @@ public class SignInActivity extends AppCompatActivity implements
                 user.child(Constants.EMAIL_ADDRESS).setValue(acct.getEmail());
                 user.child(Constants.BIRTHDAY).setValue(person.getBirthday());
                 if (person.getImage().hasUrl()) {
-                    user.child(Constants.IMAGE_URL).setValue(person.getImage().getUrl());
+                    String imageUrl = person.getImage().getUrl();
+                    if (imageUrl.matches(".*sz=50$")) {
+                        imageUrl = imageUrl.substring(0, imageUrl.length() - 2) + "256";
+                    }
+                    user.child(Constants.IMAGE_URL).setValue(imageUrl);
                 }
                 buffer.release();
             }
