@@ -221,9 +221,11 @@ public class SignInActivity extends AppCompatActivity implements
     // Open NavigationActivity. If the given Bundle is not null, it is used as Extras.
     private void goToNavigation(Bundle extras) {
         Intent intent = new Intent(SignInActivity.this, NavigationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         if (extras != null) {
             intent.putExtras(extras);
         }
         startActivity(intent);
+        finish();
     }
 }

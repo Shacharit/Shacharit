@@ -42,8 +42,6 @@ public class GiveGiftsActivity extends AppCompatActivity {
                 gifts.add((String)data.get(key));
             else if (key.equals("recipient"))
                 giftToSend.recipient = (String)data.get(key);
-            else if (key.equals("username"))
-                giftToSend.sender = (String)data.get(key);
             else if(key.equals("event"))
                 giftToSend.event = (String)data.get(key);
         }

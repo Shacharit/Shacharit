@@ -40,6 +40,7 @@
         </service>
 
         <activity android:name=".GiveGiftsActivity"></activity>
+        <activity android:name=".ReceiveGiftActivity"></activity>
     </application>
 
 </manifest>
