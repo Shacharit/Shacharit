@@ -53,11 +53,6 @@ public class NavigationActivity extends AppCompatActivity
         // Set default username is anonymous.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (currentUser == null) {
-            startActivity(new Intent(this, SignInActivity.class));
-            return;
-        }
-
         if (getIntent().getStringExtra("giveGifts") != null) {
             Intent intent = new Intent(this, GiveGiftsActivity.class);
             intent.putExtras(getIntent().getExtras());
@@ -98,20 +93,22 @@ public class NavigationActivity extends AppCompatActivity
         Fragment fragment = null;
         String title = getString(R.string.app_name);
 
-        switch (viewId) {
-            case R.id.nav_default:
-                fragment = new FirebaseContentFragment();
-                title  = getString(R.string.nav_default);
-                break;
+        if (viewId == R.id.nav_default) {
+            fragment = new FirebaseContentFragment();
+            title = getString(R.string.nav_default);
+        } else if (viewId == R.id.nav_choose_other) {
+            fragment = new OtherDefinitionFragment();
+            title  = getString(R.string.nav_choose_other);
         }
 
+        // Set the fragment.
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
             ft.commit();
         }
 
-        // set the toolbar title
+        // Set the toolbar title.
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(title);
         }
@@ -125,30 +122,7 @@ public class NavigationActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
-
-        if (id == R.id.nav_default) {
-            fragment = new FirebaseContentFragment();
-        } else if (id == R.id.nav_choose_other) {
-            fragment = new OtherDefinitionFragment();
-        } else if (id == R.id.nav_who_am_I) {
-
-        } else if (id == R.id.nav_profile) {
-
-        } else if (id == R.id.nav_my_friends) {
-
-        } else if (id == R.id.nav_my_received_gifts) {
-
-        }
-
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.main_frame, fragment);
-            ft.commit();
-        }
-        
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        displayView(id);
         return true;
     }
 }

@@ -29,6 +29,10 @@ public class GiftSendingServlet extends HttpServlet {
     // Servlet members
     private Map<String, Gift> mGiftsToSend = new HashMap<>();
 
+    // Constants:
+    private String mNotificationTitle = "קיבלת מתנה";
+    private String mNotificationMessage = "";
+
 
     @Override
     public void init(ServletConfig config) {
