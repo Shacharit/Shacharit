@@ -24,6 +24,8 @@ import java.util.Map;
 public class F2FMessagingService extends FirebaseMessagingService {
     private static final String TAG = "F2FMessagingService";
 
+    // Actions - send_gift, get_gift, send_email
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "Got an FCM notification. Popping it on the screen.");
