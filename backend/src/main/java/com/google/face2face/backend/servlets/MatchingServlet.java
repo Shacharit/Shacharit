@@ -69,24 +69,7 @@ public class MatchingServlet extends HttpServlet {
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
 
-//        while (true) {
         readFromDb();
-//            try {
-//                Thread.sleep(10000L);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
-//        System.out.println("before sleep");
-//        logger.info("before sleep");
-//        try {
-//            Thread.sleep(10000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("after sleep");
-//        logger.info("after sleep");
     }
 
     private void readFromDb() {
