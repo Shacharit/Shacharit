@@ -1,11 +1,4 @@
 package com.google.face2face.backend.servlets;
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Java Servlet Module" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/HelloWorld
-*/
-
-
 import com.google.face2face.backend.FcmMessenger;
 import com.google.face2face.backend.User;
 import com.google.face2face.backend.UserBasicInfo;
@@ -37,6 +30,8 @@ public class MatchingServlet extends HttpServlet {
     public static final String IMAGE_URL = "image_url";
     public static final String BUDDY = "buddy";
     public static final String UID = "uid";
+    private HashMap<String, List<UserBasicInfo>> buddiesInDb;
+
 
     // Firebase keys shared with client applications
     private DatabaseReference firebase;
@@ -84,7 +79,7 @@ public class MatchingServlet extends HttpServlet {
 
                 List<String> logsInCallback = new ArrayList<String>();
                 logsInCallback.add("inside onDataChange. time: " + getCurrentTime());
-                HashMap<String, List<UserBasicInfo>> buddiesInDb = new HashMap<String, List<UserBasicInfo>>();
+                buddiesInDb = new HashMap<String, List<UserBasicInfo>>();
 
                 firebase.child("logs").setValue(logsInCallback);
 
@@ -93,7 +88,7 @@ public class MatchingServlet extends HttpServlet {
 
                 for (DataSnapshot ds : children) {
 
-                    addToPojoUsers(logsInCallback, buddiesInDb, users, ds);
+                    addToPojoUsers(logsInCallback, users, ds);
                 }
 
                 printAllUsersDebug(users);
@@ -102,7 +97,7 @@ public class MatchingServlet extends HttpServlet {
                 double[][] scores = matcher.calculateScores(users);
 
                 for (int i = 0; i < users.size(); i++) {
-                    checkMatchForEachUser(logsInCallback, buddiesInDb, users, matcher, scores, i);
+                    checkMatchForEachUser(logsInCallback, users, matcher, scores, i);
                 }
 
             }
@@ -114,7 +109,9 @@ public class MatchingServlet extends HttpServlet {
         });
     }
 
-    private void checkMatchForEachUser(List<String> logsInCallback, HashMap<String, List<UserBasicInfo>> buddiesInDb, List<User> users, Matcher matcher, double[][] scores, int i) {
+    private void checkMatchForEachUser(List<String> logsInCallback,
+                                       List<User> users, Matcher matcher,
+                                       double[][] scores, int i) {
         List<Integer> indicesOfBuddies = matcher.getMatchesForUser(i, scores);
         List<User> buddiesForCurrentMatch = new ArrayList<User>();
         final User currentUser = users.get(i);
@@ -131,10 +128,10 @@ public class MatchingServlet extends HttpServlet {
             System.out.println(msg);
         }
 
-        handleFoundMatch(logsInCallback, buddiesInDb, buddiesForCurrentMatch, currentUser);
+        handleFoundMatch(logsInCallback, buddiesForCurrentMatch, currentUser);
     }
 
-    private void handleFoundMatch(List<String> logsInCallback, HashMap<String, List<UserBasicInfo>> buddiesInDb, List<User> buddiesForCurrentMatch, User currentUser) {
+    private void handleFoundMatch(List<String> logsInCallback, List<User> buddiesForCurrentMatch, User currentUser) {
         if (buddiesForCurrentMatch.size() > 0) {
             List<User> disjunction = listUtils.nameDisjunction(buddiesInDb.get(currentUser.uid), buddiesForCurrentMatch);
 
@@ -146,7 +143,7 @@ public class MatchingServlet extends HttpServlet {
             firebase.child("logs").setValue(logsInCallback);
             logger.info(msg);
 
-            System.out.println("users: " + currentUser + " was added buddiesInDb: " + buddiesForCurrentMatch);
+            System.out.println("users: " + currentUser + " was added buddies: " + buddiesForCurrentMatch);
         }
     }
 
@@ -163,7 +160,7 @@ public class MatchingServlet extends HttpServlet {
         }
     }
 
-    private void addToPojoUsers(List<String> logsInCallback, HashMap<String, List<UserBasicInfo>> buddiesInDb,
+    private void addToPojoUsers(List<String> logsInCallback,
                                 List<User> users, DataSnapshot ds) {
         logsInCallback.add("after dataSnapshot.getChildren(). time: " + getCurrentTime());
         firebase.child("logs").setValue(logsInCallback);
@@ -253,19 +250,4 @@ public class MatchingServlet extends HttpServlet {
         }
     }
 
-
-//    private String buddiesToString(List<User> newBuddies) {
-//
-//
-//        //The string builder used to construct the string
-//        StringBuilder commaSepValueBuilder = new StringBuilder();
-//
-//        //Looping through the list
-//        for (int i = 0; i < newBuddies.size(); i++) {
-//            //append the value into the builder
-//            commaSepValueBuilder.append(newBuddies.get(i));
-//
-//        }
-//        return commaSepValueBuilder.toString();
-//    }
 }
