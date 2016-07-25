@@ -20,16 +20,31 @@
             android:id="@+id/textViewOtherLabel"
             android:layout_gravity="top|start" />
 
-        <ScrollView
+        <RelativeLayout
+            android:id="@+id/fragment_self_definition_inner_linear_layout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/scroll_view"
-            android:layoutDirection="rtl">
-            <LinearLayout
-                android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/other_definition_inner_linear_layout">
+                android:text="הבא"
+                android:id="@+id/button3"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layoutDirection="rtl"
+                android:layout_above="@id/button3">
                 <com.google.face2face.FlowLayout
                     android:id="@+id/flow_container"
                     android:layout_width="match_parent"
@@ -37,15 +52,8 @@
                     android:layoutDirection="rtl"
                     android:textDirection="rtl"
                     android:padding="20dp"/>
-                <!--TODO make button always visible on long screens.-->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="הבא"
-                    android:id="@+id/button3"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+        </RelativeLayout>
 
     </LinearLayout>
 </FrameLayout>

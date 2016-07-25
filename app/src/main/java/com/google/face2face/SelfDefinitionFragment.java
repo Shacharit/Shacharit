@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -41,6 +42,7 @@ public class SelfDefinitionFragment extends Fragment {
 
     private int nChecked = 0;
     private DatabaseReference mFirebaseDatabaseReference;
+    private ProgressBar mProgressBar;
 
     public SelfDefinitionFragment() {
         // Required empty public constructor
@@ -85,6 +87,7 @@ public class SelfDefinitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_self_definition, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.fragment_self_definition_flow_container);
         flowContainer.setMaxItems(NUM_OF_SELF_DEFINITIONS);
 
@@ -123,6 +126,8 @@ public class SelfDefinitionFragment extends Fragment {
                                     }
                                 }
                             });
+                    // Change fragment to profile.
+                    ((NavigationActivity) getActivity()).displayView(R.id.nav_profile);
                 }
 
             }
@@ -138,6 +143,7 @@ public class SelfDefinitionFragment extends Fragment {
                     ToggleButton button = createButton(container, data.getKey());
                     flowContainer.addItem(button);
                 }
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
                 // Check previously chosen definitions.
                 mFirebaseDatabaseReference.child(USERS)
