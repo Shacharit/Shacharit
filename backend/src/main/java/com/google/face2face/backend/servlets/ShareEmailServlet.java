@@ -51,8 +51,15 @@ public class ShareEmailServlet extends HttpServlet {
         shareRequestsDbRef.orderByChild("handled").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ShareRequest request = dataSnapshot.getValue(ShareRequest.class);
-                doShare(request, shareRequestsDbRef);
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    // TODO: Use ds.getValue(ShareRequest.class)
+                    ShareRequest request = new ShareRequest();
+                    request.key = ds.getKey();
+                    request.shareeId = ds.child("sharee_id").getValue().toString();
+                    request.sharerId = ds.child("sharer_id").getValue().toString();
+                    request.handled = (Boolean) ds.child("handled").getValue();
+                    doShare(request, shareRequestsDbRef);
+                }
             }
 
             @Override
@@ -75,8 +82,8 @@ public class ShareEmailServlet extends HttpServlet {
                         String sharerName = sharerDataSnapshot.child("display_name").getValue().toString();
                         String sharerEmail = sharerDataSnapshot.child("email_address").getValue().toString();
                         // Build Notification
-                        String title = String.format("{0} would like to talk to you!", sharerName);
-                        String message = String.format("Click here to compose an email message to {0}.", sharerName);
+                        String title = String.format("%s would like to talk to you!", sharerName);
+                        String message = String.format("Click here to compose an email message to %s.", sharerName);
                         Map<String, String> extras = new HashMap<>();
                         extras.put("action", SendEmailAction);
                         extras.put("email", sharerEmail);
