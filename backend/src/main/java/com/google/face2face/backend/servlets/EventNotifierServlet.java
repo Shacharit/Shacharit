@@ -121,7 +121,8 @@ public class EventNotifierServlet extends HttpServlet {
                                 // name: <name>, cta: <cta>
                                 for (GiftEvent giftEvent : giftEvents) {
                                     String title = "שלח לחבר מתנה";
-                                    String message = giftEvent.name + " " + giftEvent.femaleText + " " + buddyName;
+                                    String message = buddyName + " " + giftEvent.femaleText + " "
+                                            + giftEvent.name;
 
                                     Map<String, String> data = new HashMap<>();
 
