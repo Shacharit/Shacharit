@@ -133,6 +133,7 @@ public class EventNotifierServlet extends HttpServlet {
                                     data.put("username", username);
                                     data.put("description", giftEvent.description);
                                     data.put("giveGifts", "");
+                                    data.put("event", giftEvent.name);
 
                                     // Send description, event, recipient, username
                                     try {
