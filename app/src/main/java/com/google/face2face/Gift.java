@@ -16,7 +16,6 @@ public class Gift {
     public Gift() {
         this.sent = "false";
         this.sender = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
     }
 
 }
