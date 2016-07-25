@@ -1,20 +1,26 @@
 package com.google.face2face;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,6 +94,49 @@ public class OtherDefinitionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_other_definition, container, false);
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
         flowContainer.setMaxItems(MAX_CHECKED);
+
+        // Add onClick binding to 'Next' button.
+        final Button button = (Button) view.findViewById(R.id.button3);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final String[] pickedDefinitions = flowContainer.getCheckedNames();
+                if (pickedDefinitions.length != 3) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.self_definition_pick_alert_message)
+                            .setTitle(R.string.self_definition_pick_alert_title)
+                            .setNeutralButton(R.string.self_definition_pick_alert_button, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else { // This is a valid pick of definitions.
+                    // Remove previous definitions and add new ones.
+                    mFirebaseDatabaseReference
+                            .child("users")
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("self-definitions")
+                            .removeValue(new DatabaseReference.CompletionListener() {
+                                @Override
+                                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                                    for (String definition : pickedDefinitions) {
+                                        mFirebaseDatabaseReference
+                                                .child("users")
+                                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .child("self-definitions")
+                                                .push().setValue(definition);
+                                    }
+                                }
+                            });
+                }
+
+            }
+        });
+
+        // TODO: move to one snapshot instead of two snapshots.
+        // Add definitions buttons.
         mFirebaseDatabaseReference.child("self-definitions").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -96,6 +145,24 @@ public class OtherDefinitionFragment extends Fragment {
                     ToggleButton button = createButton(container, data.getKey());
                     flowContainer.addItem(button);
                 }
+
+                // Check previously chosen definitions.
+                mFirebaseDatabaseReference.child("users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("self-definitions")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // Create button for each definition.
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                    flowContainer.checkItemByName(data.getValue().toString());
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
             }
 
             @Override
@@ -103,6 +170,7 @@ public class OtherDefinitionFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
