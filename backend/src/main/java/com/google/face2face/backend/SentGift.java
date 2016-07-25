@@ -12,5 +12,8 @@ public class SentGift {
     public String recipient;
     public String sender;
     public String sent;
+    public String text;
+    public String gender;
     public String date;
+    public String recipient_id;
 }

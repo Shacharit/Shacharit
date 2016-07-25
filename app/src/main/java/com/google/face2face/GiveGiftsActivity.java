@@ -26,10 +26,15 @@ public class GiveGiftsActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabaseReference;
     private Gift giftToSend;
 
+    /*
+    Gift structure -
+    Key - gift%d, Value - "type:<type>,url:<url>,text:<text>,cta:<cta>"
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_give_gifts);
+        /*
         Bundle data = getIntent().getExtras();
         button__sendGift = (Button) findViewById(R.id.button_sendGift);
         listView_gifts = (ListView) findViewById(R.id.listView_gifts);
@@ -74,5 +79,6 @@ public class GiveGiftsActivity extends AppCompatActivity {
                 mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
             }
         });
+        */
     }
 }

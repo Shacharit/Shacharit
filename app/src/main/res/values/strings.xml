@@ -26,9 +26,36 @@
     <string name="nav_my_received_gifts">מתנות שקיבלתי</string>
     <string name="nav_my_sent_gifts">מתנות ששלחתי</string>
     <string name="otherLabel">את מי את/ה מחפש/ת</string>
+    <string name="selfLabel">איך אתה מגדיר את עצמך</string>
 
-    // Self definition
+
+    // Other Definition
+    <string name="other_definition_pick_alert_message">אנא בחר הגדרה אחת</string>
+    <string name="other_definition_pick_alert_title">בחירת האחר</string>
+    <string name="other_definition_pick_alert_button">אישור</string>
+
+    // Self Definition
     <string name="self_definition_pick_alert_message">אנא בחר שלוש הגדרות</string>
     <string name="self_definition_pick_alert_title">הגדרה עצמית</string>
     <string name="self_definition_pick_alert_button">אישור</string>
+
+    // Profile interests
+    <string name="tv_shows_title">תוכניות טלויזיה אהובות</string>
+    <string name="hobbies_title">תחביבים</string>
+    <string name="save_button">שמור</string>
+
+    // Activities
+    <string name="buddy_image_description">התמונה של הבאדי שלך</string>
+
+    // Profile details page
+    <string name="profile_details_name_label">שם:</string>
+    <string name="profile_details_name_hint">שם</string>
+
+    // Welcome
+    <string name="shacharit_explanation">החברה הישראלית נתפשת כריבוי של שסעים המאיימים לקרוע את המדינה לגזרים. ריבוי הזהויות, העמדות והמסורות לא חייב להוביל לניתוק ולמאבק; הוא יכול לייצר זירה ציבורית תוססת וססגונית, שבה ייפגשו ויעשירו אלה את אלה עולמות ותפישׂות שונות. מזמינים להיפגש במרחב הזה להכיר ולהנות, זה מתרבותו של זה.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_success">השינויים נשמרו בהצלחה</string>
+    <string name="itemlimit">ניתן לבחור עד %d פריטים</string>
 </resources>

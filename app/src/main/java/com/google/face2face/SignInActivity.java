@@ -39,6 +39,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.google.android.gms.plus.model.people.PersonBuffer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -166,7 +167,8 @@ public class SignInActivity extends AppCompatActivity implements
             @Override
             public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
                 Log.d(TAG, "loadPeopleResult: " + loadPeopleResult);
-                Person person = loadPeopleResult.getPersonBuffer().get(0);
+                PersonBuffer buffer = loadPeopleResult.getPersonBuffer();
+                Person person = buffer.get(0);
                 DatabaseReference gender = user.child(Constants.GENDER);
                 switch (person.getGender()) {
                     case 0:
@@ -182,6 +184,10 @@ public class SignInActivity extends AppCompatActivity implements
                 user.child(Constants.DISPLAY_NAME).setValue(person.getDisplayName());
                 user.child(Constants.EMAIL_ADDRESS).setValue(acct.getEmail());
                 user.child(Constants.BIRTHDAY).setValue(person.getBirthday());
+                if (person.getImage().hasUrl()) {
+                    user.child(Constants.IMAGE_URL).setValue(person.getImage().getUrl());
+                }
+                buffer.release();
             }
         });
     }

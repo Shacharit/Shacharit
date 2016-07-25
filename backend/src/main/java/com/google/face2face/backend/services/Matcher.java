@@ -12,7 +12,7 @@ public class Matcher {
 
     private ListUtils listUtils = new ListUtils();
 
-    public double[][] matchUsers(List<User> users) {
+    public double[][] calculateScores(List<User> users) {
         double[][] scoreMatrix = new double[users.size()][users.size()];
 
         for (int i = 0; i < users.size(); i++) {
@@ -61,7 +61,7 @@ public class Matcher {
         return userWithMaxMatch;
     }
 
-    public List<Integer> getMatchsForUser(int userIndex, double[][] scoreMatrix) {
+    public List<Integer> getMatchesForUser(int userIndex, double[][] scoreMatrix) {
         List<Integer> matchedUsersIndices = new ArrayList<>();
         for (int i = 0; i < scoreMatrix.length; i++) {
             if (i == userIndex) continue;
