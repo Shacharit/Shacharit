@@ -35,8 +35,8 @@
     <string name="other_definition_pick_alert_button">אישור</string>
 
     // Self Definition
-    <string name="self_definition_pick_alert_message">אנא בחר הגדרה אחת</string>
-    <string name="self_definition_pick_alert_title">בחירת האחר</string>
+    <string name="self_definition_pick_alert_message">אנא בחר שלוש הגדרות</string>
+    <string name="self_definition_pick_alert_title">הגדרה עצמית</string>
     <string name="self_definition_pick_alert_button">אישור</string>
 
     // Profile interests
