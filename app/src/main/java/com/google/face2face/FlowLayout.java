@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -167,6 +168,7 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
             nChecked--;
         } else if (nChecked == maxItems) {
             button.setChecked(false);
+            Toast.makeText(getContext(), String.format(getContext().getString(R.string.itemlimit), maxItems), Toast.LENGTH_SHORT).show();
         } else {
             nChecked++;
         }

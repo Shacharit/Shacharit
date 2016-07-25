@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +31,7 @@ public class TvShowsFragment extends Fragment {
 
     private int nChecked = 0;
     private DatabaseReference mFirebaseDatabaseReference;
-    private String mInterestDatabaseName;
-    private String mInterestDisplayName;
+    private ProgressBar mProgressBar;
 
     public TvShowsFragment() {
         // Required empty public constructor
@@ -46,43 +48,44 @@ public class TvShowsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profie_interests, container, false);
-        TextView title = (TextView) view.findViewById(R.id.interest_title_label);
-        title.setText(R.string.tv_shows_title);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
         flowContainer.setMaxItems(MAX_CHECKED);
-        mFirebaseDatabaseReference.child("tv-shows").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Create button for each definition.
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    ToggleButton button = createButton(container, data.getKey());
-                    flowContainer.addItem(button);
-                }
 
-                // Check previously chosen definitions.
-                mFirebaseDatabaseReference.child(Constants.USERS_CHILD)
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("favorite_tv_shows")
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+        // Check previously chosen definitions.
+        mFirebaseDatabaseReference.child(Constants.USERS_CHILD)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("favorite_tv_shows")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final List<String> interests = (List<String>) dataSnapshot.getValue();
+                        mFirebaseDatabaseReference.child("tv-shows").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 // Create button for each definition.
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                    flowContainer.checkItemByName(data.getValue().toString());
+                                    ToggleButton button = createButton(container, data.getKey());
+                                    flowContainer.addItem(button);
+                                    if (interests.contains(data.getKey())) {
+                                        flowContainer.checkItemByName(data.getKey().toString());
+                                    }
                                 }
+                                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                             }
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
                         });
-            }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                    }
+                });
 
         Button saveButton = (Button) view.findViewById(R.id.profile_interests_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +96,7 @@ public class TvShowsFragment extends Fragment {
                     mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
                             .child("favorite_tv_shows")
                             .setValue(Arrays.asList(flowContainer.getCheckedNames()));
+                    Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
                 }
             }
         });
