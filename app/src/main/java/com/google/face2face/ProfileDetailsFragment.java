@@ -11,10 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Arrays;
 
 public class ProfileDetailsFragment extends Fragment {
     private static final String TAG = "ProfileDetailsFragment";
     private DatabaseReference mFirebaseDatabaseReference;
+    private EditText mNameEditText;
 
     public ProfileDetailsFragment() {
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -49,6 +54,7 @@ public class ProfileDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_profile_details, container, false);
+        mNameEditText = (EditText) view.findViewById(R.id.profile_details_name);
 
         mFirebaseDatabaseReference.child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -58,8 +64,7 @@ public class ProfileDetailsFragment extends Fragment {
                         if (dataSnapshot.hasChild("display_name")) {
                             String displayName = dataSnapshot.child("display_name").getValue().toString();
                             Log.i(TAG, "display_name: " + displayName);
-                            EditText editText = (EditText) view.findViewById(R.id.profile_details_name);
-                            editText.setText(displayName);
+                            mNameEditText.setText(displayName);
                         }
                         if (dataSnapshot.hasChild("image_url")) {
                             String imageUrl = dataSnapshot.child("image_url").getValue().toString();
@@ -77,6 +82,21 @@ public class ProfileDetailsFragment extends Fragment {
 
                     }
                 });
+
+        Button saveButton = (Button) view.findViewById(R.id.profile_details_save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null){
+                    mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
+                            .child("display_name")
+                            .setValue(mNameEditText.getText().toString());
+                    Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return view;
     }
 

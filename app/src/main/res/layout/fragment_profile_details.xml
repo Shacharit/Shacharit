@@ -32,6 +32,13 @@
                 android:lines="1"
                 android:hint="@string/profile_details_name_hint" />
         </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_button"
+            android:id="@+id/profile_details_save_button"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentBottom="true"/>
     </LinearLayout>
 
 </FrameLayout>
