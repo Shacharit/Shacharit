@@ -26,7 +26,7 @@ public class ListUtils {
 
         for (User userNew : buddiesNew) {
             for (UserBasicInfo userInDb : buddiesInDb) {
-                if (userNew.uid.equals(userInDb)) {
+                if (userNew.uid.equals(userInDb.uid)) {
                     toReturn.remove(userNew);
                     continue;
                 }

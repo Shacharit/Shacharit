@@ -16,31 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 public class GiveGiftsActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabaseReference;
 
-    private TextView buddyName;
-    private TextView title;
-    private TextView descriptor;
-    private Button send_text_button;
-    private Button send_video_button;
-    private Button send_gift_button;
-
-    /*
-    Gift structure -
-    Key - gift%d, Value - "type:<type>,url:<url>,text:<text>,cta:<cta>"
-
-    data.put("recipient", buddyName);
-    data.put("recipientId", buddyId); for DB
-    data.put("gender", gender); sender of recipient
-    data.put("username", username);
-    data.put("uid", user_ds.getKey());
-    data.put("description", giftEvent.description);
-    data.put("giveGifts", "");
-    data.put("event", giftEvent.name);
-    data.put("image_url", buddyPhoto);
-    data.put("gender", buddyGender);
-    data.put("gift" + (i + 1), "text:" + gift.text + "," +
-    "cta:" + gift.cta + "," + "url:"
-    + gift.url + "type:" + gift.type);
-    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,82 +26,110 @@ public class GiveGiftsActivity extends AppCompatActivity {
         Gift gift = populateGift(data);
 
         NetworkImageView buddyImg = (NetworkImageView) findViewById(R.id.buddy_image);
-        buddyImg.setImageUrl(data.getString("image_url"),
+        if (buddyImg == null) {
+            return;
+        }
+        buddyImg.setImageUrl(gift.recipientImageUrl,
                 VolleySingleton.getInstance(this.getApplicationContext()).getImageLoader());
 
-        ((TextView) findViewById(R.id.buddy_name)).setText(gift.recipient);
-        ((TextView) findViewById(R.id.title)).setText(gift.event);
-        ((TextView) findViewById(R.id.descriptor)).setText(data.getString("description"));
+        TextView buddy_name = (TextView) findViewById(R.id.buddy_name);
+        assert buddy_name != null;
+        buddy_name.setText(gift.recipientName);
+
+        TextView title = (TextView) findViewById(R.id.title);
+        assert title != null;
+        title.setText(gift.eventTitle);
+
+        TextView descriptior = (TextView) findViewById(R.id.descriptor);
+        assert descriptior != null;
+        descriptior.setText(gift.eventDescription);
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGiveGifts);
         for (String key : data.keySet()) {
             if (key.contains("gift")) {
-                Button button = (Button) LayoutInflater.from(this).inflate(R.layout.give_gift_button, ll).findViewById(R.id.send_message_button);
-                parseGift(button, data.getString(key), gift);
+                parseGift(data.getString(key), gift);
             }
         }
     }
 
     private Gift populateGift(Bundle data) {
         Gift gift = new Gift();
+        gift.recipientId = data.getString("recipientId");
+        gift.recipientName = data.getString("recipientName");
+        gift.recipientGender = data.getString("recipientGender");
+        gift.recipientImageUrl = data.getString("recipientImageUrl");
+        gift.senderGender = data.getString("senderGender");
+        gift.senderName = data.getString("senderName");
+        gift.senderId = data.getString("senderId");
 
-        gift.recipient_id = data.getString("recipientId");
-        gift.recipient = data.getString("recipient");
-        gift.event = data.getString("event");
-        gift.gender = data.getString("gender");
-        gift.sender = data.getString("username");
-        gift.sender_id = data.getString("uid");
+        // Users
+        gift.senderName = data.getString("senderName");
+        gift.senderImageUrl = data.getString("senderImageUrl");
+        gift.senderGender = data.getString("senderGender");
+        gift.recipientImageUrl  = data.getString("recipientImageUrl");
+        gift.recipientId = data.getString("recipientId");
+        gift.recipientName = data.getString("recipientName");
 
+        // Data
+        gift.isSent = false;
+
+        // Gift
+        gift.eventTitle = data.getString("eventTitle");
+        gift.eventDescription = data.getString("eventDescription");
         return gift;
     }
 
-
-
-    /*
-    "text:" + gift.text + "," +
-            "cta:" + gift.cta + "," + "url:"
-            + gift.url + "type:" + gift.type)
-            */
-
-
-    private void parseGift(Button button, String data, final Gift giftToSend) {
+    private void parseGift(String data, final Gift giftToSend) {
         String[] giftData = data.split(",");
         String cta = new String();
         String url = new String();
         String type = new String();
+        String text = new String();
         for (String s : giftData) {
             if (s.contains("cta:"))
                 cta = s.substring(4);
             else if (s.contains("url:"))
                 url = s.substring(4);
             else if (s.contains("type:"))
-                type = s.substring(6);
+                type = s.substring(5);
+            else if (s.contains("text:"))
+                text = s.substring(5);
         }
         if (!cta.isEmpty()) {
             giftToSend.cta = cta;
         }
+        if (!text.isEmpty()) {
+            giftToSend.giftText = text;
+        }
+
         if (type.equals("greeting")) {
+            Button button = (Button) findViewById(R.id.send_message_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         } else if(type.equals("video")) {
+            Button button = (Button) findViewById(R.id.send_video_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         } else if(type.equals("gift")) {
+            Button button = (Button) findViewById(R.id.send_gift_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         }
