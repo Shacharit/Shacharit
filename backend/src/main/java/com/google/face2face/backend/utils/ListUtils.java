@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListUtils {
-    public <T> List<T> intersection(List<T> list1, List<T> list2) {
-        List<T> list = new ArrayList<T>();
+    public List<String> intersection(List<String> list1, List<String> list2) {
+        List<String> list = new ArrayList<String>();
 
-        for (T t : list1) {
-            if(list2.contains(t)) {
+        for (String t : list1) {
+            if(list2.contains(t.trim())) {
                 list.add(t);
             }
         }

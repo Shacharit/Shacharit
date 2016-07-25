@@ -36,7 +36,7 @@ public class MatcherTest {
                 ImmutableList.<String>of("movie1", "movie3", "movie5"),
                 ImmutableList.<String>of("hobbie1", "hobbie3", "hobbie2"));
 
-        double[][] scores = matcher.matchUsers(ImmutableList.of(user1, user2, user3));
+        double[][] scores = matcher.calculateScores(ImmutableList.of(user1, user2, user3));
 
 //        assert(scores[0][1], equalTo(1.0));
     }
@@ -55,7 +55,7 @@ public class MatcherTest {
                 ImmutableList.<String>of("movie1", "movie3", "movie5"),
                 ImmutableList.<String>of("hobbie1", "hobbie3", "hobbie2"));
 
-        double[][] scores = matcher.matchUsers(ImmutableList.of(user1, user2, user3));
+        double[][] scores = matcher.calculateScores(ImmutableList.of(user1, user2, user3));
         int matchForUser = matcher.getMatchForUser(0, scores);
 
         assertThat(matchForUser, equalTo(2));
