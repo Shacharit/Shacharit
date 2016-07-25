@@ -17,7 +17,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     // NavBar
-    <string name="nav_default">Default</string>
+    <string name="nav_default">דף בית</string>
     <string name="nav_choose_other">בחירת האחר</string>
     <string name="nav_who_am_I">מי אני</string>
     <string name="nav_profile">פרופיל</string>
