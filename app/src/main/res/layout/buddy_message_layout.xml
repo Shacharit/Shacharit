@@ -9,10 +9,9 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/buddy_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="220dp"
         android:contentDescription="@string/buddy_image_description"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/profile"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/buddy_name"
