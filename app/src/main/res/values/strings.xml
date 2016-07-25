@@ -34,4 +34,10 @@
 
     // Activities
     <string name="buddy_image_description">התמונה של הבאדי שלך</string>
+
+    // Profile details page
+    <string name="profile_details_first_name_label">שם פרטי:</string>
+    <string name="profile_details_last_name_label">שם משפחה:</string>
+    <string name="profile_details_first_name_hint">שם פרטי</string>
+    <string name="profile_details_last_name_hint">שם משפחה</string>
 </resources>

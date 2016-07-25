@@ -76,8 +76,7 @@ public class NavigationActivity extends AppCompatActivity
         // Init the default fragment
         if (mRedirectToFillProfile) {
             displayView(R.id.nav_choose_other);
-        }
-        else {
+        } else if (savedInstanceState == null) {
             displayView(R.id.nav_default);
         }
 

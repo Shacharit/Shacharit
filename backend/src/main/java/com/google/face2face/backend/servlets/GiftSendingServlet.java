@@ -11,6 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,8 +63,8 @@ public class GiftSendingServlet extends HttpServlet {
                 for (DataSnapshot ds : children) {
                     SentGift gift = ds.getValue(SentGift.class);
                     gift.key = ds.getKey();
-                    String recipientUid = gift.recipient;
-                    if ("false".equals(gift.sent)) {
+                    String recipientUid = gift.recipient_id;
+                    if ("false".equals(gift.sent) && recipientUid != null) {
                         mGiftsToSend.put(recipientUid, gift);
                     }
                 }
@@ -90,21 +92,30 @@ public class GiftSendingServlet extends HttpServlet {
                         if (ds.child("reg_id").getValue() == null) {
                             continue;
                         }
-                        String userRegId = ds.child("reg_id").getValue().toString();
+                        //String userRegId = ds.child("reg_id").getValue().toString();
+                        String userRegId = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
 
                         // Build Notification
                         SentGift gift = mGiftsToSend.get(userKey);
-                        String title = "You Recieved a gift!";
-                        String message = "FUN :)";
+                        String thoughtTitle = gift.gender.equals("male") ? "חושב עליך" :
+                                "חושבת עליך";
+                        String title =  gift.sender + " " + thoughtTitle;
+                        String message = gift.text;
                         Map<String, String> extras = new HashMap<>();
                         extras.put("event", gift.event);
                         extras.put("name", gift.name);
 
-                        // Send Notification
                         try {
                             FcmMessenger.sendPushMessage(userRegId, title, message, extras);
                             // Mark gift sent
-                            giftsDbRef.child(gift.key).child("sent").setValue("true");
+                            DatabaseReference childRef = giftsDbRef.child(gift.key);
+                            childRef.child("sent").setValue("true");
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+                            Date date = new Date();
+
+                            childRef.child("date").setValue(formatter.format(date));
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

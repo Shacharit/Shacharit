@@ -116,8 +116,11 @@ public class EventNotifierServlet extends HttpServlet {
 
                             String buddyName = name.toString();
                             DataSnapshot imageUrl = buddy_snapshot.child("image_url");
+
+                            Object gender = buddy_snapshot.child("gender").getValue();
+                            String buddyGender = gender != null ? gender.toString() : "male";
                             String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
-                            String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
+                            String buddyToken = buddy_snapshot.child("reg_id").toString();
                             for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                 String definition = ds_def.getValue().toString();
                                 if (!defsToEvents.containsKey(definition)) {
@@ -142,12 +145,17 @@ public class EventNotifierServlet extends HttpServlet {
                                                 + gift.url + "type:" + gift.type);
                                     }
 
+
+                                    String buddyId = buddy_snapshot.child("uid").getValue().toString();
                                     data.put("recipient", buddyName);
+                                    data.put("recipient_id", buddyId);
                                     data.put("username", username);
+                                    data.put("uid", user_ds.getKey());
                                     data.put("description", giftEvent.description);
                                     data.put("giveGifts", "");
                                     data.put("event", giftEvent.name);
                                     data.put("image_url", buddyPhoto);
+                                    data.put("gender", buddyGender);
 
                                     // Send description, event, recipient, username
                                     try {
