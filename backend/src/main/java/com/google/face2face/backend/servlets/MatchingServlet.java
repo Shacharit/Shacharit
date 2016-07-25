@@ -228,7 +228,7 @@ public class MatchingServlet extends HttpServlet {
             extras.put("uid", newUser.uid);
             extras.put("image_url", newUser.imageUrl);
             try {
-                FcmMessenger.sendPushMessage(uid, "new buddies", "say hi to him/her" ,extras);
+                FcmMessenger.sendPushMessage(uid, "new buddies", "say hi to him/her", extras);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -243,7 +243,7 @@ public class MatchingServlet extends HttpServlet {
         StringBuilder commaSepValueBuilder = new StringBuilder();
 
         //Looping through the list
-        for (int i = 0; i < newBuddies.size(); i++){
+        for (int i = 0; i < newBuddies.size(); i++) {
             //append the value into the builder
             commaSepValueBuilder.append(newBuddies.get(i));
 
