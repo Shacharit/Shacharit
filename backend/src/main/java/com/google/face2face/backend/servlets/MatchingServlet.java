@@ -68,20 +68,50 @@ public class MatchingServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
+
+//        while (true) {
+        readFromDb();
+//            try {
+//                Thread.sleep(10000L);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+//        System.out.println("before sleep");
+//        logger.info("before sleep");
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("after sleep");
+//        logger.info("after sleep");
+    }
+
+    private void readFromDb() {
         firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                StringBuilder sb = new StringBuilder();
 
+                sb.append("elad inside onDataChange. time: "+ System.currentTimeMillis());
+                firebase.child("logs").setValue(sb.toString());
 
                 List<User> users = new ArrayList<User>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
-                System.out.println("children = "+children);
-                logger.info("children = "+children);
+                System.out.println("children = " + children);
+                logger.info("children = " + children);
                 for (DataSnapshot ds : children) {
 
-                    System.out.println("user= "+ds.getKey());
-                    logger.info("user= "+ds.getKey());
+
+                    sb.append("elad after dataSnapshot.getChildren(). time: "+ System.currentTimeMillis());
+                    firebase.child("logs").setValue(sb.toString());
+
+
+                    System.out.println("user= " + ds.getKey());
+                    logger.info("user= " + ds.getKey());
 
                     User user = new User(ds.getKey());
                     if (ds.hasChild(REG_ID)) {
@@ -172,15 +202,6 @@ public class MatchingServlet extends HttpServlet {
 
             }
         });
-        System.out.println("before sleep");
-        logger.info("before sleep");
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("after sleep");
-        logger.info("after sleep");
     }
 
 }
