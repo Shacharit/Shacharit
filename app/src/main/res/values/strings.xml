@@ -27,6 +27,11 @@
     <string name="nav_my_sent_gifts">מתנות ששלחתי</string>
     <string name="otherLabel">את מי את/ה מחפש/ת</string>
 
+    // Self definition
+    <string name="self_definition_pick_alert_message">אנא בחר שלוש הגדרות</string>
+    <string name="self_definition_pick_alert_title">הגדרה עצמית</string>
+    <string name="self_definition_pick_alert_button">אישור</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

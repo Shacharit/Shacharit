@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * How to use:
  *   In your fragment's onCreateView:
@@ -87,10 +90,12 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        // Note: it seems the code assumed left is 0 (as childLeft doesn't include it).
         int childLeft = getPaddingLeft();
         int childTop = getPaddingTop();
         int lineHeight = 0;
         int myWidth = right - left;
+        List<View> rowItems = new ArrayList<>();
         for (int i = 0; i < getChildCount(); i++) {
             final View child = getChildAt(i);
             if (child.getVisibility() == View.GONE) {
@@ -103,9 +108,28 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
                 childLeft = getPaddingLeft();
                 childTop += paddingVertical + lineHeight;
                 lineHeight = childHeight;
+                alignChildren(rowItems, right - left);
+                rowItems.clear();
             }
             child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
+            rowItems.add(child);
+            child.layout(childLeft, childTop, childLeft + childWidth, childTop + childHeight);
             childLeft += childWidth + paddingHorizontal;
+        }
+        if (rowItems.size() > 0) {
+            alignChildren(rowItems, right - left);
+        }
+    }
+
+    private void alignChildren(List<View> children, int width) {
+        View lastChild = children.get(children.size() - 1);
+        int paddingEnd = width - getPaddingRight() - lastChild.getRight();
+        int shift = paddingEnd / 2;
+        if (paddingEnd > 0) {
+            for (View child : children) {
+                child.layout(child.getLeft() + shift, child.getTop(), child.getRight() + shift,
+                        child.getBottom());
+            }
         }
     }
 
