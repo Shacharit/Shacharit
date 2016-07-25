@@ -46,14 +46,13 @@ public class ProfileFragment extends Fragment {
         mTabHost = (FragmentTabHost)rootView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        // TODO
+        // TODO - add the TV shows / movies tabs to the tabs
         mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("Fragment B"),
-                OtherDefinitionFragment.class, null);
+                ProfileDetailsFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Fragment C"),
-                OtherDefinitionFragment.class, null);
-/*        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),
-                FragmentD.class, null);
-*/
+                ProfileDetailsFragment.class, null);
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Fragment D"),
+                ProfileDetailsFragment.class, null);
 
         return rootView;
     }
