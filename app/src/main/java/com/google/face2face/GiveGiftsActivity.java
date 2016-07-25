@@ -2,6 +2,7 @@ package com.google.face2face;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -60,8 +61,10 @@ public class GiveGiftsActivity extends AppCompatActivity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGiveGifts);
         for (String key : data.keySet()) {
             if (key.contains("gift")) {
-                Button button = parseGift(data.getString(key), gift);
-                ll.addView(button);
+                Button button = (Button) LayoutInflater.from(this).inflate(R.layout.give_gift_button, ll).findViewById(R.id.sendMessageButton);
+                parseGift(button, data.getString(key), gift);
+                //Button button = parseGift(data.getString(key), gift);
+                //ll.addView(button);
             }
         }
     }
@@ -88,12 +91,11 @@ public class GiveGiftsActivity extends AppCompatActivity {
             */
 
 
-    private Button parseGift(String data, final Gift giftToSend) {
+    private void parseGift(Button button, String data, final Gift giftToSend) {
         String[] giftData = data.split(",");
         String cta = new String();
         String url = new String();
         String type = new String();
-        Button result = new Button(this.getApplicationContext());
         for (String s : giftData) {
             if (s.contains("cta:"))
                 cta = s.substring(4);
@@ -106,23 +108,21 @@ public class GiveGiftsActivity extends AppCompatActivity {
             giftToSend.cta = cta;
         }
         if (type.equals("greeting")) {
-            result.setText(cta);
-            result.setOnClickListener(new View.OnClickListener() {
+            button.setText(cta);
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
                 }
             });
         } else if(type.equals("video")) {
-            result.setText(cta);
-            result.setOnClickListener(new View.OnClickListener() {
+            button.setText(cta);
+            button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
                 }
             });
         }
-
-        return result;
     }
 }

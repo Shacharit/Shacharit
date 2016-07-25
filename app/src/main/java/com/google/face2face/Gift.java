@@ -9,7 +9,6 @@ public class Gift {
     public String sender;
     public String recipient_id;
     public String recipient;
-    public String name;
     public String event;
     public String sent;
     public String date;
