@@ -1,7 +1,7 @@
 package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.FcmMessenger;
-import com.google.face2face.backend.SentGift;
+import com.google.face2face.backend.ShareRequest;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -20,19 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GiftSendingServlet extends HttpServlet {
+public class ShareEmailServlet extends HttpServlet {
     private static final long serialVersionUID = 8126789192972477663L;
 
     // Firebase keys shared with client applications
     private DatabaseReference firebase;
 
-    // Servlet members
-    private Map<String, SentGift> mGiftsToSend = new HashMap<>();
-
     // Constants:
-    private static final String mNotificationTitle = "קיבלת מתנה";
-    private static final String mNotificationMessage = "";
-
+    public static String SendEmailAction = "send_email";
 
     @Override
     public void init(ServletConfig config) {
@@ -50,24 +45,14 @@ public class GiftSendingServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final DatabaseReference giftsDbRef = firebase.child("sent-gifts");
+        final DatabaseReference shareRequestsDbRef = firebase.child("share_requests");
 
-        // TODO: Change this (and others?) to be query-based like ShareEmailServlet.
         // Extract all gifts
-        giftsDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        shareRequestsDbRef.orderByChild("handled").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                // Iterate over all gifts and extract unsent gifts
-                for (DataSnapshot ds : children) {
-                    SentGift gift = ds.getValue(SentGift.class);
-                    gift.key = ds.getKey();
-                    String recipientUid = gift.recipient;
-                    if ("false".equals(gift.sent)) {
-                        mGiftsToSend.put(recipientUid, gift);
-                    }
-                }
-                sendGifts(giftsDbRef);
+                ShareRequest request = dataSnapshot.getValue(ShareRequest.class);
+                doShare(request, shareRequestsDbRef);
             }
 
             @Override
@@ -77,40 +62,39 @@ public class GiftSendingServlet extends HttpServlet {
         });
     }
 
-    private void sendGifts(final DatabaseReference giftsDbRef) {
+
+    private void doShare(final ShareRequest request, final DatabaseReference shareRequestsDbRef) {
         final DatabaseReference usersDbRef = firebase.child("users");
-        usersDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        usersDbRef.child(request.shareeId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                // Iterate over all users and send notifications to relevant users.
-                for (DataSnapshot ds : children) {
-                    String userKey = ds.getKey();
-                    if (mGiftsToSend.containsKey(userKey)){
-                        // Check for reg_id
-                        if (ds.child("reg_id").getValue() == null) {
-                            continue;
-                        }
-                        String userRegId = ds.child("reg_id").getValue().toString();
-
+            public void onDataChange(DataSnapshot shareeDataSnapshot) {
+                final String shareeRegId = shareeDataSnapshot.child("reg_id").getValue().toString();
+                usersDbRef.child(request.sharerId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot sharerDataSnapshot) {
+                        String sharerName = sharerDataSnapshot.child("display_name").getValue().toString();
+                        String sharerEmail = sharerDataSnapshot.child("email_address").getValue().toString();
                         // Build Notification
-                        SentGift gift = mGiftsToSend.get(userKey);
-                        String title = "You Recieved a gift!";
-                        String message = "FUN :)";
+                        String title = String.format("{0} would like to talk to you!", sharerName);
+                        String message = String.format("Click here to compose an email message to {0}.", sharerName);
                         Map<String, String> extras = new HashMap<>();
-                        extras.put("event", gift.event);
-                        extras.put("name", gift.name);
-
+                        extras.put("action", SendEmailAction);
+                        extras.put("email", sharerEmail);
                         // Send Notification
                         try {
-                            FcmMessenger.sendPushMessage(userRegId, title, message, extras);
+                            FcmMessenger.sendPushMessage(shareeRegId, title, message, extras);
                             // Mark gift sent
-                            giftsDbRef.child(gift.key).child("sent").setValue("true");
+                            shareRequestsDbRef.child(request.key).child("handled").setValue("true");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
