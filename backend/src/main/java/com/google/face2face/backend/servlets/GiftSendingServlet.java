@@ -64,8 +64,8 @@ public class GiftSendingServlet extends HttpServlet {
                 for (DataSnapshot ds : children) {
                     SentGift gift = ds.getValue(SentGift.class);
                     gift.key = ds.getKey();
-                    String recipientUid = gift.recipient_id;
-                    if ("false".equals(gift.sent) && recipientUid != null) {
+                    String recipientUid = gift.recipientId;
+                    if ("false".equals(gift.isSent) && recipientUid != null) {
                         mGiftsToSend.put(recipientUid, gift);
                     }
                 }
@@ -98,15 +98,20 @@ public class GiftSendingServlet extends HttpServlet {
 
                         // Build Notification
                         SentGift gift = mGiftsToSend.get(userKey);
-                        String thoughtTitle = gift.gender.equals("male") ? "חושב עליך" :
+                        String thoughtTitle = gift.senderGender.equals("male") ? "חושב עליך" :
                                 "חושבת עליך";
-                        String title =  gift.sender + " " + thoughtTitle;
-                        String message = gift.text;
+                        String title =  gift.senderName + " " + thoughtTitle;
+                        String message = gift.eventText;
                         Map<String, String> extras = new HashMap<>();
-                        extras.put("event", gift.event);
-                        extras.put("name", gift.name);
-                        extras.put("action", "receive_gift");
-                        extras.put("foobaz", gift.recipient);
+                        extras.put("eventTitle", gift.eventTitle);
+                        extras.put("cta", gift.cta);
+                        extras.put("eventText", gift.eventText);
+                        extras.put("senderGender", gift.senderGender);
+                        extras.put("recipientId", gift.recipientId);
+                        extras.put("recipientImageUrl", gift.recipientImageUrl);
+                        extras.put("senderImageUrl", gift.senderImageUrl);
+                        extras.put("senderName", gift.senderName);
+
 
                         try {
                             FcmMessenger.sendPushMessage(userRegId, title, message, extras);

@@ -81,7 +81,7 @@ public class EventNotifierServlet extends HttpServlet {
 
                         gift.cta = "קטע";
                         gift.text = "הטקסט";
-                        gift.type = "text";
+                        gift.type = "greeting";
                         gift.url = "";
 
                         event.gifts[i] = gift;
@@ -130,7 +130,7 @@ public class EventNotifierServlet extends HttpServlet {
                                 String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
                                 //String buddyToken = buddy_snapshot.child("reg_id").toString();
-                                String buddyToken = "dMGFRFCiywo:APA91bHvrQKrIqeF98M5MSNVhoIyRcXFiS6UqGWJgLMyQebUOzJXp43y3XafBx6Ip04ytseng6a7VakoosZD8OMpfce-w2q0qf9jjku8e5aNarw5ZYqLNthzN4eDitEaAXD8ZvR24FE4";
+                                String buddyToken = "dpabmemA4_o:APA91bE8Y6n2YLC4P_2lV460ZVgSgDRM30x8XoyLMKul5Vdx2FDfc4hvUtecUMqRXhfC8LO_mQ_woZMUm88r84PMvq3lVdexIWHx25j6jd0_G8cK-L_NEzvsFkE8_TOZE1X_9-rIa7Ty";
                                 for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                     String definition = ds_def.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {

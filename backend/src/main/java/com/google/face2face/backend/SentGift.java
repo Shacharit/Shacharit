@@ -6,14 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SentGift {
-    public String key;
-    public String event;
-    public String name;
-    public String recipient;
-    public String sender;
-    public String sent;
-    public String text;
-    public String gender;
+    // Users
+    public String senderName;
+    public String senderImageUrl;
+    public String recipientImageUrl;
+    public String recipientId;
+    public String recipientName;
+
+    // Data
+    public boolean isSent;
     public String date;
-    public String recipient_id;
+
+    // Gift
+    public String eventTitle;
+    public String eventText;
+    public String cta;
+    public String sender_id;
+    public String senderGender;
+    public String key;
 }
