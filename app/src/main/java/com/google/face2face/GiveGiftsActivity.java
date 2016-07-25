@@ -54,6 +54,8 @@ public class GiveGiftsActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: Create functions for each button, and call the SendGiftActivity class with the
+    // parameters: username, user gender, gift parameters.
     private Gift populateGift(Bundle data) {
         Gift gift = new Gift();
 
