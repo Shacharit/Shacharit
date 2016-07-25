@@ -28,7 +28,6 @@
     <string name="otherLabel">את מי את/ה מחפש/ת</string>
     <string name="selfLabel">איך אתה מגדיר את עצמך</string>
 
-
     // Other Definition
     <string name="other_definition_pick_alert_message">אנא בחר הגדרה אחת</string>
     <string name="other_definition_pick_alert_title">בחירת האחר</string>
@@ -46,6 +45,10 @@
 
     // Activities
     <string name="buddy_image_description">התמונה של הבאדי שלך</string>
+    <string name="send_message_button_text">שלח הודעה</string>
+    <string name="send_video_button_text">שלח סרטון</string>
+    <string name="send_present_button_text">שלח מתנה</string>
+    <string name="send_email_button_text">שלח מייל</string>
 
     // Profile details page
     <string name="profile_details_name_label">שם:</string>

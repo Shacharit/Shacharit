@@ -50,7 +50,7 @@ public class BdayNotifierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 1. Iterate over all users.
-        //    1.1 If the user has a birthday, iterate over all of the user's buddies.
+        //    1.1 If the user has a birthday, iterate over all of the user's buddiesBasicInfo.
         //        1.1.1 Notify the user's buddy that the user has a birthday.
 
         // TODO(maiad): Make sure that we have a birthday table that contains the different presents
@@ -67,7 +67,7 @@ public class BdayNotifierServlet extends HttpServlet {
 //            extras["gift1"] = birthday_table.Gift1();
 //            extras["gift2"] = birthday_table.Gift2();
 //            extras["gift3"] = birthday_table.Gift3();
-//            for (buddy : buddies) {
+//            for (buddy : buddiesBasicInfo) {
 //                String token = buddy.Token();
 //                FcmMessenger.sendPushMessage(token, title, message, extras);
 //            }
