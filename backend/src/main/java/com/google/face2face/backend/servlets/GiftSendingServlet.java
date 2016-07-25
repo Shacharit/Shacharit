@@ -1,7 +1,7 @@
 package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.FcmMessenger;
-import com.google.face2face.backend.Gift;
+import com.google.face2face.backend.SentGift;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +27,7 @@ public class GiftSendingServlet extends HttpServlet {
     private DatabaseReference firebase;
 
     // Servlet members
-    private Map<String, Gift> mGiftsToSend = new HashMap<>();
+    private Map<String, SentGift> mGiftsToSend = new HashMap<>();
 
     // Constants:
     private String mNotificationTitle = "קיבלת מתנה";
@@ -59,7 +59,7 @@ public class GiftSendingServlet extends HttpServlet {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // Iterate over all gifts and extract unsent gifts
                 for (DataSnapshot ds : children) {
-                    Gift gift = ds.getValue(Gift.class);
+                    SentGift gift = ds.getValue(SentGift.class);
                     gift.key = ds.getKey();
                     String recipientUid = gift.recipient;
                     if ("false".equals(gift.sent)) {
@@ -93,8 +93,7 @@ public class GiftSendingServlet extends HttpServlet {
                         String userRegId = ds.child("reg_id").getValue().toString();
 
                         // Build Notification
-                        Gift gift = mGiftsToSend.get(userKey);
-                        String user_reg_id = userRegId;
+                        SentGift gift = mGiftsToSend.get(userKey);
                         String title = "You Recieved a gift!";
                         String message = "FUN :)";
                         Map<String, String> extras = new HashMap<>();
@@ -103,7 +102,7 @@ public class GiftSendingServlet extends HttpServlet {
 
                         // Send Notification
                         try {
-                            FcmMessenger.sendPushMessage(user_reg_id, title, message, extras);
+                            FcmMessenger.sendPushMessage(userRegId, title, message, extras);
                             // Mark gift sent
                             giftsDbRef.child(gift.key).child("sent").setValue("true");
                         } catch (IOException e) {

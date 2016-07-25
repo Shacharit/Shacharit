@@ -11,6 +11,8 @@ public class User {
     public ArrayList<String> otherDefs;
     public Map<String, List<String>> interests;
     public String regId;
+    public String gender;
+    public int age;
 
     public User(String uid) {
         this.uid = uid;
