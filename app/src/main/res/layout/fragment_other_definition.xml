@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/other_definition"
     tools:context=".OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -9,7 +10,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|bottom">
+        android:layout_gravity="center_horizontal|bottom"
+        android:id="@+id/other_definition_linear_layout">
 
         <TextView
             android:layout_width="fill_parent"
@@ -21,11 +23,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/scroll_view"
             android:layoutDirection="rtl">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/other_definition_inner_linear_layout">
                 <com.google.face2face.FlowLayout
                     android:id="@+id/flow_container"
                     android:layout_width="match_parent"

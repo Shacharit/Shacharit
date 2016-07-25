@@ -1,7 +1,7 @@
 package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.FcmMessenger;
-import com.google.face2face.backend.Gift;
+import com.google.face2face.backend.SentGift;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class GiftSendingServlet extends HttpServlet {
     private DatabaseReference firebase;
 
     // Servlet members
-    private Map<String, Gift> mGiftsToSend = new HashMap<>();
+    private Map<String, SentGift> mGiftsToSend = new HashMap<>();
 
     // Constants:
     private String mNotificationTitle = "קיבלת מתנה";
@@ -59,10 +61,10 @@ public class GiftSendingServlet extends HttpServlet {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // Iterate over all gifts and extract unsent gifts
                 for (DataSnapshot ds : children) {
-                    Gift gift = ds.getValue(Gift.class);
+                    SentGift gift = ds.getValue(SentGift.class);
                     gift.key = ds.getKey();
-                    String recipientUid = gift.recipient;
-                    if ("false".equals(gift.sent)) {
+                    String recipientUid = gift.recipient_id;
+                    if ("false".equals(gift.sent) && recipientUid != null) {
                         mGiftsToSend.put(recipientUid, gift);
                     }
                 }
@@ -90,22 +92,30 @@ public class GiftSendingServlet extends HttpServlet {
                         if (ds.child("reg_id").getValue() == null) {
                             continue;
                         }
-                        String userRegId = ds.child("reg_id").getValue().toString();
+                        //String userRegId = ds.child("reg_id").getValue().toString();
+                        String userRegId = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
 
                         // Build Notification
-                        Gift gift = mGiftsToSend.get(userKey);
-                        String user_reg_id = userRegId;
-                        String title = "You Recieved a gift!";
-                        String message = "FUN :)";
+                        SentGift gift = mGiftsToSend.get(userKey);
+                        String thoughtTitle = gift.gender.equals("male") ? "חושב עליך" :
+                                "חושבת עליך";
+                        String title =  gift.sender + " " + thoughtTitle;
+                        String message = gift.text;
                         Map<String, String> extras = new HashMap<>();
                         extras.put("event", gift.event);
                         extras.put("name", gift.name);
 
-                        // Send Notification
                         try {
-                            FcmMessenger.sendPushMessage(user_reg_id, title, message, extras);
+                            FcmMessenger.sendPushMessage(userRegId, title, message, extras);
                             // Mark gift sent
-                            giftsDbRef.child(gift.key).child("sent").setValue("true");
+                            DatabaseReference childRef = giftsDbRef.child(gift.key);
+                            childRef.child("sent").setValue("true");
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+                            Date date = new Date();
+
+                            childRef.child("date").setValue(formatter.format(date));
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

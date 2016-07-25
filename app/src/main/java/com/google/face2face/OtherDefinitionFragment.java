@@ -173,7 +173,7 @@ public class OtherDefinitionFragment extends Fragment {
     }
 
     ToggleButton createButton(ViewGroup container, String text) {
-        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+        LayoutInflater inflater = LayoutInflater.from(container.getContext());
         ToggleButton button = (ToggleButton) inflater.inflate(R.layout.button_pill, container, false);
         button.setTextOff(text);
         button.setTextOn(text);

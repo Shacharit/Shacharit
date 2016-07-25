@@ -76,8 +76,7 @@ public class NavigationActivity extends AppCompatActivity
         // Init the default fragment
         if (mRedirectToFillProfile) {
             displayView(R.id.nav_choose_other);
-        }
-        else {
+        } else if (savedInstanceState == null) {
             displayView(R.id.nav_default);
         }
 
@@ -106,6 +105,9 @@ public class NavigationActivity extends AppCompatActivity
         } else if (viewId == R.id.nav_choose_other) {
             fragment = new OtherDefinitionFragment();
             title  = getString(R.string.nav_choose_other);
+        } else if (viewId == R.id.nav_profile) {
+            fragment = new ProfileFragment();
+            title = getString(R.string.nav_profile);
         }
 
         // Set the fragment.

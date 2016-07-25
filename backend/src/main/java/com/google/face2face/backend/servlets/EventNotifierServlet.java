@@ -1,6 +1,7 @@
 package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.FcmMessenger;
+import com.google.face2face.backend.Gift;
 import com.google.face2face.backend.GiftEvent;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -71,14 +72,19 @@ public class EventNotifierServlet extends HttpServlet {
                     event.femaleText = event_ds.child("female text").getValue().toString();
                     event.description = event_ds.child("description").getValue().toString();
                     for (int i = 0; i < 3; i++) {
-                        event.gifts[i] = event_ds.child("gift" + (i +1)).child("text")
-                                .getValue().toString();
+                        Gift gift = new Gift();
+                        DataSnapshot gift_ds = event_ds.child("gift" + (i + 1));
+                        gift.cta = gift_ds.child("cta").getValue().toString();
+                        gift.text = gift_ds.child("text").getValue().toString();
+                        gift.type = gift_ds.child("type").getValue().toString();
+                        gift.url = gift_ds.child("url").getValue().toString();
+                        event.gifts[i] = gift;
                     }
 
 
                     System.out.println("Found event: " + eventName);
 
-                    for(DataSnapshot defs_ds : event_ds.child("event_definitions").getChildren()) {
+                    for (DataSnapshot defs_ds : event_ds.child("event_definitions").getChildren()) {
                         String definition = defs_ds.getKey();
                         if (!defsToEvents.containsKey(definition)) {
                             defsToEvents.put(definition, new ArrayList<GiftEvent>());
@@ -91,7 +97,7 @@ public class EventNotifierServlet extends HttpServlet {
                 firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot user_ds : dataSnapshot.getChildren()) {
+                        for (DataSnapshot user_ds : dataSnapshot.getChildren()) {
                             // Check if buddy has relevant events
                             Object displayName = user_ds.child("display_name").getValue();
 
@@ -109,8 +115,13 @@ public class EventNotifierServlet extends HttpServlet {
                             }
 
                             String buddyName = name.toString();
-                            String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
-                            for(DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
+                            DataSnapshot imageUrl = buddy_snapshot.child("image_url");
+
+                            Object gender = buddy_snapshot.child("gender").getValue();
+                            String buddyGender = gender != null ? gender.toString() : "male";
+                            String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
+                            String buddyToken = buddy_snapshot.child("reg_id").toString();
+                            for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                 String definition = ds_def.getValue().toString();
                                 if (!defsToEvents.containsKey(definition)) {
                                     continue;
@@ -126,17 +137,29 @@ public class EventNotifierServlet extends HttpServlet {
 
                                     Map<String, String> data = new HashMap<>();
 
+                                    //gift1: "type:<type>,url:<url>,text:<text>,cta:<cta>
                                     for (int i = 0; i < giftEvent.gifts.length; i++) {
-                                        data.put("gift" + (i+1), giftEvent.gifts[i]);
+                                        Gift gift = giftEvent.gifts[i];
+                                        data.put("gift" + (i + 1), "text:" + gift.text + "," +
+                                                "cta:" + gift.cta + "," + "url:"
+                                                + gift.url + "type:" + gift.type);
                                     }
+
+
+                                    String buddyId = buddy_snapshot.child("uid").getValue().toString();
                                     data.put("recipient", buddyName);
+                                    data.put("recipient_id", buddyId);
                                     data.put("username", username);
+                                    data.put("uid", user_ds.getKey());
                                     data.put("description", giftEvent.description);
                                     data.put("giveGifts", "");
+                                    data.put("event", giftEvent.name);
+                                    data.put("image_url", buddyPhoto);
+                                    data.put("gender", buddyGender);
 
                                     // Send description, event, recipient, username
                                     try {
-                                        FcmMessenger.sendPushMessage(buddyToken, message, title , data);
+                                        FcmMessenger.sendPushMessage(buddyToken, message, title, data);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
