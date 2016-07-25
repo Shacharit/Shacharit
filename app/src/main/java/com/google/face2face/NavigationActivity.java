@@ -76,8 +76,7 @@ public class NavigationActivity extends AppCompatActivity
         // Init the default fragment
         if (mRedirectToFillProfile) {
             displayView(R.id.nav_choose_other);
-        }
-        else {
+        } else if (savedInstanceState == null) {
             displayView(R.id.nav_default);
         }
 
@@ -101,7 +100,7 @@ public class NavigationActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         if (viewId == R.id.nav_default) {
-            fragment = new FirebaseContentFragment();
+            fragment = new DefaultFragment() ;
             title = getString(R.string.nav_default);
         } else if (viewId == R.id.nav_choose_other) {
             fragment = new OtherDefinitionFragment();
@@ -109,7 +108,11 @@ public class NavigationActivity extends AppCompatActivity
         } else if (viewId == R.id.nav_profile) {
             fragment = new ProfileFragment();
             title = getString(R.string.nav_profile);
+        }  else if (viewId == R.id.nav_who_am_I) {
+            fragment = new SelfDefinitionFragment();
+            title  = getString(R.string.nav_who_am_I);
         }
+
 
         // Set the fragment.
         if (fragment != null) {

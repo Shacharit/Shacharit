@@ -2,36 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/other_definition"
     tools:context=".OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+        android:id="@+id/fragment_self_definition_outer_linear_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|bottom"
-        android:id="@+id/other_definition_linear_layout">
+        android:layout_gravity="center_horizontal|bottom">
 
         <TextView
+            android:id="@+id/textViewOtherLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/otherLabel"
-            android:id="@+id/textViewOtherLabel"
+            android:text="@string/selfLabel"
             android:layout_gravity="top|start" />
 
         <ScrollView
+            android:id="@+id/fragment_self_definition_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/scroll_view"
             android:layoutDirection="rtl">
             <LinearLayout
+                android:id="@+id/fragment_self_definition_inner_linear_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/other_definition_inner_linear_layout">
+                android:layout_height="wrap_content">
                 <com.google.face2face.FlowLayout
-                    android:id="@+id/flow_container"
+                    android:id="@+id/fragment_self_definition_flow_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layoutDirection="rtl"
@@ -42,7 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="הבא"
-                    android:id="@+id/button3"
+                    android:id="@+id/fragment_self_definition_next_button"
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
         </ScrollView>

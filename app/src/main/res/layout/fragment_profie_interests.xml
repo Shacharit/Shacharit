@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/other_definition"
     tools:context=".OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,26 +9,23 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|bottom"
-        android:id="@+id/other_definition_linear_layout">
+        android:layout_gravity="center_horizontal|bottom">
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/otherLabel"
-            android:id="@+id/textViewOtherLabel"
+            android:text=""
+            android:id="@+id/interest_title_label"
             android:layout_gravity="top|start" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/scroll_view"
             android:layoutDirection="rtl">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/other_definition_inner_linear_layout">
+                android:layout_height="wrap_content">
                 <com.google.face2face.FlowLayout
                     android:id="@+id/flow_container"
                     android:layout_width="match_parent"
@@ -41,8 +37,8 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="הבא"
-                    android:id="@+id/button3"
+                    android:text="@string/save_button"
+                    android:id="@+id/profile_interests_save_button"
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
         </ScrollView>

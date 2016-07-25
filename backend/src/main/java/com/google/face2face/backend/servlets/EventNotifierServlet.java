@@ -74,10 +74,16 @@ public class EventNotifierServlet extends HttpServlet {
                     for (int i = 0; i < 3; i++) {
                         Gift gift = new Gift();
                         DataSnapshot gift_ds = event_ds.child("gift" + (i + 1));
-                        gift.cta = gift_ds.child("cta").getValue().toString();
-                        gift.text = gift_ds.child("text").getValue().toString();
-                        gift.type = gift_ds.child("type").getValue().toString();
-                        gift.url = gift_ds.child("url").getValue().toString();
+                        //gift.cta = gift_ds.child("cta").getValue().toString();
+                        //gift.text = gift_ds.child("text").getValue().toString();
+                        //gift.type = gift_ds.child("type").getValue().toString();
+                        //gift.url = gift_ds.child("url").getValue().toString();
+
+                        gift.cta = "קטע";
+                        gift.text = "הטקסט";
+                        gift.type = "text";
+                        gift.url = "";
+
                         event.gifts[i] = gift;
                     }
 
@@ -106,57 +112,68 @@ public class EventNotifierServlet extends HttpServlet {
                             }
 
                             String username = displayName.toString();
-                            DataSnapshot buddy_snapshot = user_ds.child("buddy");
-                            Object name = user_ds.child("display_name").getValue();
+                            DataSnapshot buddiesDs = user_ds.child("buddy");
 
-                            if (name == null) {
-                                // User has no name
-                                continue;
-                            }
+                            for (DataSnapshot buddy_snapshot : buddiesDs.getChildren()) {
+                                Object name = user_ds.child("display_name").getValue();
 
-                            String buddyName = name.toString();
-                            DataSnapshot imageUrl = buddy_snapshot.child("image_url");
-                            String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
-                            String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
-                            for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
-                                String definition = ds_def.getValue().toString();
-                                if (!defsToEvents.containsKey(definition)) {
+                                if (name == null) {
+                                    // User has no name
                                     continue;
                                 }
 
-                                List<GiftEvent> giftEvents = defsToEvents.get(definition);
+                                String buddyName = name.toString();
+                                Object imageUrl = buddy_snapshot.child("image_url").getValue();
 
-                                // name: <name>, cta: <cta>
-                                for (GiftEvent giftEvent : giftEvents) {
-                                    String title = "שלח לחבר מתנה";
-                                    String message = buddyName + " " + giftEvent.femaleText + " "
-                                            + giftEvent.name;
-
-                                    Map<String, String> data = new HashMap<>();
-
-                                    //gift1: "type:<type>,url:<url>,text:<text>,cta:<cta>
-                                    for (int i = 0; i < giftEvent.gifts.length; i++) {
-                                        Gift gift = giftEvent.gifts[i];
-                                        data.put("gift" + (i + 1), "text:" + gift.text + "," +
-                                                "cta:" + gift.cta + "," + "url:"
-                                                + gift.url + "type:" + gift.type);
+                                Object gender = buddy_snapshot.child("gender").getValue();
+                                String buddyGender = gender != null ? gender.toString() : "male";
+                                String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
+                                //String buddyToken = buddy_snapshot.child("reg_id").toString();
+                                String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
+                                for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
+                                    String definition = ds_def.getValue().toString();
+                                    if (!defsToEvents.containsKey(definition)) {
+                                        continue;
                                     }
 
-                                    data.put("recipient", buddyName);
-                                    data.put("username", username);
-                                    data.put("description", giftEvent.description);
-                                    data.put("giveGifts", "");
-                                    data.put("event", giftEvent.name);
-                                    data.put("image_url", buddyPhoto);
+                                    List<GiftEvent> giftEvents = defsToEvents.get(definition);
 
-                                    // Send description, event, recipient, username
-                                    try {
-                                        FcmMessenger.sendPushMessage(buddyToken, message, title, data);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    // name: <name>, cta: <cta>
+                                    for (GiftEvent giftEvent : giftEvents) {
+                                        String title = "שלח לחבר מתנה";
+                                        String message = buddyName + " " + giftEvent.femaleText + " "
+                                                + giftEvent.name;
+
+                                        Map<String, String> data = new HashMap<>();
+
+                                        //gift1: "type:<type>,url:<url>,text:<text>,cta:<cta>
+                                        for (int i = 0; i < giftEvent.gifts.length; i++) {
+                                            Gift gift = giftEvent.gifts[i];
+                                            data.put("gift" + (i + 1), "text:" + gift.text + "," +
+                                                    "cta:" + gift.cta + "," + "url:"
+                                                    + gift.url + "type:" + gift.type);
+                                        }
+
+
+                                        String buddyId = buddy_snapshot.child("uid").getValue().toString();
+                                        data.put("recipient", buddyName);
+                                        data.put("recipient_id", buddyId);
+                                        data.put("username", username);
+                                        data.put("uid", user_ds.getKey());
+                                        data.put("description", giftEvent.description);
+                                        data.put("giveGifts", "");
+                                        data.put("event", giftEvent.name);
+                                        data.put("image_url", buddyPhoto);
+                                        data.put("gender", buddyGender);
+
+                                        // Send description, event, recipient, username
+                                        try {
+                                            FcmMessenger.sendPushMessage(buddyToken, message, title, data);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-
                             }
                         }
                     }

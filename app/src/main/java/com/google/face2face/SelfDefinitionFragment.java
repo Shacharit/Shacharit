@@ -21,19 +21,19 @@ import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OtherDefinitionFragment#newInstance} factory method to
+ * Use the {@link SelfDefinitionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OtherDefinitionFragment extends Fragment {
+public class SelfDefinitionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final int NUM_OF_OTHER_DEFINITIONS = 1;
-    private static final String USERS = "users";
+    private static final int NUM_OF_SELF_DEFINITIONS = 3;
     private static final String OTHER_DEFINITIONS = "other-definitions";
     private static final String SELF_DEFINITIONS = "self-definitions";
+    private static final String USERS = "users";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -42,7 +42,7 @@ public class OtherDefinitionFragment extends Fragment {
     private int nChecked = 0;
     private DatabaseReference mFirebaseDatabaseReference;
 
-    public OtherDefinitionFragment() {
+    public SelfDefinitionFragment() {
         // Required empty public constructor
     }
 
@@ -80,41 +80,37 @@ public class OtherDefinitionFragment extends Fragment {
         return textView;
     }
 
-    private AlertDialog getAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.other_definition_pick_alert_message)
-                .setTitle(R.string.other_definition_pick_alert_title)
-                .setNeutralButton(R.string.other_definition_pick_alert_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-        return builder.create();
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_other_definition, container, false);
-        final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
-        flowContainer.setMaxItems(NUM_OF_OTHER_DEFINITIONS);
+        View view = inflater.inflate(R.layout.fragment_self_definition, container, false);
+        final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.fragment_self_definition_flow_container);
+        flowContainer.setMaxItems(NUM_OF_SELF_DEFINITIONS);
 
         // Add onClick binding to 'Next' button.
-        final Button button = (Button) view.findViewById(R.id.button3);
+        final Button button = (Button) view.findViewById(R.id.fragment_self_definition_next_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final String[] pickedDefinitions = flowContainer.getCheckedNames();
-                if (pickedDefinitions.length != NUM_OF_OTHER_DEFINITIONS) {
-                    // Show alert dialog.
-                    AlertDialog dialog = getAlertDialog();
+                if (pickedDefinitions.length != NUM_OF_SELF_DEFINITIONS) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage(R.string.self_definition_pick_alert_message)
+                            .setTitle(R.string.self_definition_pick_alert_title)
+                            .setNeutralButton(R.string.self_definition_pick_alert_button, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
                     dialog.show();
                 } else { // This is a valid pick of definitions.
                     // Remove previous definitions and add new ones.
                     mFirebaseDatabaseReference
                             .child(USERS)
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .child(OTHER_DEFINITIONS)
+                            .child(SELF_DEFINITIONS)
                             .removeValue(new DatabaseReference.CompletionListener() {
                                 @Override
                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -122,13 +118,11 @@ public class OtherDefinitionFragment extends Fragment {
                                         mFirebaseDatabaseReference
                                                 .child(USERS)
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                .child(OTHER_DEFINITIONS)
+                                                .child(SELF_DEFINITIONS)
                                                 .push().setValue(definition);
                                     }
                                 }
                             });
-                    // Change fragment to self definition.
-                    ((NavigationActivity) getActivity()).displayView(R.id.nav_who_am_I);
                 }
 
             }
@@ -148,7 +142,7 @@ public class OtherDefinitionFragment extends Fragment {
                 // Check previously chosen definitions.
                 mFirebaseDatabaseReference.child(USERS)
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(OTHER_DEFINITIONS)
+                        .child(SELF_DEFINITIONS)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -169,11 +163,12 @@ public class OtherDefinitionFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
     ToggleButton createButton(ViewGroup container, String text) {
-        LayoutInflater inflater = LayoutInflater.from(container.getContext());
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
         ToggleButton button = (ToggleButton) inflater.inflate(R.layout.button_pill, container, false);
         button.setTextOff(text);
         button.setTextOn(text);

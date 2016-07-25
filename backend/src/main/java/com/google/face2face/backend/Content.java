@@ -24,6 +24,8 @@ public class Content implements Serializable {
 //        notification.put("badge", "0");
         data.put("title", title);
         data.put("message", message);
+        data.put("action", "send_email");
+        data.put("email", "mikofink@gmail.com");
 
         for (Map.Entry<String, String> entry : extraData.entrySet()) {
             data.put(entry.getKey(), entry.getValue());
