@@ -31,4 +31,10 @@
     <string name="self_definition_pick_alert_message">אנא בחר שלוש הגדרות</string>
     <string name="self_definition_pick_alert_title">הגדרה עצמית</string>
     <string name="self_definition_pick_alert_button">אישור</string>
+
+    // Profile details page
+    <string name="profile_details_first_name_label">שם פרטי:</string>
+    <string name="profile_details_last_name_label">שם משפחה:</string>
+    <string name="profile_details_first_name_hint">שם פרטי</string>
+    <string name="profile_details_last_name_hint">שם משפחה</string>
 </resources>
