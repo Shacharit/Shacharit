@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -34,6 +35,8 @@ public class OtherDefinitionFragment extends Fragment {
     private static final String USERS = "users";
     private static final String OTHER_DEFINITIONS = "other-definitions";
     private static final String SELF_DEFINITIONS = "self-definitions";
+
+    private ProgressBar mProgressBar;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,6 +100,7 @@ public class OtherDefinitionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_other_definition, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
         flowContainer.setMaxItems(NUM_OF_OTHER_DEFINITIONS);
 
@@ -144,6 +148,7 @@ public class OtherDefinitionFragment extends Fragment {
                     ToggleButton button = createButton(container, data.getKey());
                     flowContainer.addItem(button);
                 }
+                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
                 // Check previously chosen definitions.
                 mFirebaseDatabaseReference.child(USERS)

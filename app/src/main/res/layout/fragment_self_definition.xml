@@ -18,17 +18,31 @@
             android:layout_height="wrap_content"
             android:text="@string/selfLabel"
             android:layout_gravity="top|start" />
-
-        <ScrollView
-            android:id="@+id/fragment_self_definition_scroll_view"
+        <RelativeLayout
+            android:id="@+id/fragment_self_definition_inner_linear_layout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layoutDirection="rtl">
-            <LinearLayout
-                android:id="@+id/fragment_self_definition_inner_linear_layout"
-                android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:text="הבא"
+                android:id="@+id/fragment_self_definition_next_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true"/>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLargeInverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+            <ScrollView
+                android:id="@+id/fragment_self_definition_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layoutDirection="rtl"
+                android:layout_above="@id/fragment_self_definition_next_button">
                 <com.google.face2face.FlowLayout
                     android:id="@+id/fragment_self_definition_flow_container"
                     android:layout_width="match_parent"
@@ -36,15 +50,8 @@
                     android:layoutDirection="rtl"
                     android:textDirection="rtl"
                     android:padding="20dp"/>
-                <!--TODO make button always visible on long screens.-->
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="הבא"
-                    android:id="@+id/fragment_self_definition_next_button"
-                    android:layout_gravity="center_horizontal" />
-            </LinearLayout>
-        </ScrollView>
+            </ScrollView>
+        </RelativeLayout>
 
     </LinearLayout>
 </FrameLayout>
