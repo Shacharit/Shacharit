@@ -4,6 +4,7 @@ import com.google.face2face.backend.User;
 import com.google.face2face.backend.utils.ListUtils;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,13 +17,17 @@ public class Matcher {
 
         for (int i = 0; i < users.size(); i++) {
             for (int j = i + 1; j < users.size(); j++) {
-                List<String> intersection = listUtils.intersection(users.get(i).otherDefs, users.get(j).selfDefs);
-                if (intersection.size() == 0) continue;
+                User firstUser = users.get(i);
+                User secondUser = users.get(j);
+                List<String> intersection = listUtils.intersection(firstUser.otherDefs, secondUser.selfDefs);
 
-                double score = interestsScore(users.get(i).interests.get("movies"),
-                        users.get(j).interests.get("movies"));
-                score += interestsScore(users.get(i).interests.get("hobbies"),
-                        users.get(j).interests.get("hobbies"));
+                if (intersection.size() == 0) continue;
+                if(!firstUser.gender.equalsIgnoreCase(secondUser.gender)) continue;
+
+                double score = interestsScore(firstUser.interests.get("movies"),
+                        secondUser.interests.get("movies"));
+                score += interestsScore(firstUser.interests.get("hobbies"),
+                        secondUser.interests.get("hobbies"));
                 scoreMatrix[i][j] = score;
                 scoreMatrix[j][i] = score;
             }
@@ -45,13 +50,24 @@ public class Matcher {
         int userWithMaxMatch = -1;
         for (int i = 0; i < scoreMatrix.length; i++) {
             if (i == userIndex) continue;
-            double v = scoreMatrix[i][userIndex];
-            if (v > maxMatch && v > 2) {
-                maxMatch = v;
+            double currentValue = scoreMatrix[userIndex][i];
+            if (currentValue > maxMatch && currentValue > 2) {
+                maxMatch = currentValue;
                 userWithMaxMatch = i;
             }
         }
         return userWithMaxMatch;
     }
 
+    public List<Integer> getMatchsForUser(int userIndex, double[][] scoreMatrix) {
+        List<Integer> matchedUsersIndices = new ArrayList<>();
+        for (int i = 0; i < scoreMatrix.length; i++) {
+            if (i == userIndex) continue;
+            double currentValue = scoreMatrix[userIndex][i];
+            if (currentValue > 2) {
+                matchedUsersIndices.add(i);
+            }
+        }
+        return matchedUsersIndices;
+    }
 }
