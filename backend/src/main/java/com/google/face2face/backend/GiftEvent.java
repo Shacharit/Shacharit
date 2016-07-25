@@ -5,6 +5,7 @@ public class GiftEvent {
     public String maleText;
     public String femaleText;
     public String[] gifts = new String[3];
+    public String description;
 
     public GiftEvent(String name) {
         this.name = name;

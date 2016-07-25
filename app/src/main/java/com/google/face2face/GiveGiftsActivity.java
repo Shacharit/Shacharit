@@ -33,14 +33,14 @@ public class GiveGiftsActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         button__sendGift = (Button) findViewById(R.id.button_sendGift);
         listView_gifts = (ListView) findViewById(R.id.listView_gifts);
-        gifts = new ArrayList<String>();
-        selectedGift = new String();
+        gifts = new ArrayList<>();
+        selectedGift = "";
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         giftToSend = new Gift();
         for (String key : data.keySet()) {
             if (key.contains("gift"))
                 gifts.add((String)data.get(key));
-            else if (key.equals("Recipient"))
+            else if (key.equals("recipient"))
                 giftToSend.recipient = (String)data.get(key);
             else if (key.equals("username"))
                 giftToSend.sender = (String)data.get(key);
@@ -48,7 +48,7 @@ public class GiveGiftsActivity extends AppCompatActivity {
                 giftToSend.event = (String)data.get(key);
         }
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, gifts);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gifts);
 
         listView_gifts.setAdapter(adapter);
         adapter.notifyDataSetChanged();

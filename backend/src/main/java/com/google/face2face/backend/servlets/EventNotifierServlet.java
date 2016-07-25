@@ -69,6 +69,12 @@ public class EventNotifierServlet extends HttpServlet {
                     String eventName = event_ds.child("event name").getValue().toString();
                     GiftEvent event = new GiftEvent(eventName);
                     event.femaleText = event_ds.child("female text").getValue().toString();
+                    event.description = event_ds.child("description").getValue().toString();
+                    for (int i = 0; i < 3; i++) {
+                        event.gifts[i] = event_ds.child("gift" + (i +1)).child("text")
+                                .getValue().toString();
+                    }
+
 
                     System.out.println("Found event: " + eventName);
 
@@ -87,6 +93,13 @@ public class EventNotifierServlet extends HttpServlet {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for(DataSnapshot user_ds : dataSnapshot.getChildren()) {
                             // Check if buddy has relevant events
+                            Object displayName = user_ds.child("display_name").getValue();
+
+                            if (displayName == null) {
+                                continue;
+                            }
+
+                            String username = displayName.toString();
                             DataSnapshot buddy_snapshot = user_ds.child("buddy");
                             Object name = user_ds.child("display_name").getValue();
 
@@ -105,18 +118,24 @@ public class EventNotifierServlet extends HttpServlet {
 
                                 List<GiftEvent> giftEvents = defsToEvents.get(definition);
 
+                                // name: <name>, cta: <cta>
                                 for (GiftEvent giftEvent : giftEvents) {
                                     String title = "שלח לחבר מתנה";
                                     String message = giftEvent.name + " " + giftEvent.femaleText + " " + buddyName;
 
-                                    Map<String, String> giftNames = new HashMap<>();
+                                    Map<String, String> data = new HashMap<>();
 
                                     for (int i = 0; i < giftEvent.gifts.length; i++) {
-                                        giftNames.put("gift" + i, giftEvent.gifts[i]);
+                                        data.put("gift" + (i+1), giftEvent.gifts[i]);
                                     }
+                                    data.put("recipient", buddyName);
+                                    data.put("username", username);
+                                    data.put("description", giftEvent.description);
+                                    data.put("giveGifts", "");
 
+                                    // Send description, event, recipient, username
                                     try {
-                                        FcmMessenger.sendPushMessage(buddyToken, message, title , giftNames);
+                                        FcmMessenger.sendPushMessage(buddyToken, message, title , data);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
