@@ -1,30 +1,16 @@
 package com.google.face2face;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.face2face.service.VolleySingleton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 public class GiveGiftsActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabaseReference;
@@ -63,12 +49,12 @@ public class GiveGiftsActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         Gift gift = populateGift(data);
 
-        NetworkImageView buddyImg = (NetworkImageView) findViewById(R.id.buddyImg);
+        NetworkImageView buddyImg = (NetworkImageView) findViewById(R.id.buddy_image);
         buddyImg.setImageUrl(data.getString("image_url"),
                 VolleySingleton.getInstance(this.getApplicationContext()).getImageLoader());
 
-        ((TextView) findViewById(R.id.buddyName)).setText(gift.recipient);
-        ((TextView) findViewById(R.id.event)).setText(gift.event);
+        ((TextView) findViewById(R.id.buddy_name)).setText(gift.recipient);
+        ((TextView) findViewById(R.id.title)).setText(gift.event);
         ((TextView) findViewById(R.id.descriptor)).setText(data.getString("description"));
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGiveGifts);
