@@ -47,17 +47,20 @@ public class ShareEmailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final DatabaseReference shareRequestsDbRef = firebase.child("share_requests");
 
-        // Extract all gifts
-        shareRequestsDbRef.orderByChild("handled").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
+        // Extract all share requests.
+        shareRequestsDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     // TODO: Use ds.getValue(ShareRequest.class)
+                    if (ds.child("handled").getValue().equals("true")) {
+                        continue;
+                    }
                     ShareRequest request = new ShareRequest();
                     request.key = ds.getKey();
                     request.shareeId = ds.child("sharee_id").getValue().toString();
                     request.sharerId = ds.child("sharer_id").getValue().toString();
-                    request.handled = (Boolean) ds.child("handled").getValue();
+                    request.handled = ds.child("handled").getValue().equals("true");
                     doShare(request, shareRequestsDbRef);
                 }
             }
