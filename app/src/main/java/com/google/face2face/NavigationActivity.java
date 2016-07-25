@@ -108,7 +108,11 @@ public class NavigationActivity extends AppCompatActivity
         } else if (viewId == R.id.nav_profile) {
             fragment = new ProfileFragment();
             title = getString(R.string.nav_profile);
+        }  else if (viewId == R.id.nav_who_am_I) {
+            fragment = new SelfDefinitionFragment();
+            title  = getString(R.string.nav_who_am_I);
         }
+
 
         // Set the fragment.
         if (fragment != null) {
