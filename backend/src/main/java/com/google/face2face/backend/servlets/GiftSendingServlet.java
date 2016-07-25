@@ -94,7 +94,7 @@ public class GiftSendingServlet extends HttpServlet {
                             continue;
                         }
                         //String userRegId = ds.child("reg_id").getValue().toString();
-                        String userRegId = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
+                        String userRegId = "dMGFRFCiywo:APA91bHvrQKrIqeF98M5MSNVhoIyRcXFiS6UqGWJgLMyQebUOzJXp43y3XafBx6Ip04ytseng6a7VakoosZD8OMpfce-w2q0qf9jjku8e5aNarw5ZYqLNthzN4eDitEaAXD8ZvR24FE4";
 
                         // Build Notification
                         SentGift gift = mGiftsToSend.get(userKey);
