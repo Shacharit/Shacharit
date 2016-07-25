@@ -19,9 +19,9 @@ public class GiveGiftsActivity extends AppCompatActivity {
     private TextView buddyName;
     private TextView title;
     private TextView descriptor;
-    private Button sendTextButton;
-    private Button sendVideoButton;
-    private Button sendGiftButton;
+    private Button send_text_button;
+    private Button send_video_button;
+    private Button send_gift_button;
 
     /*
     Gift structure -
@@ -61,7 +61,7 @@ public class GiveGiftsActivity extends AppCompatActivity {
         LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGiveGifts);
         for (String key : data.keySet()) {
             if (key.contains("gift")) {
-                Button button = (Button) LayoutInflater.from(this).inflate(R.layout.give_gift_button, ll).findViewById(R.id.sendMessageButton);
+                Button button = (Button) LayoutInflater.from(this).inflate(R.layout.give_gift_button, ll).findViewById(R.id.send_message_button);
                 parseGift(button, data.getString(key), gift);
             }
         }
