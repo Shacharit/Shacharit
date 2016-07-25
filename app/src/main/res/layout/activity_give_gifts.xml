@@ -14,13 +14,10 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/emailButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Whatsapp" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Facebook" />
+            android:text="Email" />
     </LinearLayout>
 
     <ScrollView
@@ -32,65 +29,60 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/buddyImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
-                android:id="@+id/buddyImg"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="63dp"
+                android:contentDescription="@string/buddy_image_description"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/profile"/>
 
             <TextView
+                android:id="@+id/buddyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Buddy Name"
-                android:id="@+id/buddyName"
-                android:layout_below="@id/buddyImg"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="52dp" />
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="פסח בעוד שבוע!"
-                android:id="@+id/event"
-                android:layout_below="@id/buddyName"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="52dp" />
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#000000" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="בפסח יצאו בני ישארל ממצרים..."
                 android:id="@+id/descriptor"
-                android:layout_below="@id/event"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="52dp" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="שלח הודעה"
-                android:id="@+id/sendMessage"
-                android:layout_below="@id/descriptor"/>
+                android:text="בפסח יצאו בני ישראל ממצרים..."
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#000000" />
 
             <Button
+                android:id="@+id/sendMessageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="שלח סרטון"
-                android:id="@+id/sendVideo"
-                android:layout_below="@id/sendMessage"/>
+                android:text="שלח הודעה" />
 
             <Button
+                android:id="@+id/sendVideoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="שלח מתנה"
-                android:id="@+id/sendGift"
-                android:layout_below="@id/sendVideo"/>
+                android:text="שלח סרטון" />
+
+            <Button
+                android:id="@+id/sendGiftButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="שלח מתנה" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

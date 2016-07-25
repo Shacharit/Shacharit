@@ -100,7 +100,7 @@ public class NavigationActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         if (viewId == R.id.nav_default) {
-            fragment = new FirebaseContentFragment();
+            fragment = new DefaultFragment() ;
             title = getString(R.string.nav_default);
         } else if (viewId == R.id.nav_choose_other) {
             fragment = new OtherDefinitionFragment();
