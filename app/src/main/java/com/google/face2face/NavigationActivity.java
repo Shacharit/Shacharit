@@ -113,7 +113,6 @@ public class NavigationActivity extends AppCompatActivity
             title  = getString(R.string.nav_who_am_I);
         }
 
-
         // Set the fragment.
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

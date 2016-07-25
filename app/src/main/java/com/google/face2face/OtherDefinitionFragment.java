@@ -151,7 +151,6 @@ public class OtherDefinitionFragment extends Fragment {
                         // Create button for each definition.
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             oldDefinitions.put(data.getValue().toString(), null);
-                            //flowContainer.checkItemByName(data.getValue().toString());
                         }
                         mFirebaseDatabaseReference.child(SELF_DEFINITIONS).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -159,7 +158,7 @@ public class OtherDefinitionFragment extends Fragment {
                                 // Create button for each definition.
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                                     ToggleButton button = createButton(container, data.getKey());
-                                    flowContainer.addItemAndCheck(button, oldDefinitions.containsKey(data.getKey()));
+                                    flowContainer.addItem(button, oldDefinitions.containsKey(data.getKey()));
                                 }
                                 mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                             }

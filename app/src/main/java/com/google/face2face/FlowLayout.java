@@ -138,15 +138,11 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
         this.maxItems = maxItems;
     }
 
-    public void addItemAndCheck(ToggleButton button, boolean isChecked) {
+    public void addItem(ToggleButton button, boolean isChecked) {
         if (isChecked) {
             button.setChecked(true);
             nChecked++;
         }
-        addItem(button);
-    }
-
-    public void addItem(ToggleButton button) {
         this.addView(button,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
