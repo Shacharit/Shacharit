@@ -115,6 +115,8 @@ public class EventNotifierServlet extends HttpServlet {
                             }
 
                             String buddyName = name.toString();
+                            DataSnapshot imageUrl = buddy_snapshot.child("image_url");
+                            String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
                             String buddyToken = "fmRZ6KFsuYI:APA91bHbYkBJ3GizRmOKp88Fc4O62ke2WaQJAfS1JsnwDkDcZ37NAvAy1ZK9yPJyt56o9fb3tkb_PWG4zr2F3WGq11VwsW4FWARWfSeIYKwMHZ-Wd12bbdWffRvdvsjpymkhEzAcqHME";
                             for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                 String definition = ds_def.getValue().toString();
@@ -145,6 +147,7 @@ public class EventNotifierServlet extends HttpServlet {
                                     data.put("description", giftEvent.description);
                                     data.put("giveGifts", "");
                                     data.put("event", giftEvent.name);
+                                    data.put("image_url", buddyPhoto);
 
                                     // Send description, event, recipient, username
                                     try {
