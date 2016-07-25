@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -23,6 +24,14 @@ public class DefaultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.default_screen, container, false);
+        View view = inflater.inflate(R.layout.default_screen, container, false);
+
+        final Button button = (Button) view.findViewById(R.id.default_screen_next_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ((NavigationActivity) getActivity()).displayView(R.id.nav_choose_other);}
+        });
+
+        return view;
     }
 }

@@ -155,7 +155,7 @@ public class SignInActivity extends AppCompatActivity implements
         }
     }
 
-    private void addUserInfo(GoogleSignInAccount acct) {
+    private void addUserInfo(final GoogleSignInAccount acct) {
         String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString("push_token", null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference user = mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid());
@@ -163,7 +163,6 @@ public class SignInActivity extends AppCompatActivity implements
         if (token != null) {
             user.child("reg_id").setValue(token);
         }
-
         Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
             @Override
             public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
@@ -183,8 +182,14 @@ public class SignInActivity extends AppCompatActivity implements
                         break;
                 }
                 user.child(Constants.DISPLAY_NAME).setValue(person.getDisplayName());
+                user.child(Constants.EMAIL_ADDRESS).setValue(acct.getEmail());
+                user.child(Constants.BIRTHDAY).setValue(person.getBirthday());
                 if (person.getImage().hasUrl()) {
-                    user.child(Constants.IMAGE_URL).setValue(person.getImage().getUrl());
+                    String imageUrl = person.getImage().getUrl();
+                    if (imageUrl.matches(".*sz=50$")) {
+                        imageUrl = imageUrl.substring(0, imageUrl.length() - 2) + "256";
+                    }
+                    user.child(Constants.IMAGE_URL).setValue(imageUrl);
                 }
                 buffer.release();
             }

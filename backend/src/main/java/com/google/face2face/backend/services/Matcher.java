@@ -22,6 +22,8 @@ public class Matcher {
                 List<String> intersection = listUtils.intersection(firstUser.otherDefs, secondUser.selfDefs);
 
                 if (intersection.size() == 0) continue;
+                // TODO: Decide on whether other-gendered users can match male/female-gendered users
+                //       and if so change the following line.
                 if(!firstUser.gender.equalsIgnoreCase(secondUser.gender)) continue;
 
                 double score = interestsScore(firstUser.interests.get("movies"),
