@@ -1,8 +1,6 @@
 package com.google.face2face;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,17 +99,7 @@ public class SelfDefinitionFragment extends Fragment {
             public void onClick(View v) {
                 final String[] pickedDefinitions = flowContainer.getCheckedNames();
                 if (pickedDefinitions.length != NUM_OF_SELF_DEFINITIONS) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(R.string.self_definition_pick_alert_message)
-                            .setTitle(R.string.self_definition_pick_alert_title)
-                            .setNeutralButton(R.string.self_definition_pick_alert_button, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+                    Toast.makeText(getContext(), R.string.self_definition_pick_alert_message, Toast.LENGTH_SHORT).show();
                 } else { // This is a valid pick of definitions.
                     // Remove previous definitions and add new ones.
                     mFirebaseDatabaseReference
