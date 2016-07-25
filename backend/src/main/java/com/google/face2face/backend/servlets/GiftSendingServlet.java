@@ -32,8 +32,8 @@ public class GiftSendingServlet extends HttpServlet {
     private Map<String, SentGift> mGiftsToSend = new HashMap<>();
 
     // Constants:
-    private String mNotificationTitle = "קיבלת מתנה";
-    private String mNotificationMessage = "";
+    private static final String mNotificationTitle = "קיבלת מתנה";
+    private static final String mNotificationMessage = "";
 
 
     @Override
@@ -54,6 +54,7 @@ public class GiftSendingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final DatabaseReference giftsDbRef = firebase.child("sent-gifts");
 
+        // TODO: Change this (and others?) to be query-based like ShareEmailServlet.
         // Extract all gifts
         giftsDbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -104,6 +105,8 @@ public class GiftSendingServlet extends HttpServlet {
                         Map<String, String> extras = new HashMap<>();
                         extras.put("event", gift.event);
                         extras.put("name", gift.name);
+                        extras.put("action", "receive_gift");
+                        extras.put("foobaz", gift.recipient);
 
                         try {
                             FcmMessenger.sendPushMessage(userRegId, title, message, extras);

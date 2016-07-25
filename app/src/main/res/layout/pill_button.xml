@@ -7,6 +7,6 @@
     android:padding="10dp"
     android:layout_margin="5dp"
     android:textColor="#ff000000"
-    android:background="@drawable/round_button">
+    android:background="@drawable/oval_button">
 
 </Button>

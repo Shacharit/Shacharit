@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SelfDefinitionFragment#newInstance} factory method to
@@ -134,41 +137,39 @@ public class SelfDefinitionFragment extends Fragment {
         });
 
         // TODO: move to one snapshot instead of two snapshots.
-        // Add definitions buttons.
-        mFirebaseDatabaseReference.child(SELF_DEFINITIONS).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Create button for each definition.
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    ToggleButton button = createButton(container, data.getKey());
-                    flowContainer.addItem(button);
-                }
-                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-
-                // Check previously chosen definitions.
-                mFirebaseDatabaseReference.child(USERS)
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(SELF_DEFINITIONS)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+        final Map<String, String> oldDefinitions = new HashMap<String, String>();
+        mFirebaseDatabaseReference.child(USERS)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(SELF_DEFINITIONS)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Create button for each definition.
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            oldDefinitions.put(data.getValue().toString(), null);
+                        }
+                        mFirebaseDatabaseReference.child(SELF_DEFINITIONS).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 // Create button for each definition.
                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                    flowContainer.checkItemByName(data.getValue().toString());
+                                    ToggleButton button = createButton(container, data.getKey());
+                                    flowContainer.addItem(button, oldDefinitions.containsKey(data.getKey()));
                                 }
+                                mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                             }
+
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
 
                             }
                         });
-            }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+                    }
+                });
 
         return view;
     }

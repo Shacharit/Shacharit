@@ -63,7 +63,7 @@ public class F2FMessagingService extends FirebaseMessagingService {
                 .setContentText(data.get("message"))
                 .setSmallIcon(R.mipmap.ic_app_small)
                 .setLargeIcon(img)
-                .setContentIntent(PendingIntent.getActivity(this, 0, intent, 0))
+                .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT))
                 .setAutoCancel(true);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
