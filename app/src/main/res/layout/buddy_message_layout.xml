@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buddy_message_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+    <ImageView
+        android:id="@+id/buddy_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/buddy_image_description"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/profile"/>
+
+    <TextView
+        android:id="@+id/buddy_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="ספיידרמן"
+        android:textSize="16sp"
+        android:textColor="#666666" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="10sp"
+        android:text="יום הזיכרון לשואה והגבורה"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/descriptor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="4sp"
+        android:text="יום הזיכרון לשואה ולגבורה, מוקדש להתייחדות עם זכר השואה שהמיטו הנאצים ועוזריהם על העם היהודי, ברוצחם שישה מיליון יהודים, ועם זכר הגבורה והמרד בימים ההם. ישראלים רבים נוהגים להשתתף בטקסי זיכרון פרטיים וקהילתיים"
+        android:textSize="14sp"
+        android:textColor="#666666" />
+
+</LinearLayout>
