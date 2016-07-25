@@ -1,5 +1,7 @@
 package com.google.face2face;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * Created by ndovrat on 7/24/16.
  */
@@ -13,6 +15,7 @@ public class Gift {
 
     public Gift() {
         this.sent = "false";
+        this.sender = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     }
 

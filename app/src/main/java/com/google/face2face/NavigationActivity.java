@@ -59,6 +59,13 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
             return;
         }
+        if (getIntent().getStringExtra("receiveGift") != null) {
+            Intent intent = new Intent(this, ReceiveGiftActivity.class);
+            intent.putExtras(getIntent().getExtras());
+            startActivity(intent);
+            return;
+        }
+
         if ("RedirectToFillProfile".equals(getIntent().getStringExtra("mode"))) {
             mRedirectToFillProfile = true;
         }
