@@ -115,6 +115,8 @@ public class EventNotifierServlet extends HttpServlet {
                                     continue;
                                 }
 
+                                String userGender = user_ds.child("gender").getValue().toString();
+                                String userImageUrl = user_ds.child("image_url").getValue().toString();
                                 String buddyName = name.toString();
                                 Object imageUrl = buddy_snapshot.child("image_url").getValue();
 
@@ -150,15 +152,17 @@ public class EventNotifierServlet extends HttpServlet {
 
 
                                         String buddyId = buddy_snapshot.child("uid").getValue().toString();
-                                        data.put("recipient", buddyName);
-                                        data.put("recipient_id", buddyId);
-                                        data.put("username", username);
-                                        data.put("uid", user_ds.getKey());
-                                        data.put("description", giftEvent.description);
+                                        data.put("senderName", username);
+                                        data.put("senderImageUrl", userImageUrl);
+                                        data.put("recipientImageUrl", buddyPhoto);
+                                        data.put("recipientId", buddyId);
+                                        data.put("recipientName", buddyName);
+                                        data.put("eventText", giftEvent.description);
                                         data.put("action", "give_gift");
-                                        data.put("event", giftEvent.name);
-                                        data.put("image_url", buddyPhoto);
-                                        data.put("gender", buddyGender);
+                                        data.put("eventTitle", giftEvent.name);
+                                        data.put("recipientGender", buddyGender);
+                                        data.put("senderGender", userGender);
+
 
                                         // Send description, event, recipient, username
                                         try {

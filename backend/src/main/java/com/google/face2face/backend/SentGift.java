@@ -21,7 +21,7 @@ public class SentGift {
     public String eventTitle;
     public String eventText;
     public String cta;
-    public String sender_id;
     public String senderGender;
+    public String recipientGender;
     public String key;
 }
