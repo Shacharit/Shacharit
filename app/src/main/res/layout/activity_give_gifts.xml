@@ -35,50 +35,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/buddyImg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/buddy_image_description"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/profile"/>
-
-            <TextView
-                android:id="@+id/buddyName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="ספיידרמן"
-                android:textSize="16sp"
-                android:textColor="#666666" />
-
-            <TextView
-                android:id="@+id/event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="יום הזיכרון לשואה והגבורה"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/descriptor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="יום הזיכרון לשואה ולגבורה, מוקדש להתייחדות עם זכר השואה שהמיטו הנאצים ועוזריהם על העם היהודי, ברוצחם שישה מיליון יהודים, ועם זכר הגבורה והמרד בימים ההם. ישראלים רבים נוהגים להשתתף בטקסי זיכרון פרטיים וקהילתיים"
-                android:textSize="14sp"
-                android:textColor="#666666" />
+            <include layout="@layout/buddy_message_layout"/>
 
             <Button
                 android:id="@+id/sendMessageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10sp"
                 android:text="שלח הודעה"
-                android:background="@drawable/rectangle_button"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:background="@drawable/rectangle_button" />
 
             <Button
                 android:id="@+id/sendVideoButton"
