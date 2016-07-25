@@ -18,6 +18,8 @@
             android:layout_height="wrap_content"
             android:text="@string/otherLabel"
             android:id="@+id/textViewOtherLabel"
+            android:gravity="center"
+            android:textSize = "20dp"
             android:layout_gravity="top|start" />
 
         <RelativeLayout

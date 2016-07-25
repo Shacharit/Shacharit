@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|bottom">
-
         <TextView
             android:id="@+id/textViewOtherLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/selfLabel"
+            android:gravity="center"
+            android:textSize = "20dp"
             android:layout_gravity="top|start" />
         <RelativeLayout
             android:id="@+id/fragment_self_definition_inner_linear_layout"
