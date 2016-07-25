@@ -39,6 +39,14 @@
     <string name="self_definition_pick_alert_title">בחירת האחר</string>
     <string name="self_definition_pick_alert_button">אישור</string>
 
+    // Profile interests
+    <string name="tv_shows_title">תוכניות טלויזיה אהובות</string>
+    <string name="hobbies_title">תחביבים</string>
+    <string name="save_button">שמור</string>
+
+    // Activities
+    <string name="buddy_image_description">התמונה של הבאדי שלך</string>
+
     // Profile details page
     <string name="profile_details_name_label">שם:</string>
     <string name="profile_details_name_hint">שם</string>
