@@ -15,6 +15,6 @@ public class ReceiveGiftActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.buddy_name);
 
         textView.setText("username " + data.get("foobaz") + "\n" + data.get("name")
-        + "\nfor event " + data.get("event"));
+        + "\nfor eventTitle " + data.get("eventTitle"));
     }
 }

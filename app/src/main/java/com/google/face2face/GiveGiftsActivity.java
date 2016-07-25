@@ -29,84 +29,107 @@ public class GiveGiftsActivity extends AppCompatActivity {
         if (buddyImg == null) {
             return;
         }
-        buddyImg.setImageUrl(data.getString("image_url"),
+        buddyImg.setImageUrl(gift.recipientImageUrl,
                 VolleySingleton.getInstance(this.getApplicationContext()).getImageLoader());
 
         TextView buddy_name = (TextView) findViewById(R.id.buddy_name);
         assert buddy_name != null;
-        buddy_name.setText(gift.recipient);
+        buddy_name.setText(gift.recipientName);
 
         TextView title = (TextView) findViewById(R.id.title);
         assert title != null;
-        title.setText(gift.event);
+        title.setText(gift.eventTitle);
 
         TextView descriptior = (TextView) findViewById(R.id.descriptor);
         assert descriptior != null;
-        descriptior.setText(data.getString("description"));
+        descriptior.setText(gift.eventDescription);
 
         LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayoutGiveGifts);
         for (String key : data.keySet()) {
             if (key.contains("gift")) {
-                Button button = (Button) LayoutInflater.from(this).inflate(
-                        R.layout.give_gift_button, ll).findViewById(R.id.send_message_button);
-                parseGift(button, data.getString(key), gift);
+                parseGift(data.getString(key), gift);
             }
         }
     }
 
-    // TODO: Create functions for each button, and call the SendGiftActivity class with the
-    // parameters: username, user gender, gift parameters.
     private Gift populateGift(Bundle data) {
         Gift gift = new Gift();
+        gift.recipientId = data.getString("recipientId");
+        gift.recipientName = data.getString("recipientName");
+        gift.recipientGender = data.getString("recipientGender");
+        gift.recipientImageUrl = data.getString("recipientImageUrl");
+        gift.senderGender = data.getString("senderGender");
+        gift.senderName = data.getString("senderName");
+        gift.senderId = data.getString("senderId");
 
-        gift.recipient_id = data.getString("recipientId");
-        gift.recipient = data.getString("recipient");
-        gift.event = data.getString("event");
-        gift.gender = data.getString("gender");
-        gift.sender = data.getString("username");
-        gift.sender_id = data.getString("uid");
+        // Users
+        gift.senderName = data.getString("senderName");
+        gift.senderImageUrl = data.getString("senderImageUrl");
+        gift.senderGender = data.getString("senderGender");
+        gift.recipientImageUrl  = data.getString("recipientImageUrl");
+        gift.recipientId = data.getString("recipientId");
+        gift.recipientName = data.getString("recipientName");
 
+        // Data
+        gift.isSent = false;
+
+        // Gift
+        gift.eventTitle = data.getString("eventTitle");
+        gift.eventDescription = data.getString("eventDescription");
         return gift;
     }
 
-    private void parseGift(Button button, String data, final Gift giftToSend) {
+    private void parseGift(String data, final Gift giftToSend) {
         String[] giftData = data.split(",");
         String cta = new String();
         String url = new String();
         String type = new String();
+        String text = new String();
         for (String s : giftData) {
             if (s.contains("cta:"))
                 cta = s.substring(4);
             else if (s.contains("url:"))
                 url = s.substring(4);
             else if (s.contains("type:"))
-                type = s.substring(6);
+                type = s.substring(5);
+            else if (s.contains("text:"))
+                text = s.substring(5);
         }
         if (!cta.isEmpty()) {
             giftToSend.cta = cta;
         }
+        if (!text.isEmpty()) {
+            giftToSend.giftText = text;
+        }
+
         if (type.equals("greeting")) {
+            Button button = (Button) findViewById(R.id.send_message_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         } else if(type.equals("video")) {
+            Button button = (Button) findViewById(R.id.send_video_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         } else if(type.equals("gift")) {
+            Button button = (Button) findViewById(R.id.send_gift_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mFirebaseDatabaseReference.child("sent-gifts").push().setValue(giftToSend);
+                    finish();
                 }
             });
         }

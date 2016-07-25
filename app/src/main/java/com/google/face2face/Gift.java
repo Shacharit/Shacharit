@@ -6,19 +6,31 @@ import com.google.firebase.auth.FirebaseAuth;
  * Created by ndovrat on 7/24/16.
  */
 public class Gift {
-    public String sender;
-    public String recipient_id;
-    public String recipient;
-    public String event;
-    public String sent;
+    // Sender
+    public String senderName;
+    public String senderImageUrl;
+    public String senderId;
+    public String senderGender;
+    // Recipient
+    public String recipientImageUrl;
+    public String recipientId;
+    public String recipientName;
+    public String recipientGender;
+    // Data
+    public boolean isSent;
     public String date;
+    // Event
+    public String eventTitle;
+    public String eventDescription;
+
+    // Gift
     public String cta;
-    public String gender;
-    public String sender_id;
+    public String giftText;
+    public String giftUrl;
 
     public Gift() {
-        this.sent = "false";
-        this.sender = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        this.isSent = false;
+        this.senderName = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
 }
