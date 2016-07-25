@@ -1,6 +1,7 @@
 package com.google.face2face.backend.servlets;
 
 import com.google.face2face.backend.FcmMessenger;
+import com.google.face2face.backend.FirebaseInitializer;
 import com.google.face2face.backend.Gift;
 import com.google.face2face.backend.GiftEvent;
 import com.google.firebase.FirebaseApp;
@@ -35,15 +36,7 @@ public class BdayNotifierServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        String credential = config.getInitParameter("credential");
-        String databaseUrl = config.getInitParameter("databaseUrl");
-
-        System.out.println("Credential file : " + credential);
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setServiceAccount(config.getServletContext().getResourceAsStream(credential))
-                .setDatabaseUrl(databaseUrl)
-                .build();
-        FirebaseApp.initializeApp(options);
+        FirebaseInitializer.initializeFirebase();
         firebase = FirebaseDatabase.getInstance().getReference();
     }
 

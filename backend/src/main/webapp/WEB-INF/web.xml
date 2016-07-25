@@ -3,73 +3,28 @@
     <servlet>
         <servlet-name>MyServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.Servlet</servlet-class>
-
-        <init-param>
-            <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
-        </init-param>
-        <init-param>
-            <param-name>databaseUrl</param-name>
-            <param-value>https://il-hackathon.firebaseio.com</param-value>
-        </init-param>
-
-    </servlet>
+ </servlet>
 
     <servlet>
         <servlet-name>MatchingServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.servlets.MatchingServlet</servlet-class>
-        <init-param>
-            <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
-        </init-param>
-        <init-param>
-            <param-name>databaseUrl</param-name>
-            <param-value>https://il-hackathon.firebaseio.com</param-value>
-        </init-param>
-
     </servlet>
 
     <servlet>
         <servlet-name>EventNotifierServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.servlets.EventNotifierServlet</servlet-class>
-
-        <init-param>
-            <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
-        </init-param>
-        <init-param>
-            <param-name>databaseUrl</param-name>
-            <param-value>https://il-hackathon.firebaseio.com</param-value>
-        </init-param>
-
     </servlet>
 
     <servlet>
         <servlet-name>GiftSendingServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.servlets.GiftSendingServlet</servlet-class>
-        <init-param>
-            <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
-        </init-param>
-        <init-param>
-            <param-name>databaseUrl</param-name>
-            <param-value>https://il-hackathon.firebaseio.com</param-value>
-        </init-param>
-
     </servlet>
+
     <servlet>
         <servlet-name>ShareEmailServlet</servlet-name>
         <servlet-class>com.google.face2face.backend.servlets.ShareEmailServlet</servlet-class>
-        <init-param>
-            <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
-        </init-param>
-        <init-param>
-            <param-name>databaseUrl</param-name>
-            <param-value>https://il-hackathon.firebaseio.com</param-value>
-        </init-param>
-
     </servlet>
+
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
         <url-pattern>/hello</url-pattern>
