@@ -56,6 +56,7 @@ public class HobbiesFragment extends Fragment {
         // Check previously chosen definitions.
         mFirebaseDatabaseReference.child(Constants.USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("interests")
                 .child("hobbies")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -91,6 +92,7 @@ public class HobbiesFragment extends Fragment {
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 if (currentUser != null){
                     mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
+                            .child("interests")
                             .child("hobbies")
                             .setValue(Arrays.asList(flowContainer.getCheckedNames()));
                     Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();

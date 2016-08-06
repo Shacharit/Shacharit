@@ -67,18 +67,16 @@ public class MatchingServlet extends HttpServlet {
         firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 List<String> logsInCallback = new ArrayList<String>();
-                logsInCallback.add("inside onDataChange. time: " + getCurrentTime());
+                logsInCallback.add("inside onDataChange. time");
                 buddiesInDb = new HashMap<String, List<UserBasicInfo>>();
 
                 firebase.child("logs").setValue(logsInCallback);
 
-                List<User> users = new ArrayList<User>();
+                List<User> users = new ArrayList<>();
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
                 for (DataSnapshot ds : children) {
-
                     addToPojoUsers(logsInCallback, users, ds);
                 }
 
@@ -90,7 +88,6 @@ public class MatchingServlet extends HttpServlet {
                 for (int i = 0; i < users.size(); i++) {
                     checkMatchForEachUser(logsInCallback, users, matcher, scores, i);
                 }
-
             }
 
             @Override
@@ -111,7 +108,6 @@ public class MatchingServlet extends HttpServlet {
             final User buddy = users.get(buddyIndex);
             buddiesForCurrentMatch.add(buddy);
 
-
             String msg = "user: " + currentUser + " was added a buddy: " + buddy + " time: " + getCurrentTime();
             logger.info(msg);
             logsInCallback.add(msg);
@@ -126,13 +122,14 @@ public class MatchingServlet extends HttpServlet {
         if (buddiesForCurrentMatch.size() > 0) {
             List<User> disjunction = listUtils.nameDisjunction(buddiesInDb.get(currentUser.uid), buddiesForCurrentMatch);
 
-            sendPushAboutNewBuddies(currentUser.uid, disjunction);
             firebase.child("users").child(currentUser.uid).child("buddy").setValue(buddiesForCurrentMatch);
             String msg = "users: " + currentUser + " was added buddies: " + buddiesForCurrentMatch + " " +
                     "time: " + getCurrentTime();
             logsInCallback.add(msg);
             firebase.child("logs").setValue(logsInCallback);
             logger.info(msg);
+
+            sendPushAboutNewBuddies(currentUser.uid, disjunction);
 
             System.out.println("users: " + currentUser + " was added buddies: " + buddiesForCurrentMatch);
         }
@@ -153,7 +150,7 @@ public class MatchingServlet extends HttpServlet {
 
     private void addToPojoUsers(List<String> logsInCallback,
                                 List<User> users, DataSnapshot ds) {
-        logsInCallback.add("after dataSnapshot.getChildren(). time: " + getCurrentTime());
+        logsInCallback.add("after dataSnapshot.getChildren()");
         firebase.child("logs").setValue(logsInCallback);
 
 
@@ -194,7 +191,7 @@ public class MatchingServlet extends HttpServlet {
             return;
         }
         for (DataSnapshot self_def_ds : ds.child(SELF_DEFINITIONS).getChildren()) {
-            user.selfDefs.add(self_def_ds.getKey());
+            user.selfDefs.add(self_def_ds.getValue().toString());
         }
 
         user.otherDefs = new ArrayList<String>();
@@ -202,7 +199,7 @@ public class MatchingServlet extends HttpServlet {
             return;
         }
         for (DataSnapshot other_def_ds : ds.child(OTHER_DEFINITIONS).getChildren()) {
-            user.otherDefs.add(other_def_ds.getKey());
+            user.otherDefs.add(other_def_ds.getValue().toString());
         }
 
         user.interests = new HashMap<>();
@@ -215,21 +212,22 @@ public class MatchingServlet extends HttpServlet {
 
             for (DataSnapshot interest_inner_ds : interests_ds.getChildren()) {
                 System.out.println("Found 1");
-                user.interests.get(interest).add(interest_inner_ds.getKey());
+                user.interests.get(interest).add(interest_inner_ds.getValue().toString());
             }
         }
         users.add(user);
+
+
     }
 
     private String getCurrentTime() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MMM-yyyy");
         Date now = new Date();
-        String strDate = sdfDate.format(now);
-        return strDate;
+        return sdfDate.format(now);
     }
 
     private void sendPushAboutNewBuddies(String uid, List<User> newBuddies) {
-        Map<String, String> extras = new HashMap();
+        Map<String, String> extras = new HashMap<>();
         for (User newUser : newBuddies) {
             extras.put("uid", newUser.uid);
             extras.put("image_url", newUser.imageUrl);

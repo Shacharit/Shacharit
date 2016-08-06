@@ -25,6 +25,8 @@ public class ListUtils {
         List<User> toReturn = new ArrayList(buddiesNew);
 
         for (User userNew : buddiesNew) {
+            if (buddiesInDb == null) continue;
+
             for (UserBasicInfo userInDb : buddiesInDb) {
                 if (userNew.uid.equals(userInDb.uid)) {
                     toReturn.remove(userNew);

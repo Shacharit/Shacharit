@@ -72,8 +72,8 @@ public class EventNotifierServlet extends HttpServlet {
                         //gift.type = gift_ds.child("type").getValue().toString();
                         //gift.url = gift_ds.child("url").getValue().toString();
 
-                        gift.cta = "קטע";
-                        gift.text = "הטקסט";
+                        gift.cta = "אחל טו בשבט שמח";
+                        gift.text = "טו בשבט שמח";
                         gift.type = "greeting";
                         gift.url = "";
 
@@ -125,7 +125,7 @@ public class EventNotifierServlet extends HttpServlet {
                                 String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
                                 //String buddyToken = buddy_snapshot.child("reg_id").toString();
-                                String buddyToken = "dpabmemA4_o:APA91bE8Y6n2YLC4P_2lV460ZVgSgDRM30x8XoyLMKul5Vdx2FDfc4hvUtecUMqRXhfC8LO_mQ_woZMUm88r84PMvq3lVdexIWHx25j6jd0_G8cK-L_NEzvsFkE8_TOZE1X_9-rIa7Ty";
+                                String buddyToken = "eGfQL6JAfuQ:APA91bHxMOFjNF4ODCv4stNscMFzrJsZkwPRw4w-S1cJAGH8MkcHrG9BS0uHk4_Y_jKTo77DL7-3R8gRNaNojU0Yzx8hBEINg1FIKcAH-xF4L0AEZglbhwZNJPuytpht8ClpPMZeN3Iu";
                                 for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                     String definition = ds_def.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {
@@ -147,7 +147,7 @@ public class EventNotifierServlet extends HttpServlet {
                                             Gift gift = giftEvent.gifts[i];
                                             data.put("gift" + (i + 1), "text:" + gift.text + "," +
                                                     "cta:" + gift.cta + "," + "url:"
-                                                    + gift.url + "type:" + gift.type);
+                                                    + gift.url + "," + "type:" + gift.type);
                                         }
 
 
@@ -157,7 +157,7 @@ public class EventNotifierServlet extends HttpServlet {
                                         data.put("recipientImageUrl", buddyPhoto);
                                         data.put("recipientId", buddyId);
                                         data.put("recipientName", buddyName);
-                                        data.put("eventText", giftEvent.description);
+                                        data.put("description", giftEvent.description);
                                         data.put("action", "give_gift");
                                         data.put("eventTitle", giftEvent.name);
                                         data.put("recipientGender", buddyGender);

@@ -26,10 +26,16 @@ public class Matcher {
                 //       and if so change the following line.
                 if(!firstUser.gender.equalsIgnoreCase(secondUser.gender)) continue;
 
-                double score = interestsScore(firstUser.interests.get("movies"),
-                        secondUser.interests.get("movies"));
-                score += interestsScore(firstUser.interests.get("hobbies"),
-                        secondUser.interests.get("hobbies"));
+                double score = 0.0;
+                for (String interestKey : firstUser.interests.keySet()) {
+                    if (!secondUser.interests.containsKey(interestKey)) {
+                        continue;
+                    }
+
+                    score += interestsScore(firstUser.interests.get(interestKey),
+                            secondUser.interests.get(interestKey));
+                }
+
                 scoreMatrix[i][j] = score;
                 scoreMatrix[j][i] = score;
             }
