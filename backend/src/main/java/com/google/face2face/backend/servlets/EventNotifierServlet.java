@@ -65,17 +65,8 @@ public class EventNotifierServlet extends HttpServlet {
                     event.femaleText = event_ds.child("female text").getValue().toString();
                     event.description = event_ds.child("description").getValue().toString();
                     for (int i = 0; i < 3; i++) {
-                        Gift gift = new Gift();
                         DataSnapshot gift_ds = event_ds.child("gift" + (i + 1));
-                        //gift.cta = gift_ds.child("cta").getValue().toString();
-                        //gift.text = gift_ds.child("text").getValue().toString();
-                        //gift.type = gift_ds.child("type").getValue().toString();
-                        //gift.url = gift_ds.child("url").getValue().toString();
-
-                        gift.cta = "אחל טו בשבט שמח";
-                        gift.text = "טו בשבט שמח";
-                        gift.type = "greeting";
-                        gift.url = "";
+                        Gift gift = giftFromSnapshot(gift_ds);
 
                         event.gifts[i] = gift;
                     }
@@ -124,8 +115,8 @@ public class EventNotifierServlet extends HttpServlet {
                                 String buddyGender = gender != null ? gender.toString() : "male";
                                 String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
-                                //String buddyToken = buddy_snapshot.child("reg_id").toString();
-                                String buddyToken = "eGfQL6JAfuQ:APA91bHxMOFjNF4ODCv4stNscMFzrJsZkwPRw4w-S1cJAGH8MkcHrG9BS0uHk4_Y_jKTo77DL7-3R8gRNaNojU0Yzx8hBEINg1FIKcAH-xF4L0AEZglbhwZNJPuytpht8ClpPMZeN3Iu";
+                                String buddyToken = buddy_snapshot.child("reg_id").toString();
+                                //String buddyToken = "fM5wfcOq9XE:APA91bEPwqnFgWBoghASlrgdZM-K8rcPtRqx4YTxBZwRmAVhKrDl9YQHpmByvu8DcHRtBK4pqvlmgvWbmtXYogsjdh-20UQSCixIV0UqQRECU7dQxvWoMoXC-BgOQQRovunmPW_Tobjo";
                                 for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                     String definition = ds_def.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {
@@ -189,5 +180,16 @@ public class EventNotifierServlet extends HttpServlet {
             }
         });
 
+    }
+
+    private Gift giftFromSnapshot(DataSnapshot gift_ds) {
+        Gift gift = new Gift();
+
+        gift.cta = gift_ds.child("cta male2male").getValue().toString();
+        gift.text = gift_ds.child("greeting male2male").getValue().toString();
+        gift.type = gift_ds.child("type").getValue().toString();
+        gift.url = gift_ds.child("url").getValue().toString();
+
+        return gift;
     }
 }

@@ -81,10 +81,10 @@ public class GiveGiftsActivity extends AppCompatActivity {
 
     private void parseGift(String data, final Gift giftToSend) {
         String[] giftData = data.split(",");
-        String cta = new String();
-        String url = new String();
-        String type = new String();
-        String text = new String();
+        String cta = "";
+        String url = "";
+        String type = "";
+        String text = "";
         for (String s : giftData) {
             if (s.contains("cta:"))
                 cta = s.substring(4);
@@ -122,7 +122,7 @@ public class GiveGiftsActivity extends AppCompatActivity {
                     finish();
                 }
             });
-        } else if(type.equals("gift")) {
+        } else if(type.equals("physical")) {
             Button button = (Button) findViewById(R.id.send_gift_button);
             button.setText(cta);
             button.setOnClickListener(new View.OnClickListener() {
