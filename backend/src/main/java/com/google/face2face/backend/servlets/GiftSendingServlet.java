@@ -58,7 +58,7 @@ public class GiftSendingServlet extends HttpServlet {
                     SentGift gift = ds.getValue(SentGift.class);
                     gift.key = ds.getKey();
                     String recipientUid = gift.recipientId;
-                    if ("false".equals(gift.isSent) && recipientUid != null) {
+                    if (!gift.isSent && recipientUid != null) {
                         mGiftsToSend.put(recipientUid, gift);
                     }
                 }
@@ -87,7 +87,7 @@ public class GiftSendingServlet extends HttpServlet {
                             continue;
                         }
                         //String userRegId = ds.child("reg_id").getValue().toString();
-                        String userRegId = "dMGFRFCiywo:APA91bHvrQKrIqeF98M5MSNVhoIyRcXFiS6UqGWJgLMyQebUOzJXp43y3XafBx6Ip04ytseng6a7VakoosZD8OMpfce-w2q0qf9jjku8e5aNarw5ZYqLNthzN4eDitEaAXD8ZvR24FE4";
+                        String userRegId = "fM5wfcOq9XE:APA91bEPwqnFgWBoghASlrgdZM-K8rcPtRqx4YTxBZwRmAVhKrDl9YQHpmByvu8DcHRtBK4pqvlmgvWbmtXYogsjdh-20UQSCixIV0UqQRECU7dQxvWoMoXC-BgOQQRovunmPW_Tobjo";
 
                         // Build Notification
                         SentGift gift = mGiftsToSend.get(userKey);
@@ -96,6 +96,7 @@ public class GiftSendingServlet extends HttpServlet {
                         String title =  gift.senderName + " " + thoughtTitle;
                         String message = gift.eventText;
                         Map<String, String> extras = new HashMap<>();
+                        extras.put("action", "receive_gift");
                         extras.put("eventTitle", gift.eventTitle);
                         extras.put("cta", gift.cta);
                         extras.put("eventText", gift.eventText);
@@ -110,7 +111,7 @@ public class GiftSendingServlet extends HttpServlet {
                             FcmMessenger.sendPushMessage(userRegId, title, message, extras);
                             // Mark gift sent
                             DatabaseReference childRef = giftsDbRef.child(gift.key);
-                            childRef.child("sent").setValue("true");
+                            childRef.child("sent").setValue(true);
 
                             SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
                             Date date = new Date();
