@@ -231,6 +231,7 @@ public class MatchingServlet extends HttpServlet {
         for (User newUser : newBuddies) {
             extras.put("uid", newUser.uid);
             extras.put("image_url", newUser.imageUrl);
+            extras.put("action", "match");
             try {
                 FcmMessenger.sendPushMessage(uid, "new buddies", "say hi to him/her", extras);
             } catch (IOException e) {
