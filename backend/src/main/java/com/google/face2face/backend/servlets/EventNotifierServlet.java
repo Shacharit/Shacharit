@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,12 +33,23 @@ import javax.servlet.http.HttpServletResponse;
 public class EventNotifierServlet extends HttpServlet {
 
     private DatabaseReference firebase;
+    private static final Logger logger = Logger.getLogger(EventNotifierServlet.class.getName());
+
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         FirebaseInitializer.initializeFirebase();
         firebase = FirebaseDatabase.getInstance().getReference();
     }
+
+
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        logger.info("in matching-servlet doGet");
+        doPost(req, resp);
+    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
