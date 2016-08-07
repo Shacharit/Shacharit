@@ -127,8 +127,8 @@ public class EventNotifierServlet extends HttpServlet {
                                 String buddyGender = gender != null ? gender.toString() : "male";
                                 String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
-                                String buddyToken = buddy_snapshot.child("reg_id").toString();
-                                //String buddyToken = "fM5wfcOq9XE:APA91bEPwqnFgWBoghASlrgdZM-K8rcPtRqx4YTxBZwRmAVhKrDl9YQHpmByvu8DcHRtBK4pqvlmgvWbmtXYogsjdh-20UQSCixIV0UqQRECU7dQxvWoMoXC-BgOQQRovunmPW_Tobjo";
+//                                String buddyToken = buddy_snapshot.child("reg_id").toString();
+                                String buddyToken = "fM5wfcOq9XE:APA91bEPwqnFgWBoghASlrgdZM-K8rcPtRqx4YTxBZwRmAVhKrDl9YQHpmByvu8DcHRtBK4pqvlmgvWbmtXYogsjdh-20UQSCixIV0UqQRECU7dQxvWoMoXC-BgOQQRovunmPW_Tobjo";
                                 for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
                                     String definition = ds_def.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {
