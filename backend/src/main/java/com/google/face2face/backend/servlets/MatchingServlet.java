@@ -130,7 +130,7 @@ public class MatchingServlet extends HttpServlet {
             firebase.child("logs").setValue(logsInCallback);
             logger.info(msg);
 
-            sendPushAboutNewBuddies(currentUser.uid, disjunction);
+            sendPushAboutNewBuddies(currentUser.regId, disjunction);
 
             System.out.println("users: " + currentUser + " was added buddies: " + buddiesForCurrentMatch);
         }
