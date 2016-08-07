@@ -31,6 +31,7 @@ public class MatchingServlet extends HttpServlet {
     public static final String IMAGE_URL = "image_url";
     public static final String BUDDY = "buddy";
     public static final String UID = "uid";
+    public static final String DISPLAY_NAME = "display_name";
     private HashMap<String, List<UserBasicInfo>> buddiesInDb;
 
 
@@ -166,6 +167,9 @@ public class MatchingServlet extends HttpServlet {
             user.age = Integer.parseInt(ds.child(AGE).getValue().toString());
         }
 
+        if (ds.hasChild(DISPLAY_NAME)) {
+            user.displayName = ds.child(DISPLAY_NAME).getValue().toString();
+        }
         if (ds.hasChild(IMAGE_URL)) {
             user.imageUrl = ds.child(IMAGE_URL).getValue().toString();
         }

@@ -14,6 +14,7 @@ public class User {
     public String gender;
     public int age;
     public String imageUrl;
+    public String displayName;
 
     public User(String uid) {
         this.uid = uid;
@@ -21,6 +22,7 @@ public class User {
         this.otherDefs = new ArrayList<>();
         this.interests = new HashMap<>();
     }
+
 
     @Override
     public String toString() {
@@ -33,6 +35,7 @@ public class User {
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", displayName='" + displayName + '\'' +
                 '}';
     }
 }
