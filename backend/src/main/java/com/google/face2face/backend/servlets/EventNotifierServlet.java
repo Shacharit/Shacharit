@@ -34,6 +34,7 @@ public class EventNotifierServlet extends HttpServlet {
 
     private DatabaseReference firebase;
     private static final Logger logger = Logger.getLogger(EventNotifierServlet.class.getName());
+    private static final String anonymousImageUrl = "https://lh3.googleusercontent.com/-Kx8qBZwVREc/AAAAAAAAAAI/AAAAAAAAAAA/GWTS1klu7QQ/photo.jpg?sz=256";
 
 
     @Override
@@ -99,38 +100,43 @@ public class EventNotifierServlet extends HttpServlet {
                 firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot user_ds : dataSnapshot.getChildren()) {
+                        for (DataSnapshot senderDataSnapshot : dataSnapshot.getChildren()) {
                             // Check if buddy has relevant events
-                            Object displayName = user_ds.child("display_name").getValue();
-
+                            Object displayName = senderDataSnapshot.child("display_name").getValue();
                             if (displayName == null) {
                                 continue;
                             }
 
-                            String username = displayName.toString();
-                            DataSnapshot buddiesDs = user_ds.child("buddy");
+                            String senderName = displayName.toString();
+                            String senderGender = senderDataSnapshot.child("gender").getValue().toString();
+                            Object imageUrl = senderDataSnapshot.child("image_url").getValue();
+                            String senderImageUrl = (imageUrl == null) ? anonymousImageUrl : imageUrl.toString();
 
-                            for (DataSnapshot buddy_snapshot : buddiesDs.getChildren()) {
-                                Object name = user_ds.child("display_name").getValue();
+                            DataSnapshot buddiesDataSnapshot = senderDataSnapshot.child("buddy");
 
-                                if (name == null) {
-                                    // User has no name
-                                    continue;
-                                }
+                            for (DataSnapshot buddyDataSnapshot : buddiesDataSnapshot.getChildren()) {
+                                // TODO: get buddy username.
+//                                Object name = buddy_snapshot.child("display_name").getValue();
+//                                if (name == null) {
+//                                    // User has no name
+//                                    continue;
+//                                }
 
-                                String userGender = user_ds.child("gender").getValue().toString();
-                                String userImageUrl = user_ds.child("image_url").getValue().toString();
-                                String buddyName = name.toString();
-                                Object imageUrl = buddy_snapshot.child("image_url").getValue();
 
-                                Object gender = buddy_snapshot.child("gender").getValue();
+//                                String buddyName = name.toString();
+                                String buddyName = "test";
+
+                                imageUrl = buddyDataSnapshot.child("imageUrl").getValue();
+                                String buddyImageUrl = (imageUrl == null) ? anonymousImageUrl : imageUrl.toString();
+
+                                Object gender = buddyDataSnapshot.child("gender").getValue();
                                 String buddyGender = gender != null ? gender.toString() : "male";
-                                String buddyPhoto = imageUrl != null ? imageUrl.toString() : null;
+                                String buddyPhoto = buddyImageUrl != null ? buddyImageUrl.toString() : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
-                                String buddyToken = buddy_snapshot.child("reg_id").toString();
-                                //String buddyToken = "fM5wfcOq9XE:APA91bEPwqnFgWBoghASlrgdZM-K8rcPtRqx4YTxBZwRmAVhKrDl9YQHpmByvu8DcHRtBK4pqvlmgvWbmtXYogsjdh-20UQSCixIV0UqQRECU7dQxvWoMoXC-BgOQQRovunmPW_Tobjo";
-                                for (DataSnapshot ds_def : buddy_snapshot.child("selfDefs").getChildren()) {
-                                    String definition = ds_def.getValue().toString();
+                                String buddyToken = buddyDataSnapshot.child("regId").toString();
+//                                String buddyToken = "f2aIW9hBC0A:APA91bFR4vmjPNzNyHVjLCin2W2lyTpIgTXT66kjBM1Qwc4CWorc5QbQqrtYfERd2Xt90xTBsoo1i2CmCMAjJCg92kqbEWlPgKx-uu4DYpYCXLmLGsv3L7K8WsBeFmG2FF-4Bb37aYxs";
+                                for (DataSnapshot buddyDefinitionDataSnapshot : buddyDataSnapshot.child("selfDefs").getChildren()) {
+                                    String definition = buddyDefinitionDataSnapshot.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {
                                         continue;
                                     }
@@ -154,9 +160,9 @@ public class EventNotifierServlet extends HttpServlet {
                                         }
 
 
-                                        String buddyId = buddy_snapshot.child("uid").getValue().toString();
-                                        data.put("senderName", username);
-                                        data.put("senderImageUrl", userImageUrl);
+                                        String buddyId = buddyDataSnapshot.child("uid").getValue().toString();
+                                        data.put("senderName", senderName);
+                                        data.put("senderImageUrl", senderImageUrl);
                                         data.put("recipientImageUrl", buddyPhoto);
                                         data.put("recipientId", buddyId);
                                         data.put("recipientName", buddyName);
@@ -164,7 +170,7 @@ public class EventNotifierServlet extends HttpServlet {
                                         data.put("action", "give_gift");
                                         data.put("eventTitle", giftEvent.name);
                                         data.put("recipientGender", buddyGender);
-                                        data.put("senderGender", userGender);
+                                        data.put("senderGender", senderGender);
 
 
                                         // Send description, event, recipient, username
