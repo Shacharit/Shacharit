@@ -44,6 +44,12 @@ public class GiftSendingServlet extends HttpServlet {
     }
 
     @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        doPost(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final DatabaseReference giftsDbRef = firebase.child("sent-gifts");
 

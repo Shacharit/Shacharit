@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.face2face.GiveGiftsActivity;
+import com.google.face2face.MatchActivity;
 import com.google.face2face.R;
 import com.google.face2face.ReceiveGiftActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -39,6 +40,9 @@ public class F2FMessagingService extends FirebaseMessagingService {
                 break;
             case "send_email":
                 sendEmailNotification(remoteMessage.getData());
+                break;
+            case "match":
+                showNotification(remoteMessage.getData(), new Intent(this, MatchActivity.class));
                 break;
             default:
                 Log.w(TAG, "The FCM notification is missing or has bad 'action' field: " + remoteMessage);

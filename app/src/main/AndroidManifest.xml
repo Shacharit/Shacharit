@@ -15,10 +15,13 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NavigationActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".NavigationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -39,8 +42,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".GiveGiftsActivity"></activity>
-        <activity android:name=".ReceiveGiftActivity"></activity>
+        <activity android:name=".GiveGiftsActivity" />
+        <activity android:name=".ReceiveGiftActivity" />
+        <activity android:name=".MatchActivity"></activity>
     </application>
 
 </manifest>
