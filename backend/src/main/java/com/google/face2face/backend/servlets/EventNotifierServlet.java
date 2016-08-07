@@ -166,7 +166,7 @@ public class EventNotifierServlet extends HttpServlet {
                                         data.put("recipientImageUrl", buddyPhoto);
                                         data.put("recipientId", buddyId);
                                         data.put("recipientName", buddyName);
-                                        data.put("description", giftEvent.description);
+                                        data.put("eventDescription", giftEvent.description);
                                         data.put("action", "give_gift");
                                         data.put("eventTitle", giftEvent.name);
                                         data.put("recipientGender", buddyGender);

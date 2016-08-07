@@ -62,14 +62,17 @@ public class GiveGiftsActivity extends AppCompatActivity {
         gift.senderName = data.getString("senderName");
         gift.senderId = data.getString("senderId");
 
-        // Users
-        gift.senderName = data.getString("senderName");
-        gift.senderImageUrl = data.getString("senderImageUrl");
-        gift.senderGender = data.getString("senderGender");
-        gift.recipientImageUrl  = data.getString("recipientImageUrl");
-        gift.recipientId = data.getString("recipientId");
-        gift.recipientName = data.getString("recipientName");
 
+        // Users
+//        gift.senderName = data.getString("senderName");
+        gift.senderImageUrl = data.getString("senderImageUrl");
+//        gift.senderGender = data.getString("senderGender");
+//        gift.recipientImageUrl  = data.getString("recipientImageUrl");
+//        gift.recipientId = data.getString("recipientId");
+//        gift.recipientName = data.getString("recipientName");
+        System.out.println("recipient image url: " + gift.recipientImageUrl);
+        System.out.println("sender name: " + gift.senderName);
+        System.out.println("sender image url: " + gift.senderImageUrl);
         // Data
         gift.isSent = false;
 
