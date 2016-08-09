@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.face2face.GiveGiftsActivity;
+import com.google.face2face.BuddyEventActivity;
 import com.google.face2face.MatchActivity;
 import com.google.face2face.R;
 import com.google.face2face.ReceiveGiftActivity;
@@ -33,7 +33,7 @@ public class F2FMessagingService extends FirebaseMessagingService {
 
         switch (remoteMessage.getData().get("action")) {
             case "give_gift":
-                showNotification(remoteMessage.getData(), new Intent(this, GiveGiftsActivity.class));
+                showNotification(remoteMessage.getData(), new Intent(this, BuddyEventActivity.class));
                 break;
             case "receive_gift":
                 showNotification(remoteMessage.getData(), new Intent(this, ReceiveGiftActivity.class));

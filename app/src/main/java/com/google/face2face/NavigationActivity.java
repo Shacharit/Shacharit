@@ -53,7 +53,7 @@ public class NavigationActivity extends AppCompatActivity
         // Set default username is anonymous.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (getIntent().getStringExtra("giveGifts") != null) {
-            Intent intent = new Intent(this, GiveGiftsActivity.class);
+            Intent intent = new Intent(this, BuddyEventActivity.class);
             intent.putExtras(getIntent().getExtras());
             startActivity(intent);
             return;

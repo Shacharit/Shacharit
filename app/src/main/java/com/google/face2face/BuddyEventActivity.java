@@ -2,7 +2,6 @@ package com.google.face2face;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,13 +12,13 @@ import com.google.face2face.service.VolleySingleton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class GiveGiftsActivity extends AppCompatActivity {
+public class BuddyEventActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_give_gifts);
+        setContentView(R.layout.activity_buddy_event);
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         Bundle data = getIntent().getExtras();

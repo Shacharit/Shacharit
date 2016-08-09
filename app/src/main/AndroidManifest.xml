@@ -42,7 +42,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".GiveGiftsActivity" />
+        <activity android:name=".BuddyEventActivity" />
         <activity android:name=".ReceiveGiftActivity" />
         <activity android:name=".MatchActivity"></activity>
     </application>
