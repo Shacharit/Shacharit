@@ -135,6 +135,7 @@ public class EventNotifierServlet extends HttpServlet {
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
                                 String buddyToken = buddyDataSnapshot.child("regId").toString();
 //                                String buddyToken = "f2aIW9hBC0A:APA91bFR4vmjPNzNyHVjLCin2W2lyTpIgTXT66kjBM1Qwc4CWorc5QbQqrtYfERd2Xt90xTBsoo1i2CmCMAjJCg92kqbEWlPgKx-uu4DYpYCXLmLGsv3L7K8WsBeFmG2FF-4Bb37aYxs";
+//                                String buddyToken = "fHg77UkA2pM:APA91bHj9k8pWwmB0iEyxH6WW4hIk1qy4FA535IQp-PF1-cS7rpfxWR-mqRFpEb4nVxfHh7D3aUuOvOL-ID-s73PkUiheI8gdemLQdRBRRjMHNVSHVqk7GtbJyFntXmpBLzoeUFDKxjP";
                                 for (DataSnapshot buddyDefinitionDataSnapshot : buddyDataSnapshot.child("selfDefs").getChildren()) {
                                     String definition = buddyDefinitionDataSnapshot.getValue().toString();
                                     if (!defsToEvents.containsKey(definition)) {
