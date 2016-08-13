@@ -56,6 +56,7 @@
 
     // Welcome
     <string name="shacharit_explanation">החברה הישראלית נתפשת כריבוי של שסעים המאיימים לקרוע את המדינה לגזרים. ריבוי הזהויות, העמדות והמסורות לא חייב להוביל לניתוק ולמאבק; הוא יכול לייצר זירה ציבורית תוססת וססגונית, שבה ייפגשו ויעשירו אלה את אלה עולמות ותפישׂות שונות. מזמינים להיפגש במרחב הזה להכיר ולהנות, זה מתרבותו של זה.</string>
+    <string name="wait_for_notifications">התראה תתקבל ברגע שנמצא התאמה עבורך</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

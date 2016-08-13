@@ -26,12 +26,6 @@ public class DefaultFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.default_screen, container, false);
 
-        final Button button = (Button) view.findViewById(R.id.default_screen_next_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                ((NavigationActivity) getActivity()).displayView(R.id.nav_choose_other);}
-        });
-
         return view;
     }
 }

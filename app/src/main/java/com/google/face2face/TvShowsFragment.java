@@ -3,6 +3,7 @@ package com.google.face2face;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,10 @@ public class TvShowsFragment extends Fragment {
                             .child("favorite_tv_shows")
                             .setValue(Arrays.asList(flowContainer.getCheckedNames()));
                     Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
+
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.main_frame, new DefaultFragment());
+                    ft.commit();
                 }
             }
         });

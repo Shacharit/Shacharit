@@ -1,13 +1,16 @@
 package com.google.face2face;
 
+import android.app.TabActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -32,6 +35,7 @@ public class HobbiesFragment extends Fragment {
     private int nChecked = 0;
     private DatabaseReference mFirebaseDatabaseReference;
     private ProgressBar mProgressBar;
+    private FragmentTabHost mTabHost;
 
     public HobbiesFragment() {
         // Required empty public constructor
@@ -49,6 +53,7 @@ public class HobbiesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profie_interests, container, false);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        mTabHost = (FragmentTabHost)getActivity().findViewById(android.R.id.tabhost);
 
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.flow_container);
         flowContainer.setMaxItems(MAX_CHECKED);
@@ -95,7 +100,8 @@ public class HobbiesFragment extends Fragment {
                             .child("interests")
                             .child("hobbies")
                             .setValue(Arrays.asList(flowContainer.getCheckedNames()));
-                    Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
+
+                    mTabHost.setCurrentTab(2);
                 }
             }
         });

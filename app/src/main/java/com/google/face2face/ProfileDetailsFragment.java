@@ -1,6 +1,7 @@
 package com.google.face2face;
 
 import android.app.Activity;
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TabWidget;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +51,7 @@ public class ProfileDetailsFragment extends Fragment {
     private EditText mNameEditText;
     private StorageReference mStorageReference;
     private ImageView mImageView;
+    private FragmentTabHost mTabHost;
 
     public ProfileDetailsFragment() {
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -71,6 +76,7 @@ public class ProfileDetailsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_profile_details, container, false);
         mNameEditText = (EditText) view.findViewById(R.id.profile_details_name);
         mImageView = (ImageView) view.findViewById(R.id.profile_details_profile_imageView);
+        mTabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
 
         mFirebaseDatabaseReference.child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -107,7 +113,8 @@ public class ProfileDetailsFragment extends Fragment {
                     mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
                             .child("display_name")
                             .setValue(mNameEditText.getText().toString());
-                    Toast.makeText(getContext(), R.string.save_success, Toast.LENGTH_SHORT).show();
+
+                    mTabHost.setCurrentTab(1);
                 }
             }
         });

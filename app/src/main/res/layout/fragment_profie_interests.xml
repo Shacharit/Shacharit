@@ -19,7 +19,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save_button"
+                android:text="הבא"
                 android:id="@+id/profile_interests_save_button"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignParentBottom="true"/>
