@@ -172,7 +172,11 @@ public class FlowLayout extends ViewGroup implements View.OnClickListener {
             nChecked--;
         } else if (nChecked == maxItems) {
             button.setChecked(false);
-            Toast.makeText(getContext(), String.format(getContext().getString(R.string.itemlimit), maxItems), Toast.LENGTH_SHORT).show();
+            if (1 == maxItems) {
+                Toast.makeText(getContext(), getContext().getString(R.string.oneitemlimit), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), String.format(getContext().getString(R.string.itemlimit), maxItems), Toast.LENGTH_SHORT).show();
+            }
         } else {
             nChecked++;
         }
