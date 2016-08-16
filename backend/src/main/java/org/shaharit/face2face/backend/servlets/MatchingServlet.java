@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class MatchingServlet extends HttpServlet {
+public class MatchingServlet extends ShaharitServlet {
 
     private static final long serialVersionUID = 8126789192972477663L;
     public static final String SELF_DEFINITIONS = "self-definitions";
@@ -34,19 +34,10 @@ public class MatchingServlet extends HttpServlet {
     private HashMap<String, List<UserBasicInfo>> buddiesInDb;
 
 
-    // Firebase keys shared with client applications
-    private DatabaseReference firebase;
     private ListUtils listUtils = new ListUtils();
 
 
     private static final Logger logger = Logger.getLogger(MatchingServlet.class.getName());
-
-
-    @Override
-    public void init(ServletConfig config) {
-        FirebaseInitializer.initializeFirebase();
-        firebase = FirebaseDatabase.getInstance().getReference();
-    }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -67,9 +58,9 @@ public class MatchingServlet extends HttpServlet {
         firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> logsInCallback = new ArrayList<String>();
+                List<String> logsInCallback = new ArrayList<>();
                 logsInCallback.add("inside onDataChange. time");
-                buddiesInDb = new HashMap<String, List<UserBasicInfo>>();
+                buddiesInDb = new HashMap<>();
 
                 firebase.child("logs").setValue(logsInCallback);
 
@@ -101,7 +92,7 @@ public class MatchingServlet extends HttpServlet {
                                        List<User> users, Matcher matcher,
                                        double[][] scores, int i) {
         List<Integer> indicesOfBuddies = matcher.getMatchesForUser(i, scores);
-        List<User> buddiesForCurrentMatch = new ArrayList<User>();
+        List<User> buddiesForCurrentMatch = new ArrayList<>();
         final User currentUser = users.get(i);
 
         for (Integer buddyIndex : indicesOfBuddies) {
@@ -179,7 +170,7 @@ public class MatchingServlet extends HttpServlet {
         }
 
         if (ds.hasChild(BUDDY)) {
-            List<UserBasicInfo> buddiesFromDb = new ArrayList<UserBasicInfo>();
+            List<UserBasicInfo> buddiesFromDb = new ArrayList<>();
             for (DataSnapshot buddiesDs : ds.child(BUDDY).getChildren()) {
 
                 String uid = buddiesDs.child(UID).getValue().toString();
@@ -198,7 +189,7 @@ public class MatchingServlet extends HttpServlet {
             user.selfDefs.add(self_def_ds.getValue().toString());
         }
 
-        user.otherDefs = new ArrayList<String>();
+        user.otherDefs = new ArrayList<>();
         if (!ds.hasChild(OTHER_DEFINITIONS)) {
             return;
         }

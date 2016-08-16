@@ -26,18 +26,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class EventNotifierServlet extends HttpServlet {
-
-    private DatabaseReference firebase;
+public class EventNotifierServlet extends ShaharitServlet {
     private static final Logger logger = Logger.getLogger(EventNotifierServlet.class.getName());
     private static final String anonymousImageUrl = "https://lh3.googleusercontent.com/-Kx8qBZwVREc/AAAAAAAAAAI/AAAAAAAAAAA/GWTS1klu7QQ/photo.jpg?sz=256";
-
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        FirebaseInitializer.initializeFirebase();
-        firebase = FirebaseDatabase.getInstance().getReference();
-    }
 
 
     @Override
@@ -127,7 +118,7 @@ public class EventNotifierServlet extends HttpServlet {
 
                                 Object gender = buddyDataSnapshot.child("gender").getValue();
                                 String buddyGender = gender != null ? gender.toString() : "male";
-                                String buddyPhoto = buddyImageUrl != null ? buddyImageUrl.toString() : null;
+                                String buddyPhoto = buddyImageUrl != null ? buddyImageUrl : null;
                                 //String buddyPhoto = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=96";
                                 String buddyToken = buddyDataSnapshot.child("regId").toString();
 //                                String buddyToken = "f2aIW9hBC0A:APA91bFR4vmjPNzNyHVjLCin2W2lyTpIgTXT66kjBM1Qwc4CWorc5QbQqrtYfERd2Xt90xTBsoo1i2CmCMAjJCg92kqbEWlPgKx-uu4DYpYCXLmLGsv3L7K8WsBeFmG2FF-4Bb37aYxs";

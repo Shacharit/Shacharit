@@ -23,19 +23,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BdayNotifierServlet extends HttpServlet {
+public class BdayNotifierServlet extends ShaharitServlet {
     // Firebase keys shared with client applications
-    private DatabaseReference firebase;
-
     // Servlet members
     private Map<String, Gift> mGiftsToSend = new HashMap<>();
 
 
-    @Override
-    public void init(ServletConfig config) {
-        FirebaseInitializer.initializeFirebase();
-        firebase = FirebaseDatabase.getInstance().getReference();
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -79,7 +73,7 @@ public class BdayNotifierServlet extends HttpServlet {
                         continue;
                     }
 
-                    String userName = userDs.getKey().toString();
+                    String userName = userDs.getKey();
                     GiftEvent event = new GiftEvent(userName);
 
                     String userGender = userDs.child("gender").getValue().toString();

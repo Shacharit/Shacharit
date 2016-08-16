@@ -22,11 +22,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GiftSendingServlet extends HttpServlet {
+public class GiftSendingServlet extends ShaharitServlet {
     private static final long serialVersionUID = 8126789192972477663L;
-
-    // Firebase keys shared with client applications
-    private DatabaseReference firebase;
 
     // Servlet members
     private Map<String, SentGift> mGiftsToSend = new HashMap<>();
@@ -34,13 +31,6 @@ public class GiftSendingServlet extends HttpServlet {
     // Constants:
     private static final String mNotificationTitle = "קיבלת מתנה";
     private static final String mNotificationMessage = "";
-
-
-    @Override
-    public void init(ServletConfig config) {
-        FirebaseInitializer.initializeFirebase();
-        firebase = FirebaseDatabase.getInstance().getReference();
-    }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -1,39 +1,27 @@
 package org.shaharit.face2face.backend.servlets;
 
-import org.shaharit.face2face.backend.FcmMessenger;
-import org.shaharit.face2face.backend.FirebaseInitializer;
-import org.shaharit.face2face.backend.ShareRequest;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.shaharit.face2face.backend.FcmMessenger;
+import org.shaharit.face2face.backend.ShareRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ShareEmailServlet extends HttpServlet {
+public class ShareEmailServlet extends ShaharitServlet {
     private static final long serialVersionUID = 8126789192972477663L;
-
-    // Firebase keys shared with client applications
-    private DatabaseReference firebase;
 
     // Constants:
     public static String SendEmailAction = "send_email";
-
-    @Override
-    public void init(ServletConfig config) {
-        FirebaseInitializer.initializeFirebase();
-        firebase = FirebaseDatabase.getInstance().getReference();
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
