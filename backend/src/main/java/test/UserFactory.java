@@ -1,7 +1,6 @@
 package test;
 
-import com.google.common.collect.ImmutableList;
-import com.google.face2face.backend.User;
+import org.shaharit.face2face.backend.User;
 
 import java.util.List;
 

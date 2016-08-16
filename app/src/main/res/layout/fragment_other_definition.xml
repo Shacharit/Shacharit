@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/other_definition"
-    tools:context=".OtherDefinitionFragment">
+    tools:context="org.shaharit.face2face.OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layoutDirection="rtl"
                 android:layout_above="@id/button3">
-                <com.google.face2face.FlowLayout
+                <org.shaharit.face2face.FlowLayout
                     android:id="@+id/flow_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OtherDefinitionFragment">
+    tools:context="org.shaharit.face2face.OtherDefinitionFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layoutDirection="rtl"
                 android:layout_above="@id/fragment_self_definition_next_button">
-                <com.google.face2face.FlowLayout
+                <org.shaharit.face2face.FlowLayout
                     android:id="@+id/fragment_self_definition_flow_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

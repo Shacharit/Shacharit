@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.google.face2face.MatchActivity">
+    tools:context="org.shaharit.face2face.MatchActivity">
 
     <ScrollView
         android:id="@+id/match_scroll_view"

@@ -1,7 +1,7 @@
 package test;
 import com.google.common.collect.ImmutableList;
-import com.google.face2face.backend.User;
-import com.google.face2face.backend.services.Matcher;
+import org.shaharit.face2face.backend.User;
+import org.shaharit.face2face.backend.services.Matcher;
 
 import org.junit.After;
 import org.junit.Before;

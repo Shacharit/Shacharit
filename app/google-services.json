@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "539475951317-ocddpqolap03fht9fefdcs67oses4qlg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "61F471DB50D87604157F6C3A24151A229B3E0E2A"
+          }
+        },
+        {
+          "client_id": "539475951317-5ehi17ta94ndfgu1ial7muqg1qo0k25r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.face2face",
+            "certificate_hash": "520F02F51ABE1C5E9BA90ADD9C7F0246975D6720"
+          }
+        },
+        {
           "client_id": "539475951317-i4kt4fq2ipn6uljpmkdtvd3fqk1psqek.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -75,6 +91,50 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.google.face2face",
+            "certificate_hash": "587390D6FF3FB376958F48167BF2C58776FDE90A"
+          }
+        },
+        {
+          "client_id": "539475951317-vsuq9tosmrn9jvcejelmn7u4qeuof7p6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzqMoWDBLhv43LtkUWLlTJprfbzdPHp5A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539475951317-vsuq9tosmrn9jvcejelmn7u4qeuof7p6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539475951317:android:c2f0926c7b5811db",
+        "android_client_info": {
+          "package_name": "org.shaharit.face2face"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539475951317-h1glgpsm5c37n8d9p8g2dbc498l8p0oq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.shaharit.face2face",
             "certificate_hash": "587390D6FF3FB376958F48167BF2C58776FDE90A"
           }
         },
