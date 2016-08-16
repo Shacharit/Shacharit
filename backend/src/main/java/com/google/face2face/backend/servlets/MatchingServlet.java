@@ -120,6 +120,7 @@ public class MatchingServlet extends HttpServlet {
     }
 
     private void handleFoundMatch(List<String> logsInCallback, List<User> buddiesForCurrentMatch, User currentUser) {
+        System.out.println("Hello");
         if (buddiesForCurrentMatch.size() > 0) {
             List<User> disjunction = listUtils.nameDisjunction(buddiesInDb.get(currentUser.uid), buddiesForCurrentMatch);
 
@@ -215,13 +216,10 @@ public class MatchingServlet extends HttpServlet {
             user.interests.put(interest, new ArrayList<String>());
 
             for (DataSnapshot interest_inner_ds : interests_ds.getChildren()) {
-                System.out.println("Found 1");
                 user.interests.get(interest).add(interest_inner_ds.getValue().toString());
             }
         }
         users.add(user);
-
-
     }
 
     private String getCurrentTime() {

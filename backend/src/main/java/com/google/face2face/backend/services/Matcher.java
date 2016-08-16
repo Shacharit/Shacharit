@@ -59,7 +59,7 @@ public class Matcher {
         for (int i = 0; i < scoreMatrix.length; i++) {
             if (i == userIndex) continue;
             double currentValue = scoreMatrix[userIndex][i];
-            if (currentValue > maxMatch && currentValue > 2) {
+            if (currentValue > maxMatch && currentValue > 1) {
                 maxMatch = currentValue;
                 userWithMaxMatch = i;
             }
@@ -72,7 +72,7 @@ public class Matcher {
         for (int i = 0; i < scoreMatrix.length; i++) {
             if (i == userIndex) continue;
             double currentValue = scoreMatrix[userIndex][i];
-            if (currentValue > 2) {
+            if (currentValue > 1) {
                 matchedUsersIndices.add(i);
             }
         }
