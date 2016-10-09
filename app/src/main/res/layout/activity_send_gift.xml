@@ -20,14 +20,7 @@ tools:context="org.shaharit.face2face.SendGiftActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/send_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/send_message_button_text"
-            android:textColor="@android:color/black"
-            android:background = "@drawable/oval_button" />
+    <!-- TODO: add facebook and whatsapp buttons here -->
     </LinearLayout>
 </LinearLayout>
 
@@ -37,6 +30,17 @@ tools:context="org.shaharit.face2face.SendGiftActivity">
     android:layout_height="match_parent"
     android:layout_above="@id/contact" >
 
-    <include layout="@layout/buddy_message_layout"/>
+    <LinearLayout
+        android:id="@+id/match_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <include layout="@layout/buddy_message_layout"/>
+
+        <include layout="@layout/send_gifts_buttons_layout"/>
+    </LinearLayout>
+
 </ScrollView>
 </RelativeLayout>

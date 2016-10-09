@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/buddy_image"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:contentDescription="@string/buddy_image_description"
+        android:background="@drawable/ic_account_circle_black_36dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/buddy_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="ספיידרמן"
+        android:textSize="16sp"
+        android:textColor="#666666" />
+</LinearLayout>

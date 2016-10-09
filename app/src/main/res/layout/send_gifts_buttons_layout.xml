@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/send_gift_buttons_layout"
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- TODO: Add relevant icons (flowers, chat, gift) to buttons -->
+
+    <Button
+        style="@style/OvalButton"
+        android:id="@+id/send_message_button"
+        android:text="@string/send_message_button_text" />
+
+    <Button
+        style="@style/OvalButton"
+        android:id="@+id/send_flowers_button"
+        android:text="@string/send_flowers_button_text" />
+
+    <Button
+        style="@style/OvalButton"
+        android:id="@+id/send_gift_button"
+        android:text="@string/send_gift_button_text" />
+
+    <!--android:text="@string/send_gift_button_text"-->
+</LinearLayout>

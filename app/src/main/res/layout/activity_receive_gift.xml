@@ -18,14 +18,14 @@ tools:context="org.shaharit.face2face.ReceiveGiftActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!--<Button-->
-            <!--android:id="@+id/emailButton"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:text="שלח מייל"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:background = "@drawable/oval_button" />-->
+        <Button
+            android:id="@+id/emailButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="שלח מייל"
+            android:textColor="@android:color/black"
+            android:background = "@drawable/oval_button" />
     </LinearLayout>
 </LinearLayout>
 

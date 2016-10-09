@@ -6,12 +6,36 @@
     android:layout_height="match_parent"
     tools:context="org.shaharit.face2face.MatchActivity">
 
+    <!-- TODO: Add whatsapp and facebook buttons centered, at the bottom of the page -->
+
     <ScrollView
-        android:id="@+id/match_scroll_view"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/contact" >
 
-        <include layout="@layout/buddy_message_layout"/>
+        <LinearLayout
+            android:id="@+id/match_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layoutDirection="rtl">
+            <include layout="@layout/picture_and_name_layout"/>
+
+            <TextView
+                android:id="@+id/match_found_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="10sp"
+                android:text="@string/found_match_str"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000" />
+
+            <!-- TODO: Add the matched interests dynamically here -->
+
+            <include layout="@layout/send_gifts_buttons_layout"/>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -45,7 +45,10 @@
 
     // Activities
     <string name="buddy_image_description">התמונה של הבאדי שלך</string>
+    <string name="found_match_str">נמצאה התאמה בתחומי העניין הבאים:</string>
     <string name="send_message_button_text">שלח הודעה</string>
+    <string name="send_flowers_button_text">שלח פרחים</string>
+    <string name="send_gift_button_text">שלח מתנה</string>
     <string name="send_video_button_text">שלח סרטון</string>
     <string name="send_present_button_text">שלח מתנה</string>
     <string name="send_email_button_text">שלח מייל</string>
@@ -64,4 +67,5 @@
     <string name="oneitemlimit">ניתן לבחור עד פריט אחד</string>
     <string name="itemlimit">ניתן לבחור עד %d פריטים</string>
     <string name="image_upload">העלה תמונה</string>
+
 </resources>
