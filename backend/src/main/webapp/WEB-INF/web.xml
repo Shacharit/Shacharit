@@ -12,7 +12,7 @@
 
         <init-param>
             <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
+            <param-value>/WEB-INF/IL Hackathon-deac621aef6f.json</param-value>
         </init-param>
         <init-param>
             <param-name>databaseUrl</param-name>
@@ -26,7 +26,7 @@
 
         <init-param>
             <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
+            <param-value>/WEB-INF/IL Hackathon-deac621aef6f.json</param-value>
         </init-param>
         <init-param>
             <param-name>databaseUrl</param-name>
@@ -40,7 +40,7 @@
 
         <init-param>
             <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
+            <param-value>/WEB-INF/IL Hackathon-deac621aef6f.json</param-value>
         </init-param>
         <init-param>
             <param-name>databaseUrl</param-name>
@@ -54,7 +54,7 @@
 
         <init-param>
             <param-name>credential</param-name>
-            <param-value>/WEB-INF/IL Hackathon-57153ee57f53.json</param-value>
+            <param-value>/WEB-INF/IL Hackathon-deac621aef6f.json</param-value>
         </init-param>
         <init-param>
             <param-name>databaseUrl</param-name>

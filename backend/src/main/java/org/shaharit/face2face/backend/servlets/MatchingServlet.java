@@ -83,7 +83,6 @@ public class MatchingServlet extends ShaharitServlet {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
