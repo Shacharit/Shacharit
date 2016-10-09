@@ -110,7 +110,6 @@ public class MatchingServlet extends ShaharitServlet {
     }
 
     private void handleFoundMatch(List<String> logsInCallback, List<User> buddiesForCurrentMatch, User currentUser) {
-        System.out.println("Hello");
         if (buddiesForCurrentMatch.size() > 0) {
             List<User> disjunction = listUtils.nameDisjunction(buddiesInDb.get(currentUser.uid), buddiesForCurrentMatch);
 
@@ -172,7 +171,6 @@ public class MatchingServlet extends ShaharitServlet {
         if (ds.hasChild(BUDDY)) {
             List<UserBasicInfo> buddiesFromDb = new ArrayList<>();
             for (DataSnapshot buddiesDs : ds.child(BUDDY).getChildren()) {
-
                 String uid = buddiesDs.child(UID).getValue().toString();
                 String imageUrl = buddiesDs.hasChild(IMAGE_URL) ? buddiesDs.child(IMAGE_URL).getValue().toString() : "";
                 UserBasicInfo userBasicInfo = new UserBasicInfo();
