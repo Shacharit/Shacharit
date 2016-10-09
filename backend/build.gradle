@@ -38,3 +38,32 @@ appengine {
         oauth2 = true
     }
 }
+
+import groovy.swing.SwingBuilder
+def f = new File('backend/src/main/webapp/WEB-INF/IL Hackathon-57153ee57f53.json')
+if (!f.exists()) {
+    new SwingBuilder().edt {
+        dialog(modal: true, // Otherwise the build will continue running before you closed the dialog
+                title: 'service key configuration missing', // Dialog title
+                alwaysOnTop: false, // pretty much what the name says
+                resizable: false, // Don't allow the user to resize the dialog
+                locationRelativeTo: null, // Place dialog in center of the screen
+                pack: true, // We need to pack the dialog (so it will take the size of it's children
+                show: true // Let's show it
+        ) {
+            vbox { // Put everything below each other
+                label(text: "Missing the service key file.")
+                label(text: "Please download the file from :")
+                textField(text: "https://drive.google.com/uc?export=download&id=0B9DQr-Q_7tMCNFJrV3FQVW5DaWM",
+                        editable: false)
+                label(text: "And put it in 'backend/src/main/webapp/WEB-INF/IL Hackathon-57153ee57f53.json'")
+                button(defaultButton: true, text: 'OK', actionPerformed: {
+                    dispose(); // Close dialog
+                })
+            }
+        }
+    }
+    if (!f.exists()) {
+        throw new GradleException('Couldn\'t file file: backend/src/main/webapp/WEB-INF/IL Hackathon-57153ee57f53.json')
+    }
+}

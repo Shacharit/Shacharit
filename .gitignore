@@ -5,3 +5,5 @@ local.properties
 build
 app/*.apk
 *.DS
+
+backend/src/main/webapp/WEB-INF/IL\ Hackathon-57153ee57f53.json
