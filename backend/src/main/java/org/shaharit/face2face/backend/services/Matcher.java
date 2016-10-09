@@ -18,9 +18,10 @@ public class Matcher {
             for (int j = i + 1; j < users.size(); j++) {
                 User firstUser = users.get(i);
                 User secondUser = users.get(j);
-                List<String> intersection = listUtils.intersection(firstUser.otherDefs, secondUser.selfDefs);
+                List<String> intersection1 = listUtils.intersection(firstUser.otherDefs, secondUser.selfDefs);
+                List<String> intersection2 = listUtils.intersection(firstUser.selfDefs, secondUser.otherDefs);
 
-                if (intersection.size() == 0) continue;
+                if (intersection1.size() == 0 || intersection2.size() == 0) continue;
                 // TODO: Decide on whether other-gendered users can match male/female-gendered users
                 //       and if so change the following line.
                 if(!firstUser.gender.equalsIgnoreCase(secondUser.gender)) continue;
@@ -45,6 +46,7 @@ public class Matcher {
     private double interestsScore(java.util.List<String> list1, java.util.List<String> list2) {
         java.util.List<String> intersection = listUtils.intersection(list1, list2);
 
+        // TODO: Document the weird ∑2^-i scores.
         double score = 0;
         for (int i = 0; i < intersection.size(); i++) {
             score += Math.pow(2, -i);
