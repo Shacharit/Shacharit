@@ -1,0 +1,130 @@
+package org.shaharit.face2face.backend.tasks;
+
+import com.google.common.collect.Lists;
+
+import org.junit.Test;
+import org.mockito.ArgumentMatcher;
+import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
+import org.shaharit.face2face.backend.models.User;
+import org.shaharit.face2face.backend.push.FcmMessenger;
+import org.shaharit.face2face.backend.push.PushService;
+import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+
+import java.util.Map;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
+public class MatchingTaskPushTest {
+
+    private static final String EXPECTED_PUSH_TITLE = "new buddies";
+
+    @Test
+    public void whenUserGetsMatchedWithUserHeGetsAPush() throws Exception {
+        final User user1 = new UserBuilder().build();
+        final User user2 = new UserBuilder()
+                .withMatchingPersonalityFor(user1)
+                .build();
+
+        FcmMessenger mockMessenger = mock(FcmMessenger.class);
+        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
+                new PushService(mockMessenger)).execute();
+
+        // Assert both got message
+        verify(mockMessenger).sendMessage(eq(user1.regId), anyString(), anyString(),
+                argThat(isExtrasForNewBuddy(user2)));
+        verify(mockMessenger).sendMessage(eq(user2.regId), anyString(), anyString(),
+                argThat(isExtrasForNewBuddy(user1)));
+    }
+
+    @Test
+    public void messageIsOnlySentForNewBuddies() throws Exception {
+        final User user1 = new UserBuilder().build();
+        final User user2 = new UserBuilder()
+                .withMatchingPersonalityFor(user1)
+                .build();
+
+        // First we make make a call with no assertion just to match the users
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
+        new MatchingTask(userDb,
+                new PushService(mock(FcmMessenger.class))).execute();
+
+        final User user3 = new UserBuilder()
+                .withMatchingPersonalityFor(user1)
+                .build();
+        FcmMessenger mockMessenger = mock(FcmMessenger.class);
+
+        userDb.addUser(user3);
+
+        new MatchingTask(userDb, new PushService(mockMessenger)).execute();
+
+        // Assert only got message for new user
+        verify(mockMessenger).sendMessage(eq(user1.regId), anyString(), anyString(),
+                argThat(isExtrasForNewBuddy(user3)));
+        verify(mockMessenger,never()).sendMessage(eq(user1.regId), anyString(), anyString(),
+                argThat(isExtrasForNewBuddy(user2)));
+    }
+
+    @Test
+    public void messageIsSentWithAppropriateMessageForMale() throws Exception {
+        final User user1 = new UserBuilder()
+                .withMaleGender()
+                .build();
+        final User user2 = new UserBuilder()
+                .withMatchingPersonalityFor(user1)
+                .build();
+
+        FcmMessenger mockMessenger = mock(FcmMessenger.class);
+        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
+                new PushService(mockMessenger)).execute();
+
+        verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
+                eq("say hi to him"),
+                argThat(isExtrasForNewBuddy(user2)));
+    }
+
+    @Test
+    public void messageIsSentWithAppropriateMessageForFemale() throws Exception {
+        final User user1 = new UserBuilder()
+                .withFemaleGender()
+                .build();
+        final User user2 = new UserBuilder()
+                .withMatchingPersonalityFor(user1)
+                .build();
+
+        FcmMessenger mockMessenger = mock(FcmMessenger.class);
+        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
+                new PushService(mockMessenger)).execute();
+
+        verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
+                eq("say hi to her"),
+                argThat(isExtrasForNewBuddy(user2)));
+    }
+
+    private NewBuddyExtrasMatcher isExtrasForNewBuddy(User user) {
+        return new NewBuddyExtrasMatcher(user);
+    }
+
+    private class NewBuddyExtrasMatcher extends ArgumentMatcher<Map<String, String>> {
+        private User user;
+
+        NewBuddyExtrasMatcher(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public boolean matches(Object argument) {
+            Map<String, String> extras = (Map<String, String>) argument;
+
+            return extras.get("uid").equals(user.uid)
+                    && extras.get("image_url").equals(user.imageUrl)
+                    && extras.get("action").equals("match");
+        }
+    }
+}

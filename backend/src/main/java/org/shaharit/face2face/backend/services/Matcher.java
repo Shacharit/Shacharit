@@ -1,6 +1,6 @@
 package org.shaharit.face2face.backend.services;
 
-import org.shaharit.face2face.backend.User;
+import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.utils.ListUtils;
 
 
@@ -24,7 +24,7 @@ public class Matcher {
                 if (intersection1.size() == 0 || intersection2.size() == 0) continue;
                 // TODO: Decide on whether other-gendered users can match male/female-gendered users
                 //       and if so change the following line.
-                if(!firstUser.gender.equalsIgnoreCase(secondUser.gender)) continue;
+                if(!firstUser.gender.equals(secondUser.gender)) continue;
 
                 double score = 0.0;
                 for (String interestKey : firstUser.interests.keySet()) {
@@ -54,19 +54,20 @@ public class Matcher {
         return score;
     }
 
-    public int getMatchForUser(int userIndex, double[][] scoreMatrix) {
-        double maxMatch = -1;
-        int userWithMaxMatch = -1;
-        for (int i = 0; i < scoreMatrix.length; i++) {
-            if (i == userIndex) continue;
-            double currentValue = scoreMatrix[userIndex][i];
-            if (currentValue > maxMatch && currentValue > 1) {
-                maxMatch = currentValue;
-                userWithMaxMatch = i;
-            }
-        }
-        return userWithMaxMatch;
-    }
+    // This is not needed anymore since we now match multiple users
+//    public int getMatchForUser(int userIndex, double[][] scoreMatrix) {
+//        double maxMatch = -1;
+//        int userWithMaxMatch = -1;
+//        for (int i = 0; i < scoreMatrix.length; i++) {
+//            if (i == userIndex) continue;
+//            double currentValue = scoreMatrix[userIndex][i];
+//            if (currentValue > maxMatch && currentValue > 1) {
+//                maxMatch = currentValue;
+//                userWithMaxMatch = i;
+//            }
+//        }
+//        return userWithMaxMatch;
+//    }
 
     public List<Integer> getMatchesForUser(int userIndex, double[][] scoreMatrix) {
         List<Integer> matchedUsersIndices = new ArrayList<>();

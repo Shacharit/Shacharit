@@ -1,6 +1,8 @@
-package org.shaharit.face2face.backend;
+package org.shaharit.face2face.backend.push;
 
 import com.google.appengine.repackaged.com.google.gson.Gson;
+
+import org.shaharit.face2face.backend.Content;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -11,7 +13,7 @@ import java.net.URL;
 import java.util.Map;
 
 public class FcmMessenger {
-    public static void sendPushMessage(String token, String title, String message, Map<String,String> extras) throws IOException {
+    public static void sendPushMessage(String token, String title, String message, Map<String, String> extras) throws IOException {
         try {
             final String encoding = "UTF-8";
 
@@ -63,5 +65,11 @@ public class FcmMessenger {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMessage(String token, String title, String message, Map<String, String> extras)
+            throws IOException {
+
+        FcmMessenger.sendPushMessage(token, title, message, extras);
     }
 }

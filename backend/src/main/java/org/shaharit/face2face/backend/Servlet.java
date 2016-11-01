@@ -12,7 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.*;
 
-import static org.shaharit.face2face.backend.FcmMessenger.sendPushMessage;
+import static org.shaharit.face2face.backend.push.FcmMessenger.sendPushMessage;
 
 public class Servlet extends HttpServlet {
     @Override
