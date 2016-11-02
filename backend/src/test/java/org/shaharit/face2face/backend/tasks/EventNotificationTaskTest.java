@@ -53,7 +53,7 @@ public class EventNotificationTaskTest {
         new EventNotificationTask(userDb, eventsDb, new PushService(mockMessenger), calendar)
                 .execute();
 
-        verify(mockMessenger).sendMessage(eq(user2.regId), anyString(), anyString(),
+        verify(mockMessenger).sendMessage(eq(user1.regId), anyString(), anyString(),
                 anyMap());
     }
 
