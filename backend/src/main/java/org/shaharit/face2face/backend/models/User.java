@@ -2,6 +2,7 @@ package org.shaharit.face2face.backend.models;
 
 import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.Iterables;
+import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class User {
 
         for (User user : buddiesForCurrentMatch) {
             if (!hasBuddyWithId(user.uid)) {
-                Buddy buddy = new Buddy(user.uid, user.displayName);
+                Buddy buddy = new Buddy(user);
                 buddies.add(buddy);
                 newBuddies.add(user);
             }
@@ -50,9 +51,18 @@ public class User {
     private boolean hasBuddyWithId(final String uid) {
         return Iterables.any(buddies, new Predicate<Buddy>() {
             @Override
-            public boolean apply(@Nullable Buddy buddy) {
+            public boolean apply(Buddy buddy) {
                 return buddy.uid.equals(uid);
             }
         });
+    }
+
+    public List<Buddy> getRelevantBuddiesForEvent(final Event event) {
+        return Lists.newArrayList(Iterables.filter(buddies, new Predicate<Buddy>() {
+            @Override
+            public boolean apply(Buddy buddy) {
+                return buddy.caresAboutEvent(event);
+            }
+        }));
     }
 }

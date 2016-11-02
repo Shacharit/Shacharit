@@ -69,7 +69,6 @@ public class FcmMessenger {
 
     public void sendMessage(String token, String title, String message, Map<String, String> extras)
             throws IOException {
-
         FcmMessenger.sendPushMessage(token, title, message, extras);
     }
 }

@@ -78,7 +78,7 @@ public class FirebaseUserDb implements UserDb {
 
         if (ds.hasChild(BUDDY)) {
             for (DataSnapshot buddiesDs : ds.child(BUDDY).getChildren()) {
-                user.buddies.add(buddiesDs.getValue(Buddy.class));
+                user.buddies.add(buddyFromDs(buddiesDs));
             }
         }
         if (!ds.hasChild(SELF_DEFINITIONS)) {
@@ -112,9 +112,35 @@ public class FirebaseUserDb implements UserDb {
         return user;
     }
 
+    private Buddy buddyFromDs(DataSnapshot buddyDs) {
+        Buddy buddy = new Buddy();
+        buddy.imageUrl = buddyDs.child("imageUrl").getValue().toString();
+        buddy.uid = buddyDs.child(UID).getValue().toString();
+        buddy.displayName = buddyDs.child("displayName").getValue().toString();
+        buddy.gender = Gender.valueOf(buddyDs.child("gender").getValue().toString().toUpperCase());
+
+        for (DataSnapshot selfDefsDs : buddyDs.child("selfDefs").getChildren()) {
+            buddy.selfDefs.add(selfDefsDs.getValue().toString());
+        }
+
+        return buddy;
+    }
+
     @Override
     public void updateUserBuddies(User user) {
-        firebase.child("users").child(user.uid).child("buddy")
-                .setValue(user.buddies);
+
+        DatabaseReference userBuddiesRef = firebase.child("users").child(user.uid).child("buddy");
+
+        for (int i = 0; i < user.buddies.size(); i++) {
+            Buddy buddy = user.buddies.get(i);
+
+            userBuddiesRef.child("imageUrl").setValue(buddy.imageUrl);
+            userBuddiesRef.child(UID).setValue(buddy.uid);
+            userBuddiesRef.child("displayName").setValue(buddy.displayName);
+            userBuddiesRef.child("gender").setValue(buddy.gender);
+            userBuddiesRef.child("selfDefs").setValue(buddy.selfDefs);
+        }
+
+        userBuddiesRef.setValue(user.buddies);
     }
 }

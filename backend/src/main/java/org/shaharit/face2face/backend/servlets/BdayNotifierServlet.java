@@ -1,13 +1,10 @@
 package org.shaharit.face2face.backend.servlets;
 
-import org.shaharit.face2face.backend.FirebaseInitializer;
-import org.shaharit.face2face.backend.Gift;
+import org.shaharit.face2face.backend.models.Gift;
 import org.shaharit.face2face.backend.GiftEvent;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
@@ -17,9 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

@@ -13,6 +13,7 @@ import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
+import org.shaharit.face2face.backend.testhelpers.TestUtils;
 import org.shaharit.face2face.backend.testhelpers.UserBuilder;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.mock;
 
 public class MatchingTaskTest {
-    private final PushService stubbedPushService = new PushService(mock(FcmMessenger.class));
+    private final PushService stubbedPushService = TestUtils.stubbedPushServide();
 
     @Test
     public void emptyDb() throws Exception {

@@ -23,6 +23,7 @@ public class UserBuilder {
         put(HOBBIES, Lists.newArrayList("hobby1", "hobby2", "hobby3"));
     }};
     private Gender gender = Gender.MALE;
+    private String displayName;
 
     public User build() {
         User user = new User(Integer.toString(++id));
@@ -34,6 +35,7 @@ public class UserBuilder {
         user.interests = interests;
         user.gender = gender;
         user.imageUrl = "http://" + user.uid + ".jpg";
+        user.displayName = displayName == null ? "user" + user.uid : displayName;
         return user;
     }
 
@@ -89,6 +91,11 @@ public class UserBuilder {
 
     public UserBuilder withFemaleGender() {
         gender = Gender.FEMALE;
+        return this;
+    }
+
+    public UserBuilder withDisplayName(String displayName) {
+        this.displayName = displayName;
         return this;
     }
 }

@@ -8,7 +8,5 @@ public interface UserDb {
     void getUsers(UsersHandler handler);
     void updateUserBuddies(User user);
 
-    interface UsersHandler {
-        void processResult(List<User> users);
-    }
+    interface UsersHandler extends ResultHandler<List<User>> {}
 }
