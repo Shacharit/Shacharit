@@ -10,7 +10,7 @@ import org.shaharit.face2face.backend.database.EventDb;
 import org.shaharit.face2face.backend.models.Event;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.GenderCommunications;
-import org.shaharit.face2face.backend.models.Gift;
+import org.shaharit.face2face.backend.models.GiftSuggestion;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,13 +51,13 @@ public class FirebaseEventDb implements EventDb {
         });
     }
 
-    private List<Gift> giftsFromSnapshot(DataSnapshot eventDs) {
-        List<Gift> res = Lists.newArrayList();
+    private List<GiftSuggestion> giftsFromSnapshot(DataSnapshot eventDs) {
+        List<GiftSuggestion> res = Lists.newArrayList();
 
         for (int i = 0; i < 3; i++) {
             final DataSnapshot giftDs = eventDs.child("gift" + (i + 1));
 
-            res.add(new Gift(
+            res.add(new GiftSuggestion(
                     greetingsFromGiftDs(giftDs),
                     ctaFromGiftDs(giftDs),
                     giftDs.child("url").getValue().toString(),

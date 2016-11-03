@@ -1,13 +1,12 @@
 package org.shaharit.face2face.backend.tasks;
 
-import com.google.appengine.repackaged.com.google.common.base.Flag;
 import com.google.common.collect.Lists;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.GenderCommunications;
-import org.shaharit.face2face.backend.models.Gift;
+import org.shaharit.face2face.backend.models.GiftSuggestion;
 import org.shaharit.face2face.backend.database.EventDb;
 import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.database.fakes.InMemoryEventsDb;
@@ -94,7 +93,7 @@ public class EventNotificationTaskPushTest {
         String type = "greeting";
         Gender gend = Gender.MALE;
         Event event = new EventBuilder()
-                .withGift(new Gift(
+                .withGift(new GiftSuggestion(
                         new GenderCommunications().addCommunication(gend, gend,
                                 "חושב עליך ואיך עובר עליך היום"),
                         new GenderCommunications()
@@ -120,7 +119,7 @@ public class EventNotificationTaskPushTest {
         String type = "video";
         Gender gender = Gender.FEMALE;
         Event event = new EventBuilder()
-                .withGift(new Gift(
+                .withGift(new GiftSuggestion(
                         new GenderCommunications().addCommunication(gender, gender,
                                 "חושבת עלייך ואיך עובר עלייך היום"),
                         new GenderCommunications()

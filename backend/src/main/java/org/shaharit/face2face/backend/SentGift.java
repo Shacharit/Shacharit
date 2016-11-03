@@ -12,7 +12,7 @@ public class SentGift {
     public boolean isSent;
     public String date;
 
-    // Gift
+    // GiftSuggestion
     public String eventTitle;
     public String eventText;
     public String cta;

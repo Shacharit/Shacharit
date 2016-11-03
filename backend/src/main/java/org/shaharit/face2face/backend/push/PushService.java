@@ -5,6 +5,7 @@ import org.shaharit.face2face.backend.models.Event;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.GenderCommunications;
 import org.shaharit.face2face.backend.models.Gift;
+import org.shaharit.face2face.backend.models.GiftSuggestion;
 import org.shaharit.face2face.backend.models.User;
 
 import java.io.IOException;
@@ -16,6 +17,11 @@ public class PushService {
     private static final Map<Gender, String> newBuddyMessage = new HashMap<Gender, String>() {{
         put(Gender.MALE, "say hi to him");
         put(Gender.FEMALE, "say hi to her");
+    }};
+
+    private static final Map<Gender, String> gotGiftTitles = new HashMap<Gender, String>() {{
+        put(Gender.MALE, "חושב עליך");
+        put(Gender.FEMALE, "חושבת עליך");
     }};
 
     private static final GenderCommunications eventPushTitles = new GenderCommunications() {{
@@ -93,11 +99,34 @@ public class PushService {
         }
     }
 
-    private String giftCsv(Gift gift, String senderName, Gender recipient, Gender sender) {
+    private String giftCsv(GiftSuggestion gift, String senderName, Gender recipient, Gender sender) {
         return String.format("cta:%s,url:%s,type:%s,text:%s",
                 gift.cta.getCommunication(sender, recipient),
                 gift.url,
                 gift.type,
                 senderName + " " + gift.greeting.getCommunication(sender, recipient));
+    }
+
+    public void sendPushAboutGift(String regId, Gift gift) {
+        HashMap<String, String> extras = new HashMap<>();
+        extras.put("action", "receive_gift");
+
+        // Sender information
+        extras.put("senderName", gift.giftSender.displayName);
+        extras.put("senderImageUrl", gift.giftSender.imageUrl);
+
+        // Event info
+        extras.put("eventTitle", gift.eventTitle);
+
+        try {
+            if (shouldSkipSending(regId)) {
+                return;
+            }
+
+            messenger.sendMessage(regId,gotGiftTitles.get(gift.giftSender.gender),gift.text,
+                    extras);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

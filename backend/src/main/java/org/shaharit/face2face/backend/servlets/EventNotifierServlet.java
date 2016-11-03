@@ -65,7 +65,7 @@ public class EventNotifierServlet extends ShaharitServlet {
 //                    event.description = event_ds.child("description").getValue().toString();
 //                    for (int i = 0; i < 3; i++) {
 //                        DataSnapshot gift_ds = event_ds.child("gift" + (i + 1));
-//                        Gift gift = giftFromSnapshot(gift_ds);
+//                        GiftSuggestion gift = giftFromSnapshot(gift_ds);
 //
 //                        event.gifts[i] = gift;
 //                    }
@@ -139,7 +139,7 @@ public class EventNotifierServlet extends ShaharitServlet {
 //
 //                                        //gift1: "type:<type>,url:<url>,text:<text>,cta:<cta>
 //                                        for (int i = 0; i < giftEvent.gifts.length; i++) {
-//                                            Gift gift = giftEvent.gifts[i];
+//                                            GiftSuggestion gift = giftEvent.gifts[i];
 //                                            data.put("gift" + (i + 1), "text:" + gift.text + "," +
 //                                                    "cta:" + gift.cta + "," + "url:"
 //                                                    + gift.url + "," + "type:" + gift.type);
@@ -186,8 +186,8 @@ public class EventNotifierServlet extends ShaharitServlet {
 //
 //    }
 //
-//    private Gift giftFromSnapshot(DataSnapshot gift_ds) {
-//        Gift gift = new Gift();
+//    private GiftSuggestion giftFromSnapshot(DataSnapshot gift_ds) {
+//        GiftSuggestion gift = new GiftSuggestion();
 //
 //        gift.cta = gift_ds.child("cta male2male").getValue().toString();
 //        gift.text = gift_ds.child("greeting male2male").getValue().toString();

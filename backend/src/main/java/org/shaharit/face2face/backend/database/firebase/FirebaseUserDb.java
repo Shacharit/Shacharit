@@ -13,6 +13,7 @@ import org.shaharit.face2face.backend.models.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FirebaseUserDb implements UserDb {
     private static final String SELF_DEFINITIONS = "self-definitions";
@@ -25,6 +26,7 @@ public class FirebaseUserDb implements UserDb {
     private static final String BUDDY = "buddy";
     private static final String UID = "uid";
     private static final String DISPLAY_NAME = "display_name";
+    private static final String USERS = "users";
 
 
     private final DatabaseReference firebase;
@@ -35,7 +37,7 @@ public class FirebaseUserDb implements UserDb {
 
     @Override
     public void getUsers(final UsersHandler handler) {
-        firebase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebase.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<User> users = new ArrayList<>();
@@ -142,5 +144,25 @@ public class FirebaseUserDb implements UserDb {
         }
 
         userBuddiesRef.setValue(user.buddies);
+    }
+
+    @Override
+    public void getRegIdForUserIds(List<String> userIds, final RegIdsHandler handler) {
+        firebase.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Map<String, String> res = new HashMap<>();
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    res.put(ds.getKey(), ds.child(REG_ID).getValue().toString());
+                }
+
+                handler.processResult(res);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

@@ -9,7 +9,7 @@ import org.shaharit.face2face.backend.services.Matcher;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchingTask {
+public class MatchingTask implements Task {
     private UserDb userDb;
     private PushService pushService;
 
@@ -18,6 +18,7 @@ public class MatchingTask {
         this.pushService = pushService;
     }
 
+    @Override
     public void execute() {
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override

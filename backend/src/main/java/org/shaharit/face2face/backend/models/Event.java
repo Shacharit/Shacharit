@@ -1,8 +1,6 @@
 package org.shaharit.face2face.backend.models;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +10,10 @@ public class Event {
     public List<String> selfDefinitions;
     public Map<Gender, String> titleMap;
     public String description;
-    public List<Gift> gifts;
+    public List<GiftSuggestion> gifts;
 
     public Event(String date, List<String> selfDefinitions, Map<Gender, String> titleMap,
-                 String description, List<Gift> gifts) {
+                 String description, List<GiftSuggestion> gifts) {
         this.dateStr = date;
         this.selfDefinitions = selfDefinitions;
         this.titleMap = titleMap;

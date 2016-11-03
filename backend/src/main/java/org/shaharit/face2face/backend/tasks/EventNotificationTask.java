@@ -17,7 +17,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class EventNotificationTask {
+public class EventNotificationTask implements Task {
     private UserDb userDb;
     private final EventDb eventDb;
     private final PushService pushService;
@@ -30,6 +30,7 @@ public class EventNotificationTask {
         this.calendar = calendar;
     }
 
+    @Override
     public void execute() {
         eventDb.getEvents(new EventDb.EventResultHandler() {
             @Override

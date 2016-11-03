@@ -1,9 +1,8 @@
 package org.shaharit.face2face.backend.testhelpers;
 
-import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Lists;
 
-import org.shaharit.face2face.backend.models.Gift;
+import org.shaharit.face2face.backend.models.GiftSuggestion;
 import org.shaharit.face2face.backend.models.Event;
 import org.shaharit.face2face.backend.models.Gender;
 
@@ -15,7 +14,7 @@ public class EventBuilder {
     private final HashMap<Gender, String> titleMap = new HashMap<Gender, String>() {{
         put(Gender.MALE, "he is celebrating");
     }};
-    private final ArrayList<Gift> gifts = Lists.newArrayList();
+    private final ArrayList<GiftSuggestion> gifts = Lists.newArrayList();
     private String dateStr = "24-Dec-2016";
     private ArrayList<String> selfDefinitions = Lists.newArrayList("Def");
     private String description = "some desc";
@@ -44,7 +43,7 @@ public class EventBuilder {
         return this;
     }
 
-    public EventBuilder withGift(Gift gift) {
+    public EventBuilder withGift(GiftSuggestion gift) {
         gifts.add(gift);
         return this;
     }

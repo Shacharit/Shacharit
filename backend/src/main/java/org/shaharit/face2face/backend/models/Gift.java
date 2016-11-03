@@ -1,18 +1,17 @@
 package org.shaharit.face2face.backend.models;
 
 public class Gift {
-    public GenderCommunications greeting;
-    public String url;
-    public GenderCommunications cta;
-    public String type;
+    public final String id;
+    public String eventTitle;
+    public final String recipientUid;
+    public final GiftSender giftSender;
+    public String text;
 
-    public Gift() {
-    }
-
-    public Gift(GenderCommunications greeting, GenderCommunications cta, String url,  String type) {
-        this.greeting = greeting;
-        this.url = url;
-        this.cta = cta;
-        this.type = type;
+    public Gift(String id, String text, String eventTitle, String recipientUid, GiftSender giftSender) {
+        this.id = id;
+        this.eventTitle = eventTitle;
+        this.recipientUid = recipientUid;
+        this.text = text;
+        this.giftSender = giftSender;
     }
 }

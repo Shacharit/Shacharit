@@ -1,6 +1,6 @@
 package org.shaharit.face2face.backend.servlets;
 
-import org.shaharit.face2face.backend.models.Gift;
+import org.shaharit.face2face.backend.models.GiftSuggestion;
 import org.shaharit.face2face.backend.GiftEvent;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class BdayNotifierServlet extends ShaharitServlet {
     // Firebase keys shared with client applications
     // Servlet members
-    private Map<String, Gift> mGiftsToSend = new HashMap<>();
+    private Map<String, GiftSuggestion> mGiftsToSend = new HashMap<>();
 
 
 
