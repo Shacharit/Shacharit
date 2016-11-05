@@ -41,6 +41,10 @@ public class GiftSendingTask implements Task {
                 }
             });
 
+            if (gifts.isEmpty()) {
+                return;
+            }
+
             userDb.getRegIdForUserIds(recipientUserIds, new UserDb.RegIdsHandler() {
                 @Override
                 public void processResult(Map<String, String> uidToRegIdMap) {

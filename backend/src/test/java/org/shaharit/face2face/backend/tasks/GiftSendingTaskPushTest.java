@@ -32,13 +32,15 @@ public class GiftSendingTaskPushTest {
         User recipient = new UserBuilder().build();
         InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
 
-        Gift gift = new GiftBuilder(recipient.uid).withSenderGender(Gender.MALE).build();
+        Gift gift = new GiftBuilder(recipient.uid)
+                .withSenderName("רפי")
+                .withSenderGender(Gender.MALE).build();
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
         new GiftSendingTask(mockGiftDb, userDb, new PushService(mockMessenger)).execute();
 
-        verify(mockMessenger).sendMessage(eq(recipient.regId), eq("חושב עליך"), anyString(),
+        verify(mockMessenger).sendMessage(eq(recipient.regId), eq("רפי חושב עליך"), anyString(),
                 argThat(hasExtrasForPushAction("receive_gift")));
 
     }
@@ -48,13 +50,16 @@ public class GiftSendingTaskPushTest {
         User recipient = new UserBuilder().build();
         InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
 
-        Gift gift = new GiftBuilder(recipient.uid).withSenderGender(Gender.FEMALE).build();
+        Gift gift = new GiftBuilder(recipient.uid)
+                .withSenderGender(Gender.FEMALE)
+                .withSenderName("יפה")
+                .build();
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
         new GiftSendingTask(mockGiftDb, userDb, new PushService(mockMessenger)).execute();
 
-        verify(mockMessenger).sendMessage(eq(recipient.regId), eq("חושבת עליך"), anyString(),
+        verify(mockMessenger).sendMessage(eq(recipient.regId), eq("יפה חושבת עליך"), anyString(),
                 argThat(hasExtrasForPushAction("receive_gift")));
 
     }

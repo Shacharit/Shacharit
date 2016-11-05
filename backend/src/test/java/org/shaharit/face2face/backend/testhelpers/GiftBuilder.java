@@ -44,4 +44,9 @@ public class GiftBuilder {
         this.eventTitle = title;
         return this;
     }
+
+    public GiftBuilder withSenderName(String displayName) {
+        this.name = displayName;
+        return this;
+    }
 }

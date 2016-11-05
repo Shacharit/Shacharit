@@ -112,7 +112,8 @@ public class PushService {
         extras.put("action", "receive_gift");
 
         // Sender information
-        extras.put("senderName", gift.giftSender.displayName);
+        String senderName = gift.giftSender.displayName;
+        extras.put("senderName", senderName);
         extras.put("senderImageUrl", gift.giftSender.imageUrl);
 
         // Event info
@@ -123,7 +124,9 @@ public class PushService {
                 return;
             }
 
-            messenger.sendMessage(regId,gotGiftTitles.get(gift.giftSender.gender),gift.text,
+            messenger.sendMessage(regId,
+                    senderName + " " + gotGiftTitles.get(gift.giftSender.gender),
+                    gift.text,
                     extras);
         } catch (IOException e) {
             e.printStackTrace();
