@@ -3,17 +3,17 @@
     <cron>
         <url>/match</url>
         <description>find buddies to all users</description>
-        <schedule>every day 10:30</schedule>
+        <schedule>every 1 minutes</schedule>
     </cron>
     <cron>
         <url>/event_handler</url>
         <description>EventNotifierServlet</description>
-        <schedule>every day 11:30</schedule>
+        <schedule>every day 11:31</schedule>
     </cron>
     <cron>
         <url>/send_gift</url>
         <description>GiftSendingServlet</description>
-        <schedule>every day 11:00</schedule>
+        <schedule>every 5 minutes</schedule>
     </cron>
 
 </cronentries>
