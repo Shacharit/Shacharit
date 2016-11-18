@@ -1,4 +1,4 @@
-package org.shaharit.face2face.backend.testhelpers;
+package org.shaharit.face2face.backend.testhelpers.builders;
 
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 

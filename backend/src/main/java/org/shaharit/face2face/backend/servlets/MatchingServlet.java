@@ -2,6 +2,7 @@ package org.shaharit.face2face.backend.servlets;
 import org.shaharit.face2face.backend.database.firebase.FirebaseUserDb;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
+import org.shaharit.face2face.backend.services.FirebaseMatchingLog;
 import org.shaharit.face2face.backend.tasks.MatchingTask;
 
 import java.io.IOException;
@@ -25,9 +26,9 @@ public class MatchingServlet extends ShaharitServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
-        new MatchingTask(new FirebaseUserDb(firebase), new PushService(new FcmMessenger()))
-                .execute();
-
+        new MatchingTask(new FirebaseUserDb(firebase),
+                new PushService(new FcmMessenger()),
+                new FirebaseMatchingLog(firebase)).execute();
     }
 
 // Rafi: All logic moved to MatchingTask class

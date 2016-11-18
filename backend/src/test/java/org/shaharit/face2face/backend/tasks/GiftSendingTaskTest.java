@@ -5,13 +5,12 @@ import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import org.junit.Test;
 import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
 import org.shaharit.face2face.backend.database.fakes.MockGiftDb;
-import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.Gift;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
-import org.shaharit.face2face.backend.testhelpers.GiftBuilder;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.GiftBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.ArrayList;
 

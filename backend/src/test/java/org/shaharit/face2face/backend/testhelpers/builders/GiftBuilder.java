@@ -1,6 +1,4 @@
-package org.shaharit.face2face.backend.testhelpers;
-
-import com.google.appengine.repackaged.com.google.api.client.auth.openidconnect.IdTokenVerifier;
+package org.shaharit.face2face.backend.testhelpers.builders;
 
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.Gift;

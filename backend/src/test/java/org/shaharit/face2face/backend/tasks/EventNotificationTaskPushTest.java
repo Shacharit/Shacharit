@@ -15,9 +15,10 @@ import org.shaharit.face2face.backend.models.Event;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
-import org.shaharit.face2face.backend.testhelpers.EventBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.EventBuilder;
 import org.shaharit.face2face.backend.testhelpers.TestUtils;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.MatchingTaskBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -247,7 +248,7 @@ public class EventNotificationTaskPushTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, TestUtils.stubbedPushServide()).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
 
         event.dateStr = "24-Dec-2016";

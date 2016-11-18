@@ -8,13 +8,11 @@ import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
 import org.shaharit.face2face.backend.database.fakes.MockGiftDb;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.Gift;
-import org.shaharit.face2face.backend.models.GiftSender;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
-import org.shaharit.face2face.backend.testhelpers.ExtrasForPushAction;
-import org.shaharit.face2face.backend.testhelpers.GiftBuilder;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.GiftBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.Map;
 

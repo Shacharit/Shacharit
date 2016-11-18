@@ -10,10 +10,10 @@ import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
-import org.shaharit.face2face.backend.testhelpers.EventBuilder;
-import org.shaharit.face2face.backend.testhelpers.ExtrasForRecipientMatcher;
+import org.shaharit.face2face.backend.testhelpers.builders.EventBuilder;
 import org.shaharit.face2face.backend.testhelpers.TestUtils;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.MatchingTaskBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.Calendar;
 
@@ -38,7 +38,8 @@ public class EventNotificationTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).withPushService(stubbedPushService).build()
+                .execute();
 
         // Setup an event for christians
         EventDb eventsDb = new InMemoryEventsDb(new EventBuilder()
@@ -66,7 +67,8 @@ public class EventNotificationTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).withPushService(stubbedPushService).build()
+                .execute();
 
         // Setup an event for christians
         EventDb eventsDb = new InMemoryEventsDb(new EventBuilder()
@@ -97,7 +99,8 @@ public class EventNotificationTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user, relevantBuddy));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).withPushService(stubbedPushService).build()
+                .execute();
 
         // Setup an event for christians
         EventDb eventsDb = new InMemoryEventsDb(new EventBuilder()

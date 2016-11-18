@@ -11,10 +11,10 @@ import org.shaharit.face2face.backend.models.Buddy;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
-import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
 import org.shaharit.face2face.backend.testhelpers.TestUtils;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.MatchingTaskBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class MatchingTaskTest {
     public void emptyDb() throws Exception {
         UserDb userDb = new InMemoryUserDb(new ArrayList<User>());
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -61,7 +61,7 @@ public class MatchingTaskTest {
                 .build();
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -90,7 +90,7 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -119,7 +119,7 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -138,10 +138,11 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        MatchingTaskBuilder matchingTaskBuilder = new MatchingTaskBuilder().withUserDb(userDb);
+        matchingTaskBuilder.build().execute();
 
         // At this point they should already be matched... We run again to see they still do
-        new MatchingTask(userDb, stubbedPushService).execute();
+        matchingTaskBuilder.build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -162,7 +163,7 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -191,7 +192,7 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override
@@ -208,7 +209,7 @@ public class MatchingTaskTest {
 
         UserDb userDb = new InMemoryUserDb(Lists.newArrayList(user));
 
-        new MatchingTask(userDb, stubbedPushService).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         userDb.getUsers(new UserDb.UsersHandler() {
             @Override

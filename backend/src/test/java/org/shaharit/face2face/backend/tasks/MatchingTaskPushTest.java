@@ -8,12 +8,12 @@ import org.shaharit.face2face.backend.database.fakes.InMemoryUserDb;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.FcmMessenger;
 import org.shaharit.face2face.backend.push.PushService;
-import org.shaharit.face2face.backend.testhelpers.UserBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.MatchingTaskBuilder;
+import org.shaharit.face2face.backend.testhelpers.builders.UserBuilder;
 
 import java.util.Map;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
@@ -33,8 +33,12 @@ public class MatchingTaskPushTest {
                 .build();
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
-        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
-                new PushService(mockMessenger)).execute();
+
+        new MatchingTaskBuilder()
+                .withUserDb(new InMemoryUserDb(Lists.newArrayList(user1, user2)))
+                .withPushService(new PushService(mockMessenger))
+                .build()
+                .execute();
 
         // Assert both got message
         verify(mockMessenger).sendMessage(eq(user1.regId), anyString(), anyString(),
@@ -52,8 +56,7 @@ public class MatchingTaskPushTest {
 
         // First we make make a call with no assertion just to match the users
         InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(user1, user2));
-        new MatchingTask(userDb,
-                new PushService(mock(FcmMessenger.class))).execute();
+        new MatchingTaskBuilder().withUserDb(userDb).build().execute();
 
         final User user3 = new UserBuilder()
                 .withMatchingPersonalityFor(user1)
@@ -62,12 +65,16 @@ public class MatchingTaskPushTest {
 
         userDb.addUser(user3);
 
-        new MatchingTask(userDb, new PushService(mockMessenger)).execute();
+        new MatchingTaskBuilder()
+                .withUserDb(userDb)
+                .withPushService(new PushService(mockMessenger))
+                .build()
+                .execute();
 
         // Assert only got message for new user
         verify(mockMessenger).sendMessage(eq(user1.regId), anyString(), anyString(),
                 argThat(isExtrasForNewBuddy(user3)));
-        verify(mockMessenger,never()).sendMessage(eq(user1.regId), anyString(), anyString(),
+        verify(mockMessenger, never()).sendMessage(eq(user1.regId), anyString(), anyString(),
                 argThat(isExtrasForNewBuddy(user2)));
     }
 
@@ -81,8 +88,12 @@ public class MatchingTaskPushTest {
                 .build();
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
-        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
-                new PushService(mockMessenger)).execute();
+
+        new MatchingTaskBuilder()
+                .withUserDb(new InMemoryUserDb(Lists.newArrayList(user1, user2)))
+                .withPushService(new PushService(mockMessenger))
+                .build()
+                .execute();
 
         verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
                 eq("say hi to him"),
@@ -99,8 +110,11 @@ public class MatchingTaskPushTest {
                 .build();
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
-        new MatchingTask(new InMemoryUserDb(Lists.newArrayList(user1, user2)),
-                new PushService(mockMessenger)).execute();
+        new MatchingTaskBuilder()
+                .withUserDb(new InMemoryUserDb(Lists.newArrayList(user1, user2)))
+                .withPushService(new PushService(mockMessenger))
+                .build()
+                .execute();
 
         verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
                 eq("say hi to her"),

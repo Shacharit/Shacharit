@@ -59,7 +59,7 @@ public class FcmMessenger {
             }
             in.close();
             conn.disconnect();
-            // 7. Print result
+            // 7. Print matchResult
             final String res = response.toString();
             System.out.println(res);
         } catch (Exception e) {
