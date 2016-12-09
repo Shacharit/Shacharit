@@ -1,2 +1,5 @@
 language: android
 script: ./gradlew backend:build
+android:
+  components:
+    - android-23
