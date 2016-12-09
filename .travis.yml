@@ -1,5 +1,7 @@
 language: android
 script: ./gradlew backend:build
+env:
+  - BUILD_SERVER=travis
 android:
   components:
     - platform-tools
