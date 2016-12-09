@@ -67,6 +67,7 @@ appengine {
 }
 
 def buildMachine = System.getenv('BUILD_MACHINE')
+println buildMachine
 
 if (buildMachine != 'travis') {
     def f = new File('backend/src/main/webapp/WEB-INF/IL Hackathon-deac621aef6f.json')
