@@ -2,4 +2,5 @@ language: android
 script: ./gradlew backend:build
 android:
   components:
+    - build-tools-23.0.3
     - android-23
