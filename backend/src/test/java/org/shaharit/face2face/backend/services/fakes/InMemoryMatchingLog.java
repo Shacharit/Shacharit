@@ -24,6 +24,11 @@ public class InMemoryMatchingLog implements MatchingLog {
         userSummariesMap.get(uid).put(potentialBuddy.uid, matchSummary);
     }
 
+    @Override
+    public void logTrace(String tag, String msg) {
+        // Do nothing for now
+    }
+
     private void verifyHasKey(String uid) {
         if (!userSummariesMap.containsKey(uid)) {
             userSummariesMap.put(uid, new HashMap<String, MatchSummary>());
