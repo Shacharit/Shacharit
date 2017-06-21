@@ -147,14 +147,20 @@ public class FirebaseUserDb implements UserDb {
     }
 
     @Override
-    public void getRegIdForUserIds(List<String> userIds, final RegIdsHandler handler) {
+    public void getRegIdForUserIds(final List<String> userIds, final RegIdsHandler handler) {
         firebase.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, String> res = new HashMap<>();
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    res.put(ds.getKey(), ds.child(REG_ID).getValue().toString());
+                    String key = ds.getKey();
+
+                    if (!userIds.contains(key)) {
+                        continue;
+                    }
+
+                    res.put(key, ds.child(REG_ID).getValue().toString());
                 }
 
                 handler.processResult(res);

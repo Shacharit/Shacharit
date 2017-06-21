@@ -26,9 +26,11 @@ public class MatchingServlet extends ShaharitServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
+        logger.info("Running matching task at " + Long.toString(System.currentTimeMillis()));
         new MatchingTask(new FirebaseUserDb(firebase),
                 new PushService(new FcmMessenger()),
                 new FirebaseMatchingLog(firebase)).execute();
+        logger.info("Triggered match task");
     }
 
 // Rafi: All logic moved to MatchingTask class

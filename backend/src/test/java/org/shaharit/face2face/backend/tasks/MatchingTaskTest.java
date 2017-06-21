@@ -54,8 +54,8 @@ public class MatchingTaskTest {
                 .build();
 
         final User user2 = new UserBuilder()
-                .withSelfDefinitions("Jewish")
-                .withOtherDefinitions("Muslim")
+                .withSelfDefinitions("Muslim")
+                .withOtherDefinitions("Jewish")
                 .withMovieInterests("movie2")
                 .withHobbies("hobby2")
                 .build();

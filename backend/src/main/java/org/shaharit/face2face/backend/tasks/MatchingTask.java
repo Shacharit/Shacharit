@@ -10,12 +10,16 @@ import org.shaharit.face2face.backend.services.MatchResult;
 import org.shaharit.face2face.backend.services.MatchSummary;
 import org.shaharit.face2face.backend.services.Matcher;
 import org.shaharit.face2face.backend.services.MatchingLog;
+import org.shaharit.face2face.backend.servlets.MatchingServlet;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class MatchingTask implements Task {
+    private static final Logger logger = Logger.getLogger(MatchingTask.class.getName());
+
     private UserDb userDb;
     private PushService pushService;
     private MatchingLog matchingLog;
@@ -28,7 +32,10 @@ public class MatchingTask implements Task {
 
     @Override
     public void execute() {
+        logger.info("Start match task");
+        matchingLog.logTrace("StartTime", String.valueOf(System.currentTimeMillis()));
         userDb.getUsers(new MatchingUserHandler());
+        logger.info("Waiting for DB callback");
     }
 
     private class MatchingUserHandler implements UserDb.UsersHandler {
@@ -56,7 +63,7 @@ public class MatchingTask implements Task {
                 handleFoundMatch(matchedBuddies, user);
             }
 
-            System.out.println("Matching complete");
+            matchingLog.logTrace("EndTime", String.valueOf(System.currentTimeMillis()));
         }
     }
 
