@@ -23,6 +23,6 @@ public class FirebaseMatchingLog implements MatchingLog {
 
     @Override
     public void logTrace(String tag, String msg) {
-        getLogsRef().child(tag);
+        getLogsRef().child(tag).setValue(msg);
     }
 }
