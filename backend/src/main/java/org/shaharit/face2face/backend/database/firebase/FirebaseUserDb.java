@@ -70,6 +70,11 @@ public class FirebaseUserDb implements UserDb {
         if (ds.hasChild(DISPLAY_NAME)) {
             user.displayName = ds.child(DISPLAY_NAME).getValue().toString();
         }
+
+        if (ds.hasChild(DISPLAY_NAME)) {
+            user.displayName = ds.child(DISPLAY_NAME).getValue().toString();
+        }
+
         if (ds.hasChild(IMAGE_URL)) {
             user.imageUrl = ds.child(IMAGE_URL).getValue().toString();
         }

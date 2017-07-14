@@ -53,7 +53,7 @@ public class F2FMessagingService extends FirebaseMessagingService {
             intent.putExtra(entry.getKey(), entry.getValue());
         }
 
-        Bitmap img = null;
+        Bitmap img;
         try {
             img = BitmapFactory.decodeStream((InputStream) new URL(data.get("image_url")).getContent());
         } catch (IOException e) {
@@ -71,6 +71,11 @@ public class F2FMessagingService extends FirebaseMessagingService {
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, notification.build());
+    }
+
+    @Override
+    public void onDeletedMessages() {
+        super.onDeletedMessages();
     }
 
     private void sendEmailNotification(Map<String, String> data) {

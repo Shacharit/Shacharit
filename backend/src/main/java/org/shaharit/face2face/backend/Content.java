@@ -18,14 +18,15 @@ public class Content implements Serializable {
 
     public Content(String regId, String title, String message, Map<String, String> extraData) {
         addRegId(regId);
-//        notification.put("title", title);
-//        notification.put("body", message);
-//        notification.put("sound", "default");
-//        notification.put("badge", "0");
+        notification.put("title", title);
+        notification.put("body", message);
+        notification.put("sound", "default");
+        notification.put("badge", "0");
+//        data.put("action", "send_email");
+//        data.put("email", "mikofink@gmail.com");
+
         data.put("title", title);
         data.put("message", message);
-        data.put("action", "send_email");
-        data.put("email", "mikofink@gmail.com");
 
 
         for (Map.Entry<String, String> entry : extraData.entrySet()) {
