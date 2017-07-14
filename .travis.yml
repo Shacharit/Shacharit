@@ -1,4 +1,5 @@
 language: android
+jdk: oraclejdk8
 script: ./gradlew backend:build
 env:
   - BUILD_MACHINE=travis
