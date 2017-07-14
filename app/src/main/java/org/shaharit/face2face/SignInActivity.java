@@ -48,6 +48,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static org.shaharit.face2face.Constants.PUSH_TOKEN;
+
 public class SignInActivity extends AppCompatActivity implements
         View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
@@ -149,7 +151,7 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void addUserInfo(final GoogleSignInAccount acct) {
-        String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString("push_token", null);
+        String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString(PUSH_TOKEN, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference user = mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid());
 
