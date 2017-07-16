@@ -4,6 +4,8 @@ import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
+import org.shaharit.face2face.backend.services.MatchSummary;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +37,12 @@ public class User {
         this.buddies = new ArrayList<>();
     }
 
-    public List<User> mergeNewBuddies(List<User> buddiesForCurrentMatch) {
+    public List<User> mergeNewBuddies(List<User> buddiesForCurrentMatch, Map<String, MatchSummary> buddySummaries) {
         List<User> newBuddies = new ArrayList<>();
 
         for (User user : buddiesForCurrentMatch) {
             if (!hasBuddyWithId(user.uid)) {
-                Buddy buddy = new Buddy(user);
+                Buddy buddy = new Buddy(user, buddySummaries.get(user.uid));
                 buddies.add(buddy);
                 newBuddies.add(user);
             }

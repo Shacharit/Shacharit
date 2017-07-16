@@ -13,6 +13,7 @@ import org.shaharit.face2face.backend.services.MatchingLog;
 import org.shaharit.face2face.backend.servlets.MatchingServlet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -48,6 +49,7 @@ public class MatchingTask implements Task {
                     matchingResult.entrySet()) {
                 final User user = userMapEntry.getKey();
                 final List<User> matchedBuddies = new ArrayList<>();
+                final Map<String, MatchSummary> buddySummaries = new HashMap<>();
 
                 for (Map.Entry<User, MatchSummary> userMatchSummaryEntry :
                         userMapEntry.getValue().entrySet()) {
@@ -56,20 +58,21 @@ public class MatchingTask implements Task {
 
                     if (matchSummary.matchResult.equals(MatchResult.MATCH)) {
                         matchedBuddies.add(potentialBuddy);
+                        buddySummaries.put(potentialBuddy.uid, matchSummary);
                     }
                     matchingLog.logMatchSummary(user, potentialBuddy,
                             matchSummary);
                 }
-                handleFoundMatch(matchedBuddies, user);
+                handleFoundMatch(matchedBuddies, buddySummaries, user);
             }
 
             matchingLog.logTrace("EndTime", String.valueOf(System.currentTimeMillis()));
         }
     }
 
-    private void handleFoundMatch(List<User> buddiesForCurrentMatch, User currentUser) {
+    private void handleFoundMatch(List<User> buddiesForCurrentMatch, Map<String, MatchSummary> buddySummaries, User currentUser) {
         if (buddiesForCurrentMatch.size() > 0) {
-            List<User> newBuddies = currentUser.mergeNewBuddies(buddiesForCurrentMatch);
+            List<User> newBuddies = currentUser.mergeNewBuddies(buddiesForCurrentMatch, buddySummaries);
 
             userDb.updateUserBuddies(currentUser);
 
