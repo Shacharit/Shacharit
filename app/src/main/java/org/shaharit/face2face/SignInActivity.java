@@ -105,6 +105,8 @@ public class SignInActivity extends AppCompatActivity implements
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         Log.i(TAG, "SignInActivity onCreate(): currentUser == " + currentUser);
         if (currentUser != null) {
+            // We always refresh the token just in case it was somehow missed
+            setUserToken(currentUser);
             goToNavigation(getIntent().getExtras());
         }
     }
@@ -151,13 +153,9 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     private void addUserInfo(final GoogleSignInAccount acct) {
-        String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString(PUSH_TOKEN, null);
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference user = mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid());
 
-        if (token != null) {
-            user.child("reg_id").setValue(token);
-        }
+        final DatabaseReference user = setUserToken(currentUser);
         Plus.PeopleApi.load(mGoogleApiClient, acct.getId()).setResultCallback(new ResultCallback<People.LoadPeopleResult>() {
             @Override
             public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
@@ -189,6 +187,16 @@ public class SignInActivity extends AppCompatActivity implements
                 buffer.release();
             }
         });
+    }
+
+    private DatabaseReference setUserToken(FirebaseUser currentUser) {
+        String token = PreferenceManager.getDefaultSharedPreferences(SignInActivity.this).getString(PUSH_TOKEN, null);
+        final DatabaseReference user = mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid());
+
+        if (token != null) {
+            user.child("reg_id").setValue(token);
+        }
+        return user;
     }
 
     private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
