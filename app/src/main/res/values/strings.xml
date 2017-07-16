@@ -73,4 +73,9 @@
     <string name="chooseGreeting">בחר ברכה</string>
     <string name="chooseVideo">בחר סרטון</string>
     <string name="chooseGift">בחר מתנה</string>
+    <string name="confirmGiftTitle">בחרת לשלוח ל%2$s %1$s לרגל %3$s</string>
+
+    <string name="greetingDescription">ברכה</string>
+    <string name="physicalDescription">מתנה</string>
+    <string name="videoDescription">סרטון</string>
 </resources>

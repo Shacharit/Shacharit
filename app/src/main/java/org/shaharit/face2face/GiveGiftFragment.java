@@ -1,5 +1,6 @@
 package org.shaharit.face2face;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -76,7 +77,18 @@ public class GiveGiftFragment extends Fragment {
                         view.findViewById(R.id.chooseGreeting).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                findAndCreateGift("greeting", notification);
+                                String titleFormat = getResources().getString(R.string.confirmGiftTitle);
+                                String typeStr = getResources().getString(R.string.greetingDescription);
+                                String title = String.format(titleFormat, notification.buddyName, typeStr, notification.eventName);
+                                Dialog dialog = new Dialog(getContext());
+                                dialog.setContentView(R.layout.confirm_sent_gift);
+                                ((TextView) dialog.findViewById(R.id.title)).setText(title);
+                                dialog.findViewById(R.id.positive).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        findAndCreateGift("greeting", notification);
+                                    }
+                                });
                             }
                         });
                         view.findViewById(R.id.chooseVideo).setOnClickListener(new View.OnClickListener() {
