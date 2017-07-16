@@ -15,7 +15,9 @@ public interface UserDb {
 
     String addEventNotification(User user, EventNotification eventNotification);
 
-    String addGift(String recipientUid, Gift gift);
+    String addGift(String recipientUid, Gift gift, String displayName, String imageUrl, String email);
+
+    void getUser(String senderUid, UsersHandler usersHandler);
 
     interface UsersHandler extends ResultHandler<List<User>> {}
     interface RegIdsHandler extends ResultHandler<Map<String, String>> {}

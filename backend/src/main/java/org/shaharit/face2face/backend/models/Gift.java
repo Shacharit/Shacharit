@@ -4,14 +4,14 @@ public class Gift {
     public final String id;
     public String eventTitle;
     public final String recipientUid;
-    public final GiftSender giftSender;
+    public final String senderUid;
     public String text;
 
-    public Gift(String id, String text, String eventTitle, String recipientUid, GiftSender giftSender) {
+    public Gift(String id, String text, String eventTitle, String recipientUid, String senderUid) {
         this.id = id;
         this.eventTitle = eventTitle;
         this.recipientUid = recipientUid;
         this.text = text;
-        this.giftSender = giftSender;
+        this.senderUid = senderUid;
     }
 }

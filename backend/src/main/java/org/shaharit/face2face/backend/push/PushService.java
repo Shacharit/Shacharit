@@ -96,14 +96,16 @@ public class PushService {
         }
     }
 
-    public void sendPushAboutGift(String regId, Gift gift, String giftId) {
+    public void sendPushAboutGift(String regId, Gift gift, String giftId, String senderName,
+                                  String senderImageUrl, String senderEmail, Gender senderGender) {
         HashMap<String, String> extras = new HashMap<>();
+        extras.put("giftId", giftId);
         extras.put("action", "receive_gift");
 
         // Sender information
-        String senderName = gift.giftSender.displayName;
         extras.put("senderName", senderName);
-        extras.put("senderImageUrl", gift.giftSender.imageUrl);
+        extras.put("senderImageUrl", senderImageUrl);
+        extras.put("senderEmail", senderEmail);
 
         // Event info
         extras.put("eventTitle", gift.eventTitle);
@@ -114,7 +116,7 @@ public class PushService {
             }
 
             messenger.sendMessage(regId,
-                    senderName + " " + gotGiftTitles.get(gift.giftSender.gender),
+                    senderName + " " + gotGiftTitles.get(senderGender),
                     gift.text,
                     extras);
         } catch (IOException e) {

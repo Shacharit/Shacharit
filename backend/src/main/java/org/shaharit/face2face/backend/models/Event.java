@@ -11,14 +11,16 @@ public class Event {
     public Map<Gender, String> titleMap;
     public String description;
     public List<GiftSuggestion> gifts;
+    public String name;
 
     public Event(String date, List<String> selfDefinitions, Map<Gender, String> titleMap,
-                 String description, List<GiftSuggestion> gifts) {
+                 String description, List<GiftSuggestion> gifts, String name) {
         this.dateStr = date;
         this.selfDefinitions = selfDefinitions;
         this.titleMap = titleMap;
         this.description = description;
         this.gifts = gifts;
+        this.name = name;
     }
 
     public boolean occursAtDay(Date date) {

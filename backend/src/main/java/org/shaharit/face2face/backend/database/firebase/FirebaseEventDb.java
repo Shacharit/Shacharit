@@ -37,7 +37,8 @@ public class FirebaseEventDb implements EventDb {
                             eventDefinitionsFromDs(event_ds.child("event_definitions")),
                             titleMapFromDs(event_ds),
                             event_ds.child("description").getValue().toString(),
-                            giftsFromSnapshot(event_ds)
+                            giftsFromSnapshot(event_ds),
+                            event_ds.child("event name").getValue().toString()
                     ));
                 }
 

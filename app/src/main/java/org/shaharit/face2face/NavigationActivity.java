@@ -64,7 +64,8 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
             return;
         }
-        if ("match".equals(getIntent().getStringExtra("action"))) {
+        final String action = getIntent().getStringExtra("action");
+        if ("match".equals(action)) {
             Fragment fragment = new MatchFragment();
             Bundle bundle = new Bundle();
             bundle.putString("userId", getIntent().getStringExtra("uid"));
@@ -78,6 +79,16 @@ public class NavigationActivity extends AppCompatActivity
             Fragment fragment = new GiveGiftFragment();
             Bundle bundle = new Bundle();
             bundle.putString("notificationId", getIntent().getStringExtra("notificationId"));
+            fragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.commit();
+            return;
+        }
+        if ("receive_gift".equals(action)) {
+            Fragment fragment = new GotGiftFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("giftId", getIntent().getStringExtra("giftId"));
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);

@@ -48,17 +48,28 @@ public class GiftSendingTask implements Task {
             userDb.getRegIdForUserIds(recipientUserIds, new UserDb.RegIdsHandler() {
                 @Override
                 public void processResult(Map<String, String> uidToRegIdMap) {
-                    for (Gift gift : gifts) {
-                        String recipientRegId = uidToRegIdMap.get(gift.recipientUid);
+                    for (final Gift gift : gifts) {
+                        final String recipientRegId = uidToRegIdMap.get(gift.recipientUid);
+                        userDb.getUser(gift.senderUid, new UserDb.UsersHandler() {
 
-                        if (recipientRegId != null) {
-                            // Only send gift push if we have reg ID for the user
-                            // TODO: Ask Michael if mark as sent or not
-                            final String giftId = userDb.addGift(gift.recipientUid, gift);
-                            pushService.sendPushAboutGift(recipientRegId, gift, giftId);
-                        }
+                            @Override
+                            public void processResult(List<User> result) {
+                                User user = result.get(0);
 
-                        giftDb.markGiftAsSent(gift.id);
+                                if (recipientRegId != null) {
+                                    // Only send gift push if we have reg ID for the user
+                                    // TODO: Ask Michael if mark as sent or not
+                                    final String giftId = userDb.addGift(gift.recipientUid, gift,
+                                            user.displayName, user.imageUrl, user.email);
+                                    pushService.sendPushAboutGift(recipientRegId, gift, giftId,
+                                            user.displayName, user.imageUrl, user.email, user.gender);
+                                }
+
+                                giftDb.markGiftAsSent(gift.id);
+                            }
+                        });
+
+
                     }
                 }
             });

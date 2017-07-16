@@ -192,12 +192,34 @@ public class FirebaseUserDb implements UserDb {
     }
 
     @Override
-    public String addGift(String recipientUid, Gift gift) {
+    public String addGift(String recipientUid, Gift gift, String displayName, String imageUrl, String email) {
         DatabaseReference giftRef = firebase.child(USERS)
                 .child(recipientUid).child("gifts").push();
 
-        giftRef.setValue(gift);
+        giftRef.child("giftInfo").setValue(gift);
+        giftRef.child("senderName").setValue(displayName);
+        giftRef.child("senderImageUrl").setValue(imageUrl);
+        giftRef.child("senderEmail").setValue(email);
+
+        giftRef.child("eventTitle").setValue(gift.eventTitle);
 
         return giftRef.getKey();
+    }
+
+    @Override
+    public void getUser(String userId, final UsersHandler usersHandler) {
+        firebase.child(USERS).child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<>();
+                users.add(userFromDs(dataSnapshot));
+
+                usersHandler.processResult(users);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 }

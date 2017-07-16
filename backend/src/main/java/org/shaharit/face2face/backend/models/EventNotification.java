@@ -14,6 +14,7 @@ public class EventNotification {
     public String buddyName;
     public String buddyId;
     public String buddyEmail;
+    public String eventName;
     public List<FinalizedGiftSuggestion> giftSuggestions = new ArrayList<>();
 
     public EventNotification() {
@@ -27,6 +28,7 @@ public class EventNotification {
         this.eventDescription = event.description;
         this.giftSuggestions = fromGifts(event.gifts, user, buddy);
         this.buddyEmail = buddy.email;
+        this.eventName = event.name;
     }
 
     private List<FinalizedGiftSuggestion> fromGifts(

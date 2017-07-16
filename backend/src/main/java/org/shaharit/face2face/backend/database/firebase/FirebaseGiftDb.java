@@ -33,7 +33,7 @@ public class FirebaseGiftDb implements GiftDb {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // Iterate over all gifts and extract unsent gifts
                 for (DataSnapshot ds : children) {
-                    if (Boolean.parseBoolean(ds.child(SENT_FIELD).getValue().toString())) {
+                    if (ds.hasChild(SENT_FIELD) && Boolean.parseBoolean(ds.child(SENT_FIELD).getValue().toString())) {
                         continue;
                     }
 
@@ -56,11 +56,7 @@ public class FirebaseGiftDb implements GiftDb {
                 ds.child("giftText").getValue().toString(),
                 ds.child("eventTitle").getValue().toString(),
                 ds.child("recipientId").getValue().toString(),
-                new GiftSender(
-                        ds.child("senderName").getValue().toString(),
-                        ds.child("senderImageUrl").getValue().toString(),
-                        Gender.valueOf(ds.child("senderGender").getValue().toString().toUpperCase())
-                )
+                ds.child("senderUid").getValue().toString()
         );
     }
 
