@@ -1,5 +1,6 @@
 package org.shaharit.face2face.backend.database;
 
+import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.User;
 
 import java.util.List;
@@ -10,6 +11,8 @@ public interface UserDb {
     void updateUserBuddies(User user);
 
     void getRegIdForUserIds(List<String> userIds, RegIdsHandler handler);
+
+    String addEventNotification(User user, EventNotification eventNotification);
 
     interface UsersHandler extends ResultHandler<List<User>> {}
     interface RegIdsHandler extends ResultHandler<Map<String, String>> {}

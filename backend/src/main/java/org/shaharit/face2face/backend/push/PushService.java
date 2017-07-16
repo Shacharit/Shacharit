@@ -2,6 +2,7 @@ package org.shaharit.face2face.backend.push;
 
 import org.shaharit.face2face.backend.models.Buddy;
 import org.shaharit.face2face.backend.models.Event;
+import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.GenderCommunications;
 import org.shaharit.face2face.backend.models.Gift;
@@ -65,7 +66,7 @@ public class PushService {
         return res;
     }
 
-    public void sendPushAboutBuddyEvent(User user, Buddy buddy, Event event) {
+    public void sendPushAboutBuddyEvent(User user, Buddy buddy, EventNotification notification, String notificationId) {
         Map<String, String> extras = new HashMap<>();
 
         extras.put("recipientId", buddy.uid);
@@ -76,15 +77,11 @@ public class PushService {
         extras.put("senderName", user.displayName);
         extras.put("senderId", user.uid);
         extras.put("senderImageUrl", user.imageUrl);
-        String eventTitle = buddy.displayName + " " + event.titleMap.get(buddy.gender);
+        String eventTitle = notification.eventTitle;
         extras.put("eventTitle", eventTitle);
-        extras.put("eventDescription", event.description);
+        extras.put("eventDescription", notification.eventDescription);
         extras.put("action", "give_gift");
-
-        if (event.gifts.size() > 0) {
-            extras.put("gift",
-                    giftCsv(event.gifts.get(0), user.displayName, user.gender, user.gender));
-        }
+        extras.put("notificaitonId", notificationId);
 
 
         try {
@@ -97,14 +94,6 @@ public class PushService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String giftCsv(GiftSuggestion gift, String senderName, Gender recipient, Gender sender) {
-        return String.format("cta:%s,url:%s,type:%s,text:%s",
-                gift.cta.getCommunication(sender, recipient),
-                gift.url,
-                gift.type,
-                senderName + " " + gift.greeting.getCommunication(sender, recipient));
     }
 
     public void sendPushAboutGift(String regId, Gift gift) {

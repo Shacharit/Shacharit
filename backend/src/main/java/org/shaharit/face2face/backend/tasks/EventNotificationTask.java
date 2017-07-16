@@ -8,6 +8,7 @@ import org.shaharit.face2face.backend.database.EventDb;
 import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.models.Buddy;
 import org.shaharit.face2face.backend.models.Event;
+import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.push.PushService;
 
@@ -67,7 +68,9 @@ public class EventNotificationTask implements Task {
 
                     // Send message to user about each buddy that is relevant
                     for (Buddy buddy : buddies) {
-                        pushService.sendPushAboutBuddyEvent(user, buddy, event);
+                        EventNotification eventNotification = new EventNotification(event, user, buddy);
+                        String notificationId = userDb.addEventNotification(user, eventNotification);
+                        pushService.sendPushAboutBuddyEvent(user, buddy, eventNotification, notificationId);
                     }
                 }
             }

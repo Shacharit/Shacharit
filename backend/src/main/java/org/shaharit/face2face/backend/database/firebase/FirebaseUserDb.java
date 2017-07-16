@@ -7,6 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.models.Buddy;
+import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.User;
 
@@ -177,5 +178,15 @@ public class FirebaseUserDb implements UserDb {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    @Override
+    public String addEventNotification(User user, EventNotification eventNotification) {
+        DatabaseReference notification = firebase.child(USERS)
+                .child(user.uid).child("notifications").push();
+
+        notification.setValue(eventNotification);
+
+        return notification.getKey();
     }
 }
