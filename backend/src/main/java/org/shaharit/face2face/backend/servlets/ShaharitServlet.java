@@ -7,6 +7,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.shaharit.face2face.backend.FirebaseInitializer;
 
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 
@@ -24,12 +26,22 @@ public abstract class ShaharitServlet extends HttpServlet {
                 .setDatabaseUrl(databaseUrl)
                 .build();
 
-        FirebaseApp.initializeApp(options);
+        initFirebase(options);
 
-
-//        FirebaseInitializer.initializeFirebase(
-//                config.getServletContext().getResourceAsStream(credential),
-//                databaseUrl);
         firebase = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private synchronized void initFirebase(FirebaseOptions options) {
+        boolean hasBeenInitialized=false;
+        List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
+        for(FirebaseApp app : firebaseApps){
+            if(app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)){
+                hasBeenInitialized=true;
+            }
+        }
+
+        if (!hasBeenInitialized) {
+            FirebaseApp.initializeApp(options);
+        }
     }
 }
