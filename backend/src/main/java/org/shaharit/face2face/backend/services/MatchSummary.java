@@ -1,9 +1,15 @@
 package org.shaharit.face2face.backend.services;
 
-public class MatchSummary {
-    public MatchResult matchResult;
+import java.util.List;
 
-    MatchSummary(MatchResult matchResult) {
+public class MatchSummary {
+    public final MatchResult matchResult;
+    public final List<String> sharedInterests;
+    public final List<String> notSharedInterests;
+
+    MatchSummary(MatchResult matchResult, List<String> sharedInteresets, List<String> notSharedInterests) {
         this.matchResult = matchResult;
+        this.sharedInterests = sharedInteresets;
+        this.notSharedInterests = notSharedInterests;
     }
 }

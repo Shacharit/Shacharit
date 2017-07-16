@@ -32,36 +32,42 @@ public class Matcher {
 
                 if (intersection1.size() == 0 || intersection2.size() == 0) {
                     setMutualSummary(res,
-                            new MatchSummary(MatchResult.NON_MATCHING_SELF_DEFINITION),
+                            new MatchSummary(MatchResult.NON_MATCHING_SELF_DEFINITION, null, null),
                             firstUser, secondUser);
                     continue;
                 }
 
                 if(!firstUser.gender.equals(secondUser.gender)) {
                     setMutualSummary(res,
-                            new MatchSummary(MatchResult.NON_MATCHING_GENDER),
+                            new MatchSummary(MatchResult.NON_MATCHING_GENDER, null, null),
                             firstUser, secondUser);
                     continue;
                 }
 
                 double score = 0.0;
+                List<String> sharedInterests = new ArrayList<>();
+                List<String> nonSharedInterests = new ArrayList<>();
                 for (String interestKey : firstUser.interests.keySet()) {
                     if (!secondUser.interests.containsKey(interestKey)) {
                         continue;
                     }
 
-                    score += interestsScore(firstUser.interests.get(interestKey),
-                            secondUser.interests.get(interestKey));
+                    List<String> list1 = firstUser.interests.get(interestKey);
+                    List<String> list2 = secondUser.interests.get(interestKey);
+                    score += interestsScore(list1,
+                            list2);
+                    sharedInterests.addAll(listUtils.intersection(list1, list2));
+                    nonSharedInterests.addAll(listUtils.difference(list2,list1));
                 }
 
                 if (score > 1) {
                     setMutualSummary(res,
-                            new MatchSummary(MatchResult.MATCH),
+                            new MatchSummary(MatchResult.MATCH, sharedInterests, nonSharedInterests),
                             firstUser, secondUser);
                 }
                 else {
                     setMutualSummary(res,
-                            new MatchSummary(MatchResult.NON_MATCHING_INTERESTS),
+                            new MatchSummary(MatchResult.NON_MATCHING_INTERESTS, sharedInterests, nonSharedInterests),
                             firstUser, secondUser);
                 }
             }

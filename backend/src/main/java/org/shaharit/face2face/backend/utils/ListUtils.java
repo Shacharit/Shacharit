@@ -1,6 +1,7 @@
 package org.shaharit.face2face.backend.utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ListUtils {
@@ -9,6 +10,18 @@ public class ListUtils {
 
         for (String t : list1) {
             if (list2.contains(t.trim())) {
+                list.add(t);
+            }
+        }
+
+        return list;
+    }
+
+    public List<String> difference(List<String> list1, List<String> list2) {
+        List<String> list = new ArrayList<>();
+
+        for (String t : list1) {
+            if (!list2.contains(t.trim())) {
                 list.add(t);
             }
         }

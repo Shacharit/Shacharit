@@ -143,18 +143,24 @@ public class FirebaseUserDb implements UserDb {
 
         DatabaseReference userBuddiesRef = firebase.child("users").child(user.uid).child("buddy");
 
-        for (int i = 0; i < user.buddies.size(); i++) {
-            Buddy buddy = user.buddies.get(i);
+//        for (int i = 0; i < user.buddies.size(); i++) {
+//            Buddy buddy = user.buddies.get(i);
+//
+//            userBuddiesRef.child("imageUrl").setValue(buddy.imageUrl);
+//            userBuddiesRef.child(UID).setValue(buddy.uid);
+//            userBuddiesRef.child("displayName").setValue(buddy.displayName);
+//            userBuddiesRef.child("gender").setValue(buddy.gender);
+//            userBuddiesRef.child("selfDefs").setValue(buddy.selfDefs);
+//            userBuddiesRef.child("email").setValue(buddy.email);
+//        }
 
-            userBuddiesRef.child("imageUrl").setValue(buddy.imageUrl);
-            userBuddiesRef.child(UID).setValue(buddy.uid);
-            userBuddiesRef.child("displayName").setValue(buddy.displayName);
-            userBuddiesRef.child("gender").setValue(buddy.gender);
-            userBuddiesRef.child("selfDefs").setValue(buddy.selfDefs);
-            userBuddiesRef.child("email").setValue(buddy.email);
+        Map<String, Buddy> buddyMap = new HashMap<>(user.buddies.size());
+
+        for (Buddy buddy : user.buddies) {
+            buddyMap.put(buddy.uid, buddy);
         }
 
-        userBuddiesRef.setValue(user.buddies);
+        userBuddiesRef.setValue(buddyMap);
     }
 
     @Override
