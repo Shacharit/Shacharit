@@ -16,9 +16,7 @@ public class Buddy {
     public String email;
     public List<String> selfDefs;
 
-    public Buddy() {
-        this.selfDefs = Lists.newArrayList();
-    }
+    public Buddy() {}
 
     public Buddy(User user, MatchSummary matchSummary) {
         this.uid = user.uid;

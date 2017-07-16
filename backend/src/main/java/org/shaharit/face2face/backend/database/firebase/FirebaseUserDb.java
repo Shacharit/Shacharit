@@ -125,17 +125,7 @@ public class FirebaseUserDb implements UserDb {
     }
 
     private Buddy buddyFromDs(DataSnapshot buddyDs) {
-        Buddy buddy = new Buddy();
-        buddy.imageUrl = buddyDs.child("imageUrl").getValue().toString();
-        buddy.uid = buddyDs.child(UID).getValue().toString();
-        buddy.displayName = buddyDs.child("displayName").getValue().toString();
-        buddy.gender = Gender.valueOf(buddyDs.child("gender").getValue().toString().toUpperCase());
-
-        for (DataSnapshot selfDefsDs : buddyDs.child("selfDefs").getChildren()) {
-            buddy.selfDefs.add(selfDefsDs.getValue().toString());
-        }
-
-        return buddy;
+        return buddyDs.getValue(Buddy.class);
     }
 
     @Override
