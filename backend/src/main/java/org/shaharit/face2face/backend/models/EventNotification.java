@@ -13,6 +13,7 @@ public class EventNotification {
     public String buddyImageUrl;
     public String buddyName;
     public String buddyId;
+    public String buddyEmail;
     public List<FinalizedGiftSuggestion> giftSuggestions = new ArrayList<>();
 
     public EventNotification() {
@@ -25,6 +26,7 @@ public class EventNotification {
         this.eventTitle = event.titleMap.get(buddy.gender);
         this.eventDescription = event.description;
         this.giftSuggestions = fromGifts(event.gifts, user, buddy);
+        this.buddyEmail = buddy.email;
     }
 
     private List<FinalizedGiftSuggestion> fromGifts(

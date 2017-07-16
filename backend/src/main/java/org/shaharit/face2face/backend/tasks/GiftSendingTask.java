@@ -54,7 +54,8 @@ public class GiftSendingTask implements Task {
                         if (recipientRegId != null) {
                             // Only send gift push if we have reg ID for the user
                             // TODO: Ask Michael if mark as sent or not
-                            pushService.sendPushAboutGift(recipientRegId,gift);
+                            final String giftId = userDb.addGift(gift.recipientUid, gift);
+                            pushService.sendPushAboutGift(recipientRegId, gift, giftId);
                         }
 
                         giftDb.markGiftAsSent(gift.id);

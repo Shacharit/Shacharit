@@ -96,7 +96,7 @@ public class PushService {
         }
     }
 
-    public void sendPushAboutGift(String regId, Gift gift) {
+    public void sendPushAboutGift(String regId, Gift gift, String giftId) {
         HashMap<String, String> extras = new HashMap<>();
         extras.put("action", "receive_gift");
 

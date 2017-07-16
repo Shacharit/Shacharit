@@ -9,6 +9,7 @@ import org.shaharit.face2face.backend.database.UserDb;
 import org.shaharit.face2face.backend.models.Buddy;
 import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.Gender;
+import org.shaharit.face2face.backend.models.Gift;
 import org.shaharit.face2face.backend.models.User;
 
 import java.util.ArrayList;
@@ -188,5 +189,15 @@ public class FirebaseUserDb implements UserDb {
         notification.setValue(eventNotification);
 
         return notification.getKey();
+    }
+
+    @Override
+    public String addGift(String recipientUid, Gift gift) {
+        DatabaseReference giftRef = firebase.child(USERS)
+                .child(recipientUid).child("gifts").push();
+
+        giftRef.setValue(gift);
+
+        return giftRef.getKey();
     }
 }
