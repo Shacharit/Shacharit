@@ -27,6 +27,7 @@ public class FirebaseUserDb implements UserDb {
     private static final String UID = "uid";
     private static final String DISPLAY_NAME = "display_name";
     private static final String USERS = "users";
+    private static final String EMAIL = "email_address";
 
 
     private final DatabaseReference firebase;
@@ -77,6 +78,10 @@ public class FirebaseUserDb implements UserDb {
 
         if (ds.hasChild(IMAGE_URL)) {
             user.imageUrl = ds.child(IMAGE_URL).getValue().toString();
+        }
+
+        if (ds.hasChild(EMAIL)) {
+            user.email = ds.child(EMAIL).getValue().toString();
         }
 
         if (ds.hasChild(GENDER)) {
@@ -146,6 +151,7 @@ public class FirebaseUserDb implements UserDb {
             userBuddiesRef.child("displayName").setValue(buddy.displayName);
             userBuddiesRef.child("gender").setValue(buddy.gender);
             userBuddiesRef.child("selfDefs").setValue(buddy.selfDefs);
+            userBuddiesRef.child("email").setValue(buddy.email);
         }
 
         userBuddiesRef.setValue(user.buddies);

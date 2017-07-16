@@ -22,6 +22,7 @@ public class User {
     public int age;
     public String imageUrl;
     public String displayName;
+    public String email;
 
     // Empty constructor for construction via Firebase
     public User() {}

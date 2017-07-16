@@ -9,6 +9,7 @@ public class Buddy {
     public String displayName;
     public Gender gender;
     public String imageUrl;
+    public String email;
     public List<String> selfDefs;
 
     public Buddy() {
@@ -21,6 +22,7 @@ public class Buddy {
         this.gender = user.gender;
         this.imageUrl = user.imageUrl;
         this.selfDefs = user.selfDefs;
+        this.email = user.email;
     }
 
     public boolean caresAboutEvent(Event event) {
