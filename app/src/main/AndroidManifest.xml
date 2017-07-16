@@ -15,7 +15,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +43,7 @@
 
         <activity android:name="org.shaharit.face2face.BuddyEventActivity" />
         <activity android:name="org.shaharit.face2face.ReceiveGiftActivity" />
-        <activity android:name="org.shaharit.face2face.MatchActivity"></activity>
+        <activity android:name="org.shaharit.face2face.MatchFragment"></activity>
     </application>
 
 </manifest>

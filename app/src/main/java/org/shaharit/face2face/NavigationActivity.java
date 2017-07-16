@@ -64,6 +64,16 @@ public class NavigationActivity extends AppCompatActivity
             startActivity(intent);
             return;
         }
+        if ("match".equals(getIntent().getStringExtra("action"))) {
+            Fragment fragment = new MatchFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("userId", getIntent().getStringExtra("uid"));
+            fragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.commit();
+            return;
+        }
 
         if ("RedirectToFillProfile".equals(getIntent().getStringExtra("mode"))) {
             mRedirectToFillProfile = true;
@@ -110,6 +120,9 @@ public class NavigationActivity extends AppCompatActivity
         }  else if (viewId == org.shaharit.face2face.R.id.nav_who_am_I) {
             fragment = new SelfDefinitionFragment();
             title  = getString(org.shaharit.face2face.R.string.nav_who_am_I);
+        }  else if (viewId == org.shaharit.face2face.R.id.nav_my_friends) {
+            fragment = new MyFriendsFragment();
+            title  = getString(org.shaharit.face2face.R.string.nav_my_friends);
         }
 
         // Set the fragment.
