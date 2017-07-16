@@ -4,6 +4,7 @@ import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.appengine.repackaged.com.google.common.collect.Maps;
 
+import org.shaharit.face2face.backend.models.EventNotification;
 import org.shaharit.face2face.backend.models.User;
 import org.shaharit.face2face.backend.database.UserDb;
 
@@ -52,6 +53,11 @@ public class InMemoryUserDb implements UserDb {
                 return userIds.contains(uid);
             }
         }));
+    }
+
+    @Override
+    public String addEventNotification(User user, EventNotification eventNotification) {
+        return null;
     }
 
     public void addUser(User user) {

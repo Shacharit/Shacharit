@@ -22,7 +22,7 @@ public class EventNotification {
         this.buddyId = buddy.uid;
         this.buddyName = buddy.displayName;
         this.buddyImageUrl = buddy.imageUrl;
-        this.eventTitle = buddy.displayName + " " + event.titleMap.get(buddy.gender);
+        this.eventTitle = event.titleMap.get(buddy.gender);
         this.eventDescription = event.description;
         this.giftSuggestions = fromGifts(event.gifts, user, buddy);
     }
