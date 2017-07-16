@@ -68,4 +68,9 @@
     <string name="itemlimit">ניתן לבחור עד %d פריטים</string>
     <string name="image_upload">העלה תמונה</string>
 
+    <string name="sharedInterestsTitle">תחומי עניין משותפים</string>
+    <string name="interestsTitle">תחומי עניין נוספים</string>
+    <string name="chooseGreeting">בחר ברכה</string>
+    <string name="chooseVideo">בחר סרטון</string>
+    <string name="chooseGift">בחר מתנה</string>
 </resources>

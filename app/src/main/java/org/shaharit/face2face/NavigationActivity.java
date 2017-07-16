@@ -74,6 +74,16 @@ public class NavigationActivity extends AppCompatActivity
             ft.commit();
             return;
         }
+        if ("give_gift".equals(getIntent().getStringExtra("action"))) {
+            Fragment fragment = new GiveGiftFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("notificationId", getIntent().getStringExtra("notificationId"));
+            fragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.commit();
+            return;
+        }
 
         if ("RedirectToFillProfile".equals(getIntent().getStringExtra("mode"))) {
             mRedirectToFillProfile = true;

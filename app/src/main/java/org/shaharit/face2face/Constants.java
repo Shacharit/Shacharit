@@ -3,6 +3,7 @@ package org.shaharit.face2face;
 public class Constants {
     public static final String USERS_CHILD = "users";
     public static final String BUDDY_CHILD = "buddy";
+    public static final String NOTIFICATION_CHILD = "notifications";
     public static final String PUSH_TOKEN = "push_token";
     public static final String GENDER = "gender";
     public static final String GENDER_FEMALE = "female";
@@ -12,4 +13,5 @@ public class Constants {
     public static final String EMAIL_ADDRESS = "email_address";
     public static final String BIRTHDAY = "birthday";
     public static final String IMAGE_URL = "image_url";
+    public static final String SENT_GIFTS_CHILD = "sent-gifts";
 }

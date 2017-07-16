@@ -33,7 +33,8 @@ public class F2FMessagingService extends FirebaseMessagingService {
 
         switch (remoteMessage.getData().get("action")) {
             case "give_gift":
-                showNotification(remoteMessage.getData(), new Intent(this, BuddyEventActivity.class));
+                remoteMessage.getData().put("action", "give_gift");
+                showNotification(remoteMessage.getData(), new Intent(this, NavigationActivity.class));
                 break;
             case "receive_gift":
                 showNotification(remoteMessage.getData(), new Intent(this, ReceiveGiftActivity.class));

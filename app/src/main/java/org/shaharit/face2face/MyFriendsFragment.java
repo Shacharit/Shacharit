@@ -63,6 +63,12 @@ public class MyFriendsFragment extends Fragment {
             }
         });
 
+        ((TextView) view.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchGiveGiftFragment("-KpAUzlorh36c31IOFl_");
+            }
+        });
         ((TextView) view.findViewById(R.id.friend)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +82,17 @@ public class MyFriendsFragment extends Fragment {
         Fragment fragment = new MatchFragment();
         Bundle bundle = new Bundle();
         bundle.putString("userId", userId);
+        fragment.setArguments(bundle);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    private void launchGiveGiftFragment(String notificationId) {
+        Fragment fragment = new GiveGiftFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("notificationId", notificationId);
         fragment.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);

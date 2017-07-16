@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,31 +12,138 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/contact" >
+        android:layout_above="@id/contact">
 
-        <LinearLayout
-            android:id="@+id/match_linear_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layoutDirection="rtl">
+            android:layout_height="wrap_content">
 
-            <include layout="@layout/picture_and_name_layout" />
+            <LinearLayout
+                android:id="@+id/match_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/match_found_message"
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/buddy_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/ic_account_circle_black_36dp"
+                    android:contentDescription="@string/buddy_image_description"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ddd"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="#aaa" />
+
+                    <TextView
+                        android:id="@+id/buddy_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_margin="10dp"
+                        android:textColor="#666666"
+                        android:textSize="20sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#555" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sharedInterestsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sharedInterestsTitle"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sharedInterestsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/interestsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/interestsTitle"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/interestsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/messageAction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_message_white_24dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/giftAction"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_card_giftcard_white_24dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/videoAction"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_play_circle_filled_white_24dp"
+                        app:backgroundTint="@color/colorPrimary"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginTop="10sp"
-                android:text="@string/found_match_str"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#000000" />
-
-            <!-- TODO: Add the matched interests dynamically here -->
-
-            <include layout="@layout/send_gifts_buttons_layout"/>
-        </LinearLayout>
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="220dp"
+                android:src="@android:drawable/ic_dialog_email"/>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

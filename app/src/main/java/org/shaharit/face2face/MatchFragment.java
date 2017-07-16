@@ -1,5 +1,6 @@
 package org.shaharit.face2face;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,15 +45,51 @@ public class MatchFragment extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Buddy buddy = dataSnapshot.getValue(Buddy.class);
+                        final Buddy buddy = dataSnapshot.getValue(Buddy.class);
                         NetworkImageView buddyImg = (NetworkImageView) view.findViewById(org.shaharit.face2face.R.id.buddy_image);
                         if (buddyImg == null) {
                             return;
                         }
                         buddyImg.setImageUrl(buddy.imageUrl,
                                 VolleySingleton.getInstance(getContext()).getImageLoader());
-                        TextView buddy_name = (TextView) view.findViewById(org.shaharit.face2face.R.id.buddy_name);
-                        buddy_name.setText(buddy.displayName);
+                        TextView buddyName = (TextView) view.findViewById(org.shaharit.face2face.R.id.buddy_name);
+                        buddyName.setText(buddy.displayName);
+
+                        String sharedStr = "";
+                        int i = 0;
+                        for (; i < buddy.sharedInterests.size() - 1; i++) {
+                            String sharedInterest = buddy.sharedInterests.get(i);
+                            sharedStr += sharedInterest + ", ";
+                        }
+                        if (buddy.sharedInterests.size() > 0) {
+                            sharedStr += buddy.sharedInterests.get(i);
+                            ((TextView) view.findViewById(R.id.sharedInterestsText)).setText(sharedStr);
+                        } else {
+                            view.findViewById(R.id.sharedInterestsLayout).setVisibility(View.GONE);
+                        }
+
+                        String notSharedStr = "";
+                        i = 0;
+                        for (; i < buddy.notSharedInterests.size() - 1; i++) {
+                            String interest = buddy.notSharedInterests.get(i);
+                            notSharedStr += interest + ", ";
+                        }
+                        if (buddy.notSharedInterests.size() > 0) {
+                            notSharedStr += buddy.notSharedInterests.get(i);
+                            ((TextView) view.findViewById(R.id.interestsText)).setText(notSharedStr);
+                        } else {
+                            view.findViewById(R.id.interestsLayout).setVisibility(View.GONE);
+                        }
+
+                        view.findViewById(R.id.fabEmail).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent email = new Intent(Intent.ACTION_SEND);
+                                email.putExtra(Intent.EXTRA_EMAIL, new String[]{buddy.email});
+                                email.setType("message/rfc822");
+                                startActivity(Intent.createChooser(email, ""));
+                            }
+                        });
                     }
 
                     @Override
