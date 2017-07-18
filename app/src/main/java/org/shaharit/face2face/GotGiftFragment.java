@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.shaharit.face2face.model.Buddy;
+import org.shaharit.face2face.model.*;
 import org.shaharit.face2face.service.VolleySingleton;
 
 public class GotGiftFragment extends Fragment {
@@ -42,6 +42,24 @@ public class GotGiftFragment extends Fragment {
 
         final ImageButton videoButton = (ImageButton) view.findViewById(R.id.videoAction);
         videoButton.setVisibility(View.GONE);
+
+        mFirebaseDatabaseReference
+                .child(Constants.USERS_CHILD)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(Constants.GIFT_CHILD)
+                .child(giftId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        GiftDetails giftDetails = dataSnapshot.getValue(GiftDetails.class);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
         return view;
     }

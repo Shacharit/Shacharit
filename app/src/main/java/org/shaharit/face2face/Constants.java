@@ -14,4 +14,5 @@ public class Constants {
     public static final String BIRTHDAY = "birthday";
     public static final String IMAGE_URL = "image_url";
     public static final String SENT_GIFTS_CHILD = "sent-gifts";
+    public static final String GIFT_CHILD = "gifts";
 }
