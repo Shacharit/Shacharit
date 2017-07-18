@@ -113,8 +113,7 @@
                     android:src="@drawable/ic_message_white_24dp"
                     android:padding="@dimen/buttonPadding"
                     android:background="@drawable/circle_button_red"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
+                    android:layout_gravity="center"
                     />
 
                 <ImageButton
