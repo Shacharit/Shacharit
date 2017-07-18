@@ -26,9 +26,15 @@ public class GotGiftFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_match, container, false);
+        final View view = inflater.inflate(R.layout.fragment_got_gift, container, false);
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         final String giftId = getArguments().getString("giftId");
+
+        NetworkImageView buddyImg = (NetworkImageView) view.findViewById(org.shaharit.face2face.R.id.buddy_image);
+
+        final String buddyImage = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=256";
+        buddyImg.setImageUrl(buddyImage,
+                VolleySingleton.getInstance(getContext()).getImageLoader());
 
         return view;
     }

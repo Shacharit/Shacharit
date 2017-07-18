@@ -75,7 +75,23 @@ public class MyFriendsFragment extends Fragment {
                 launchUserFragment("l956KBVYSVa0tQSwuBMrjnYfGx22");
             }
         });
+        ((TextView) view.findViewById(R.id.goto_gift)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchGotGiftFragment("-KpAVbQIXGxiUAqZSKxL");
+            }
+        });
         return view;
+    }
+
+    private void launchGotGiftFragment(String giftId) {
+        Fragment fragment = new GotGiftFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("giftId", giftId);
+        fragment.setArguments(bundle);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+        ft.commit();
     }
 
     private void launchUserFragment(String userId) {

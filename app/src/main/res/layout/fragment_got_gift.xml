@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="org.shaharit.face2face.MatchFragment">
+
+    <!-- TODO: Add whatsapp and facebook buttons centered, at the bottom of the page -->
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/contact"
+        android:fillViewport="true"
+        >
+
+
+        <LinearLayout
+            android:id="@+id/match_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/buddy_image"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/ic_account_circle_black_36dp"
+                android:contentDescription="@string/buddy_image_description"
+                android:scaleType="centerCrop"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0D031"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#aaa"/>
+
+                <TextView
+                    android:id="@+id/buddyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="עופר שלח לך מתנה"
+                    android:textColor="#444"
+                    android:textSize="27sp"/>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#555"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/gift_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="חושב עליך ואיך עובר עליך היום"
+                    android:textColor="#333"
+                    android:textSize="27sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/messageAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_message_white_24dp"
+                    android:background="@drawable/c"
+                    />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/giftAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:src="@drawable/ic_card_giftcard_white_24dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/videoAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    android:src="@drawable/ic_play_circle_filled_white_24dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

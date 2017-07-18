@@ -25,5 +25,13 @@
             android:gravity="center"
             android:textSize = "20dp"
             />
+        <TextView
+            android:id="@+id/goto_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test"
+            android:gravity="center"
+            android:textSize = "20dp"
+            />
     </LinearLayout>
 </FrameLayout>
