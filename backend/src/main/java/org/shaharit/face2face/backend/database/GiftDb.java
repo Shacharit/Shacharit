@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GiftDb {
     void getUnsentGifts(GiftsHandler handler);
-    void markGiftAsSent(String giftId);
+    void markGiftAsSent(String uid, String giftId);
 
     interface GiftsHandler extends ResultHandler<List<Gift>> {}
 }

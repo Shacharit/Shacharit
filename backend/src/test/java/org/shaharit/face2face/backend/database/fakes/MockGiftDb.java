@@ -22,7 +22,7 @@ public class MockGiftDb implements GiftDb {
     }
 
     @Override
-    public void markGiftAsSent(String giftId) {
+    public void markGiftAsSent(String uid, String giftId) {
         sentGiftIds.add(giftId);
     }
 
