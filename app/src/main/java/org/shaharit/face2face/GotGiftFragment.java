@@ -1,7 +1,13 @@
 package org.shaharit.face2face;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.model.*;
 import org.shaharit.face2face.service.VolleySingleton;
+import org.w3c.dom.Text;
 
 public class GotGiftFragment extends Fragment {
     private static final String TAG = "GotGiftFragment";
@@ -30,12 +37,6 @@ public class GotGiftFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_got_gift, container, false);
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         final String giftId = getArguments().getString("giftId");
-
-        NetworkImageView buddyImg = (NetworkImageView) view.findViewById(org.shaharit.face2face.R.id.buddy_image);
-
-        final String buddyImage = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=256";
-        buddyImg.setImageUrl(buddyImage,
-                VolleySingleton.getInstance(getContext()).getImageLoader());
 
         final ImageButton giftButton = (ImageButton) view.findViewById(R.id.giftAction);
         giftButton.setVisibility(View.GONE);
@@ -52,7 +53,51 @@ public class GotGiftFragment extends Fragment {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        GiftDetails giftDetails = dataSnapshot.getValue(GiftDetails.class);
+                        final GiftDetails giftDetails = dataSnapshot.getValue(GiftDetails.class);
+
+                        NetworkImageView buddyImg =
+                                (NetworkImageView) view.findViewById(org.shaharit.face2face.R.id.buddy_image);
+
+                        buddyImg.setImageUrl(giftDetails.senderImageUrl,
+                                VolleySingleton.getInstance(getContext()).getImageLoader());
+
+                        final TextView giftTitleView = (TextView) view.findViewById(R.id.giftText);
+
+                        giftTitleView.setText(giftDetails.senderName + "קיבלת מתנה מ");
+
+                        final TextView giftTextView = (TextView) view.findViewById(R.id.giftText);
+
+                        giftTextView.setText(giftDetails.giftInfo.text);
+
+                        final TextView giftUrlView = (TextView) view.findViewById(R.id.giftUrl);
+
+                        final String detailsStr = "פרטים";
+//                        final String urlString = String.format(
+//                                getResources().getString(R.string.giftUrl),
+//                                giftDetails.giftInfo.url,
+//                                detailsStr);
+
+                        final String url = giftDetails.giftInfo.url;
+
+                        if (!TextUtils.isEmpty(url)) {
+                            String value = String.format("<html><a href=%s>%s</a></html>", url,
+                                    detailsStr);
+                            giftUrlView.setMovementMethod(LinkMovementMethod.getInstance());
+                            giftUrlView.setText(Html.fromHtml(value));
+                        } else {
+                            giftUrlView.setVisibility(View.GONE);
+                        }
+
+                        view.findViewById(R.id.messageActionAction).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent email = new Intent(Intent.ACTION_SEND);
+                                email.putExtra(Intent.EXTRA_EMAIL, new String[]{giftDetails.senderEmail});
+                                email.setType("message/rfc822");
+                                startActivity(Intent.createChooser(email, ""));
+                            }
+                        });
+
                     }
 
                     @Override
