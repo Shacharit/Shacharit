@@ -1,4 +1,4 @@
-package org.shaharit.face2face.friends;
+package org.shaharit.face2face.gifts;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import org.shaharit.face2face.R;
 import org.shaharit.face2face.model.Buddy;
+import org.shaharit.face2face.model.Gift;
 import org.shaharit.face2face.service.VolleySingleton;
 
 import java.util.List;
@@ -19,15 +20,16 @@ import java.util.List;
  * Created by kalisky on 7/18/17.
  */
 
-public class FriendAdapter extends BaseAdapter {
+public class SentGiftsAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private final VolleySingleton volley;
-    private List<Buddy> items = null;
+    private List<Gift> items;
 
-    FriendAdapter(Context context) {
+    SentGiftsAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
         this.volley = VolleySingleton.getInstance(context);
     }
+
     @Override
     public int getCount() {
         if (items == null) {
@@ -51,14 +53,15 @@ public class FriendAdapter extends BaseAdapter {
         if (convertView == null){
             convertView = inflater.inflate(R.layout.friend_item, viewGroup, false);
         }
-        Buddy buddy = items.get(i);
-        ((TextView) convertView.findViewById(R.id.name)).setText(buddy.displayName);
-        NetworkImageView buddyImg = (NetworkImageView) convertView.findViewById(R.id.photo);
-        buddyImg.setImageUrl(buddy.imageUrl, volley.getImageLoader());
+        Gift gift = items.get(i);
+        ((TextView) convertView.findViewById(R.id.name)).setText("Ofer");
+//        NetworkImageView buddyImg = (NetworkImageView) convertView.findViewById(R.id.photo);
+//        buddyImg.setImageUrl(gift.imageUrl, volley.getImageLoader());
         return convertView;
     }
 
-    public void setItems(List<Buddy> items) {
+    public void setItems(List<Gift> items) {
         this.items = items;
     }
+
 }

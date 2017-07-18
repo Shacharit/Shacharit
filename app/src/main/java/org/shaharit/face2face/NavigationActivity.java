@@ -25,7 +25,7 @@ import org.shaharit.face2face.friends.MyFriendsFragment;
 import org.shaharit.face2face.gifts.GiveGiftFragment;
 import org.shaharit.face2face.gifts.GotGiftFragment;
 import org.shaharit.face2face.gifts.ReceiveGiftActivity;
-import org.shaharit.face2face.gifts.SentGiftsFragment;
+import org.shaharit.face2face.gifts.GiftsFragment;
 import org.shaharit.face2face.utils.EventBus;
 
 public class NavigationActivity extends AppCompatActivity
@@ -158,7 +158,7 @@ public class NavigationActivity extends AppCompatActivity
             fragment = new HackFragment();
             title  = getString(R.string.nav_my_received_gifts);
         } else if (viewId == R.id.nav_my_sent_gifts) {
-            fragment = new SentGiftsFragment();
+            fragment = new GiftsFragment();
             title  = getString(R.string.nav_my_sent_gifts);
         }
 
@@ -189,7 +189,7 @@ public class NavigationActivity extends AppCompatActivity
 
     @Subscribe
     public void handleGiftSentEvent(Events.GiftSentEvent event) {
-        Fragment fragment = new SentGiftsFragment();
+        Fragment fragment = new GiftsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_frame, fragment);
         ft.addToBackStack(null);

@@ -155,6 +155,8 @@ public class GiveGiftFragment extends Fragment {
 
     private void createSentGift(Gift foundGift, EventNotification notification, String type) {
         DatabaseReference newItem = mFirebaseDatabaseReference
+                .child(Constants.USERS_CHILD)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child(Constants.SENT_GIFTS_CHILD)
                 .push();
         newItem.child("eventTitle").setValue(notification.eventTitle);
