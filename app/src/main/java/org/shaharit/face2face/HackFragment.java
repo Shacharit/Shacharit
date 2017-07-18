@@ -1,7 +1,6 @@
 package org.shaharit.face2face;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,14 +21,14 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyFriendsFragment#newInstance} factory method to
+ * Use the {@link HackFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyFriendsFragment extends Fragment {
+public class HackFragment extends Fragment {
 
     private DatabaseReference mFirebaseDatabaseReference;
 
-    public MyFriendsFragment() {
+    public HackFragment() {
         // Required empty public constructor
     }
 
@@ -43,7 +42,7 @@ public class MyFriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_my_friends, container, false);
+        View view = inflater.inflate(R.layout.fragment_hack, container, false);
         mFirebaseDatabaseReference
                 .child(Constants.USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

@@ -6,4 +6,8 @@
     android:layout_height="match_parent"
     tools:context="org.shaharit.face2face.MatchFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fill this!"/>
 </RelativeLayout>
