@@ -61,7 +61,7 @@ public class GotGiftFragment extends Fragment {
                         buddyImg.setImageUrl(giftDetails.senderImageUrl,
                                 VolleySingleton.getInstance(getContext()).getImageLoader());
 
-                        final TextView giftTitleView = (TextView) view.findViewById(R.id.giftText);
+                        final TextView giftTitleView = (TextView) view.findViewById(R.id.giftTitle);
 
                         giftTitleView.setText(giftDetails.senderName + "קיבלת מתנה מ");
 
@@ -72,10 +72,6 @@ public class GotGiftFragment extends Fragment {
                         final TextView giftUrlView = (TextView) view.findViewById(R.id.giftUrl);
 
                         final String detailsStr = "פרטים";
-//                        final String urlString = String.format(
-//                                getResources().getString(R.string.giftUrl),
-//                                giftDetails.giftInfo.url,
-//                                detailsStr);
 
                         final String url = giftDetails.giftInfo.url;
 
