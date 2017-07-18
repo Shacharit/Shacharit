@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,7 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.Constants;
 import org.shaharit.face2face.R;
-import org.shaharit.face2face.model.GiftSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ import java.util.List;
 
 public class SentGiftsFragment extends Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
-    private List<Gift> gifts;
+    private List<SentGift> gifts;
 
     @Nullable
     @Override
@@ -39,17 +37,6 @@ public class SentGiftsFragment extends Fragment {
         ListView listView = (ListView) view.findViewById(R.id.list);
         final SentGiftsAdapter adapter = new SentGiftsAdapter(getContext());
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (gifts == null || gifts.size() <= position) {
-                    return;
-                }
-//                Events.GiftClickedEvent event = new Events.GiftClickedEvent();
-//                event.giftId = gifts.get(position).;
-//                EventBus.getInstance().post(event);
-            }
-        });
         mFirebaseDatabaseReference
                 .child(Constants.USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -58,7 +45,7 @@ public class SentGiftsFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gifts = new ArrayList<>();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    final Gift gift = data.getValue(Gift.class);
+                    final SentGift gift = data.getValue(SentGift.class);
                     gifts.add(gift);
                 }
                 adapter.setItems(gifts);

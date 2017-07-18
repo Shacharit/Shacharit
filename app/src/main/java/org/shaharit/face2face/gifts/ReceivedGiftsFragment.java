@@ -18,10 +18,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.Constants;
 import org.shaharit.face2face.R;
-import org.shaharit.face2face.model.GiftSuggestion;
+import org.shaharit.face2face.events.Events;
+import org.shaharit.face2face.utils.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kalisky on 7/18/17.
@@ -29,7 +31,7 @@ import java.util.List;
 
 public class ReceivedGiftsFragment extends Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
-    private List<Gift> gifts;
+    private List<ReceivedGift> gifts;
 
     @Nullable
     @Override
@@ -37,7 +39,7 @@ public class ReceivedGiftsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_with_list, container, false);
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         ListView listView = (ListView) view.findViewById(R.id.list);
-        final SentGiftsAdapter adapter = new SentGiftsAdapter(getContext());
+        final ReceivedGiftsAdapter adapter = new ReceivedGiftsAdapter(getContext());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -45,9 +47,9 @@ public class ReceivedGiftsFragment extends Fragment {
                 if (gifts == null || gifts.size() <= position) {
                     return;
                 }
-//                Events.FriendClickedEvent event = new Events.FriendClickedEvent();
-//                event.userId = gifts.get(position).uid;
-//                EventBus.getInstance().post(event);
+                Events.GiftClickedEvent event = new Events.GiftClickedEvent();
+                event.giftId = gifts.get(position).id;
+                EventBus.getInstance().post(event);
             }
         });
         mFirebaseDatabaseReference
@@ -57,8 +59,23 @@ public class ReceivedGiftsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gifts = new ArrayList<>();
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    final Gift gift = data.getValue(Gift.class);
+                for (DataSnapshot giftData : dataSnapshot.getChildren()) {
+                    ReceivedGift gift = new ReceivedGift();
+                    for (DataSnapshot field : giftData.getChildren()) {
+                        if (field.getKey().equals("senderImageUrl")) {
+                            gift.senderImageUrl = (String) field.getValue();
+                        } else if (field.getKey().equals("senderName")) {
+                            gift.senderName = (String) field.getValue();
+                        } else if (field.getKey().equals("giftInfo")) {
+                            Map<String, String> map = (Map<String, String>) field.getValue();
+                            for (Map.Entry<String, String> giftField : map.entrySet()) {
+                                if (giftField.getKey().equals("type")) {
+                                    gift.type = giftField.getValue();
+                                }
+                            }
+                        }
+                    }
+                    gift.id = giftData.getKey();
                     gifts.add(gift);
                 }
                 adapter.setItems(gifts);

@@ -19,13 +19,13 @@ import java.util.List;
  * Created by kalisky on 7/18/17.
  */
 
-public class SentGiftsAdapter extends BaseAdapter {
+public class ReceivedGiftsAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private final VolleySingleton volley;
     private final Context context;
-    private List<SentGift> items;
+    private List<ReceivedGift> items;
 
-    SentGiftsAdapter(Context context) {
+    ReceivedGiftsAdapter(Context context) {
         this.inflater = LayoutInflater.from(context);
         this.volley = VolleySingleton.getInstance(context);
         this.context = context;
@@ -54,20 +54,20 @@ public class SentGiftsAdapter extends BaseAdapter {
         if (convertView == null){
             convertView = inflater.inflate(R.layout.friend_item, viewGroup, false);
         }
-        SentGift gift = items.get(i);
+        ReceivedGift gift = items.get(i);
         int resId = Utils.getGiftTypeStringResourceId(gift.type);
         String text = "";
         if (resId != 0) {
             String typeStr = context.getResources().getString(resId);
-            text = gift.buddyName + " / " + typeStr;
+            text = gift.senderName + " / " + typeStr;
         }
         ((TextView) convertView.findViewById(R.id.name)).setText(text);
         NetworkImageView buddyImg = (NetworkImageView) convertView.findViewById(R.id.photo);
-        buddyImg.setImageUrl(gift.buddyImageUrl, volley.getImageLoader());
+        buddyImg.setImageUrl(gift.senderImageUrl, volley.getImageLoader());
         return convertView;
     }
 
-    public void setItems(List<SentGift> items) {
+    public void setItems(List<ReceivedGift> items) {
         this.items = items;
     }
 

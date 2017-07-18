@@ -207,6 +207,18 @@ public class NavigationActivity extends AppCompatActivity
         ft.commitAllowingStateLoss();
     }
 
+    @Subscribe
+    public void handleGiftClickedEvent(Events.GiftClickedEvent event) {
+        Fragment fragment = new GotGiftFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("giftId", event.giftId);
+        fragment.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commitAllowingStateLoss();
+    }
+
     @Override
     protected void onDestroy() {
         EventBus.getInstance().unregister(this);
