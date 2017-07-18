@@ -23,7 +23,7 @@ public class Gift {
     public String eventTitle;
     public String eventDescription;
 
-    // Gift
+    // GiftSuggestion
     public String cta;
     public String giftText;
     public String giftUrl;

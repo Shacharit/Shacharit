@@ -15,5 +15,5 @@ public class EventNotification {
     public String buddyId;
     public String buddyEmail;
     public String eventName;
-    public List<Gift> giftSuggestions = new ArrayList<>();
+    public List<GiftSuggestion> giftSuggestions = new ArrayList<>();
 }

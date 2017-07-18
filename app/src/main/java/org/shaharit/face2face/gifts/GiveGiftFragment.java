@@ -17,13 +17,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.otto.Bus;
 
 import org.shaharit.face2face.Constants;
 import org.shaharit.face2face.R;
 import org.shaharit.face2face.events.Events;
 import org.shaharit.face2face.model.EventNotification;
-import org.shaharit.face2face.model.Gift;
+import org.shaharit.face2face.model.GiftSuggestion;
 import org.shaharit.face2face.service.VolleySingleton;
 import org.shaharit.face2face.utils.EventBus;
 
@@ -70,7 +69,7 @@ public class GiveGiftFragment extends Fragment {
                                 startActivity(Intent.createChooser(email, ""));
                             }
                         });
-                        for(org.shaharit.face2face.model.Gift gift : notification.giftSuggestions) {
+                        for(GiftSuggestion gift : notification.giftSuggestions) {
                             if (gift.type.equals("greeting")) {
                                 view.findViewById(R.id.chooseGreetingLayout).setVisibility(View.VISIBLE);
                             } else if (gift.type.equals("video")) {
@@ -139,8 +138,8 @@ public class GiveGiftFragment extends Fragment {
     }
 
     private void findAndCreateGift(String type, EventNotification notification) {
-        Gift foundGift = null;
-        for(Gift gift : notification.giftSuggestions) {
+        GiftSuggestion foundGift = null;
+        for(GiftSuggestion gift : notification.giftSuggestions) {
             if (gift.type.equals(type)) {
                 foundGift = gift;
                 break;
@@ -153,7 +152,7 @@ public class GiveGiftFragment extends Fragment {
         createSentGift(foundGift, notification, type);
     }
 
-    private void createSentGift(Gift foundGift, EventNotification notification, String type) {
+    private void createSentGift(GiftSuggestion foundGift, EventNotification notification, String type) {
         DatabaseReference newItem = mFirebaseDatabaseReference
                 .child(Constants.USERS_CHILD)
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

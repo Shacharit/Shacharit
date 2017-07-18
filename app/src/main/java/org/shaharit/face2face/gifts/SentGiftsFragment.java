@@ -18,11 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.Constants;
 import org.shaharit.face2face.R;
-import org.shaharit.face2face.events.Events;
-import org.shaharit.face2face.friends.FriendAdapter;
-import org.shaharit.face2face.model.Buddy;
-import org.shaharit.face2face.model.Gift;
-import org.shaharit.face2face.utils.EventBus;
+import org.shaharit.face2face.model.GiftSuggestion;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -68,7 +68,7 @@ public class HackFragment extends Fragment {
         ((TextView) view.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchGiveGiftFragment("-KpAp7oEW1r_i7cfTpfV");
+                launchGiveGiftFragment("-KpKezOfKncdtwdDkW5s");
             }
         });
         ((TextView) view.findViewById(R.id.friend)).setOnClickListener(new View.OnClickListener() {

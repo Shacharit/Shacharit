@@ -206,4 +206,10 @@ public class NavigationActivity extends AppCompatActivity
         ft.addToBackStack(null);
         ft.commitAllowingStateLoss();
     }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getInstance().unregister(this);
+        super.onDestroy();
+    }
 }

@@ -7,11 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
-
 import org.shaharit.face2face.R;
-import org.shaharit.face2face.model.Buddy;
-import org.shaharit.face2face.model.Gift;
+import org.shaharit.face2face.model.GiftSuggestion;
 import org.shaharit.face2face.service.VolleySingleton;
 
 import java.util.List;

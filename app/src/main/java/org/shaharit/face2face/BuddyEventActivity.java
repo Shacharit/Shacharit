@@ -64,7 +64,7 @@ public class BuddyEventActivity extends AppCompatActivity {
         gift.senderImageUrl = data.getString("senderImageUrl");
         gift.isSent = false;
 
-        // Gift
+        // GiftSuggestion
         gift.eventTitle = data.getString("eventTitle");
         gift.eventDescription = data.getString("eventDescription");
         return gift;
