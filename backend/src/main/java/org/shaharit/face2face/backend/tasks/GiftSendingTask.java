@@ -65,7 +65,7 @@ public class GiftSendingTask implements Task {
                                             user.displayName, user.imageUrl, user.email, user.gender);
                                 }
 
-                                giftDb.markGiftAsSent(gift.id);
+                                giftDb.markGiftAsSent(user.uid ,gift.id);
                             }
                         });
 

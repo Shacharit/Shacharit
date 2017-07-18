@@ -6,9 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import org.shaharit.face2face.backend.database.GiftDb;
-import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.Gift;
-import org.shaharit.face2face.backend.models.GiftSender;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +15,7 @@ import java.util.List;
 public class FirebaseGiftDb implements GiftDb {
     private static final String SENT_GIFTS = "sent-gifts";
     private static final String SENT_FIELD = "isSent";
+    public static final String USERS = "users";
     private DatabaseReference firebase;
 
     public FirebaseGiftDb(DatabaseReference firebase) {
@@ -25,7 +24,7 @@ public class FirebaseGiftDb implements GiftDb {
 
     @Override
     public void getUnsentGifts(final GiftsHandler handler) {
-        firebase.child(SENT_GIFTS).addListenerForSingleValueEvent(new ValueEventListener() {
+        firebase.child(USERS).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Gift> res = new ArrayList<>();
@@ -33,11 +32,15 @@ public class FirebaseGiftDb implements GiftDb {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // Iterate over all gifts and extract unsent gifts
                 for (DataSnapshot ds : children) {
-                    if (ds.hasChild(SENT_FIELD) && Boolean.parseBoolean(ds.child(SENT_FIELD).getValue().toString())) {
-                        continue;
+                    for (DataSnapshot sentGiftsDs : ds.child(SENT_GIFTS).getChildren()) {
+                        if (sentGiftsDs.hasChild(SENT_FIELD)
+                                && Boolean.parseBoolean(sentGiftsDs.child(SENT_FIELD).getValue().toString())) {
+                            continue;
+                        }
+
+                        res.add(giftFromDs(sentGiftsDs));
                     }
 
-                    res.add(giftFromDs(ds));
                 }
 
                 handler.processResult(res);
@@ -64,7 +67,8 @@ public class FirebaseGiftDb implements GiftDb {
     }
 
     @Override
-    public void markGiftAsSent(String giftId) {
-        firebase.child(SENT_GIFTS).child(giftId).child(SENT_FIELD).setValue(true);
+    public void markGiftAsSent(String uid, String giftId) {
+        firebase.child(USERS).child(uid).child(SENT_GIFTS).child(giftId).child(SENT_FIELD)
+                .setValue(true);
     }
 }

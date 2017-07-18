@@ -78,4 +78,6 @@
     <string name="greetingDescription">ברכה</string>
     <string name="physicalDescription">מתנה</string>
     <string name="videoDescription">סרטון</string>
+
+    <string name="giftUrl"><a href="%1$s">%2%s</a></string>
 </resources>
