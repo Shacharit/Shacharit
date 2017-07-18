@@ -80,7 +80,7 @@ public class HackFragment extends Fragment {
         ((TextView) view.findViewById(R.id.goto_gift)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchGotGiftFragment("-KpAVbQIXGxiUAqZSKxL");
+                launchGotGiftFragment("-KpJbJazxi2gUpM_J3QY");
             }
         });
         return view;

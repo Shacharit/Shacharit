@@ -30,6 +30,7 @@ public class FirebaseUserDb implements UserDb {
     private static final String DISPLAY_NAME = "display_name";
     private static final String USERS = "users";
     private static final String EMAIL = "email_address";
+    public static final String GIFT_INFO = "giftInfo";
 
 
     private final DatabaseReference firebase;
@@ -196,7 +197,9 @@ public class FirebaseUserDb implements UserDb {
         DatabaseReference giftRef = firebase.child(USERS)
                 .child(recipientUid).child("gifts").push();
 
-        giftRef.child("giftInfo").setValue(gift);
+        giftRef.child(GIFT_INFO).child("text").setValue(gift.text);
+        giftRef.child(GIFT_INFO).child("url").setValue(gift.url);
+        giftRef.child(GIFT_INFO).child("type").setValue(gift.type);
         giftRef.child("senderName").setValue(displayName);
         giftRef.child("senderImageUrl").setValue(imageUrl);
         giftRef.child("senderEmail").setValue(email);

@@ -53,10 +53,13 @@ public class FirebaseGiftDb implements GiftDb {
     private Gift giftFromDs(DataSnapshot ds) {
         return new Gift(
                 ds.getKey(),
-                ds.child("giftText").getValue().toString(),
+                ds.child("eventName").getValue().toString(),
                 ds.child("eventTitle").getValue().toString(),
                 ds.child("recipientId").getValue().toString(),
-                ds.child("senderUid").getValue().toString()
+                ds.child("senderUid").getValue().toString(),
+                ds.child("giftText").getValue().toString(),
+                ds.child("type").getValue().toString(),
+                ds.child("url").getValue().toString()
         );
     }
 
