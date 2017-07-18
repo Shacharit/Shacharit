@@ -3,7 +3,7 @@
     <cron>
         <url>/match</url>
         <description>find buddies to all users</description>
-        <schedule>every 1 minutes</schedule>
+        <schedule>every 2 minutes</schedule>
     </cron>
     <cron>
         <url>/event_handler</url>
