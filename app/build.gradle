@@ -21,8 +21,8 @@ android {
         applicationId "org.shaharit.face2face"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 3
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
