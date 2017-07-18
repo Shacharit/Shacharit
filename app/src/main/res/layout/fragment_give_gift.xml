@@ -94,16 +94,17 @@
                     <LinearLayout
                         android:id="@+id/chooseGreeting"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="10dp">
 
-                        <android.support.design.widget.FloatingActionButton
+                        <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="10dp"
                             android:src="@drawable/ic_message_white_24dp"
-                            app:backgroundTint="@color/colorPrimary" />
+                            android:background="@drawable/circle_button_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -128,16 +129,17 @@
                     <LinearLayout
                         android:id="@+id/chooseVideo"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="10dp">
 
-                        <android.support.design.widget.FloatingActionButton
+                        <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="10dp"
                             android:src="@drawable/ic_play_circle_filled_white_24dp"
-                            app:backgroundTint="@color/colorPrimary" />
+                            android:background="@drawable/circle_button_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -162,16 +164,17 @@
                     <LinearLayout
                         android:id="@+id/chooseGift"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="10dp">
 
-                        <android.support.design.widget.FloatingActionButton
+                        <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="10dp"
                             android:src="@drawable/ic_card_giftcard_white_24dp"
-                            app:backgroundTint="@color/colorPrimary" />
+                            android:background="@drawable/circle_button_primary" />
 
                         <TextView
                             android:layout_width="wrap_content"

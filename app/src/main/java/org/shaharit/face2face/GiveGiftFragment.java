@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.otto.Bus;
 
 import org.shaharit.face2face.events.Events;
-import org.shaharit.face2face.model.*;
+import org.shaharit.face2face.model.EventNotification;
 import org.shaharit.face2face.model.Gift;
 import org.shaharit.face2face.service.VolleySingleton;
 import org.shaharit.face2face.utils.EventBus;
