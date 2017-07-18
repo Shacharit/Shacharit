@@ -9,4 +9,7 @@ public class Events {
     public static class FriendClickedEvent {
         public String userId;
     }
+    public static class GiftClickedEvent {
+        public String giftId;
+    }
 }

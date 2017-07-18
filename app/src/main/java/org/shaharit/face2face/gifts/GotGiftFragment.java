@@ -1,14 +1,11 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.shaharit.face2face.model.*;
+import org.shaharit.face2face.Constants;
+import org.shaharit.face2face.R;
+import org.shaharit.face2face.model.GiftDetails;
 import org.shaharit.face2face.service.VolleySingleton;
-import org.w3c.dom.Text;
 
 public class GotGiftFragment extends Fragment {
     private static final String TAG = "GotGiftFragment";

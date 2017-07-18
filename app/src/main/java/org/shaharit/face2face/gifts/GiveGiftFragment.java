@@ -166,5 +166,7 @@ public class GiveGiftFragment extends Fragment {
         newItem.child("recipientId").setValue(notification.buddyId);
         newItem.child("senderUid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
         newItem.child("type").setValue(type);
+        newItem.child("buddyName").setValue(notification.buddyName);
+        newItem.child("buddyImageUrl").setValue(notification.buddyImageUrl);
     }
 }

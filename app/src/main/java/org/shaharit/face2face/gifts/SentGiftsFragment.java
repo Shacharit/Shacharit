@@ -49,9 +49,9 @@ public class SentGiftsFragment extends Fragment {
                 if (gifts == null || gifts.size() <= position) {
                     return;
                 }
-                Events.FriendClickedEvent event = new Events.FriendClickedEvent();
-                event.userId = gifts.get(position).uid;
-                EventBus.getInstance().post(event);
+//                Events.GiftClickedEvent event = new Events.GiftClickedEvent();
+//                event.giftId = gifts.get(position).;
+//                EventBus.getInstance().post(event);
             }
         });
         mFirebaseDatabaseReference

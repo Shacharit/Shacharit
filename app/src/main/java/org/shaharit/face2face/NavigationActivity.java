@@ -82,7 +82,7 @@ public class NavigationActivity extends AppCompatActivity
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
-            ft.commit();
+            ft.commitAllowingStateLoss();
             return;
         }
         if ("give_gift".equals(getIntent().getStringExtra("action"))) {
@@ -92,7 +92,7 @@ public class NavigationActivity extends AppCompatActivity
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
-            ft.commit();
+            ft.commitAllowingStateLoss();
             return;
         }
         if ("receive_gift".equals(action)) {
@@ -102,7 +102,7 @@ public class NavigationActivity extends AppCompatActivity
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
-            ft.commit();
+            ft.commitAllowingStateLoss();
             return;
         }
 
@@ -166,7 +166,7 @@ public class NavigationActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
-            ft.commit();
+            ft.commitAllowingStateLoss();
         }
 
         // Set the toolbar title.
@@ -193,7 +193,7 @@ public class NavigationActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_frame, fragment);
         ft.addToBackStack(null);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
     @Subscribe
     public void handleFriendClickedEvent(Events.FriendClickedEvent event) {
@@ -204,6 +204,6 @@ public class NavigationActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
         ft.addToBackStack(null);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 }
