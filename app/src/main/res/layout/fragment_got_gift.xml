@@ -70,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:text="חושב עליך ואיך עובר עליך היום"
                     android:textColor="#333"
                     android:textSize="27sp"/>
@@ -84,31 +84,34 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/messageAction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_message_white_24dp"
-                    android:background="@drawable/c"
-                    />
-
-                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/giftAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginStart="40dp"
-                    android:src="@drawable/ic_card_giftcard_white_24dp"
-                    app:backgroundTint="@color/colorPrimary"
+                    android:src="@drawable/ic_message_white_24dp"
+                    android:padding="10dp"
+                    android:background="@drawable/circle_button_green"
                     />
 
-                <android.support.design.widget.FloatingActionButton
+                <ImageButton
+                    android:id="@+id/messageActionAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_message_white_24dp"
+                    android:padding="10dp"
+                    android:background="@drawable/circle_button_red"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="40dp"
+                    />
+
+                <ImageButton
                     android:id="@+id/videoAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_message_white_24dp"
+                    android:padding="10dp"
+                    android:background="@drawable/circle_button_green"
                     android:layout_marginLeft="40dp"
                     android:layout_marginStart="40dp"
-                    android:src="@drawable/ic_play_circle_filled_white_24dp"
-                    app:backgroundTint="@color/colorPrimary"
                     />
             </LinearLayout>
 

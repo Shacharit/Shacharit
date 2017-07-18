@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -35,6 +36,12 @@ public class GotGiftFragment extends Fragment {
         final String buddyImage = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=256";
         buddyImg.setImageUrl(buddyImage,
                 VolleySingleton.getInstance(getContext()).getImageLoader());
+
+        final ImageButton giftButton = (ImageButton) view.findViewById(R.id.giftAction);
+        giftButton.setVisibility(View.GONE);
+
+        final ImageButton videoButton = (ImageButton) view.findViewById(R.id.videoAction);
+        videoButton.setVisibility(View.GONE);
 
         return view;
     }
