@@ -17,10 +17,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.otto.Bus;
 
+import org.shaharit.face2face.events.Events;
 import org.shaharit.face2face.model.*;
 import org.shaharit.face2face.model.Gift;
 import org.shaharit.face2face.service.VolleySingleton;
+import org.shaharit.face2face.utils.EventBus;
 
 public class GiveGiftFragment extends Fragment {
 
@@ -47,7 +50,7 @@ public class GiveGiftFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final EventNotification notification = dataSnapshot.getValue(EventNotification.class);
                         NetworkImageView buddyImg = (NetworkImageView) view.findViewById(R.id.buddy_image);
-                        if (buddyImg == null) {
+                        if (buddyImg == null || notification == null) {
                             return;
                         }
                         buddyImg.setImageUrl(notification.buddyImageUrl,
@@ -77,30 +80,25 @@ public class GiveGiftFragment extends Fragment {
                         view.findViewById(R.id.chooseGreeting).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String titleFormat = getResources().getString(R.string.confirmGiftTitle);
-                                String typeStr = getResources().getString(R.string.greetingDescription);
-                                String title = String.format(titleFormat, notification.buddyName, typeStr, notification.eventName);
-                                Dialog dialog = new Dialog(getContext());
-                                dialog.setContentView(R.layout.confirm_sent_gift);
-                                ((TextView) dialog.findViewById(R.id.title)).setText(title);
-                                dialog.findViewById(R.id.positive).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        findAndCreateGift("greeting", notification);
-                                    }
-                                });
+                                int description = R.string.greetingDescription;
+                                final String type = "greeting";
+                                handleGiftClick(description, type, notification);
                             }
                         });
                         view.findViewById(R.id.chooseVideo).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                findAndCreateGift("video", notification);
+                                int description = R.string.videoDescription;
+                                final String type = "video";
+                                handleGiftClick(description, type, notification);
                             }
                         });
                         view.findViewById(R.id.chooseGift).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                findAndCreateGift("physical", notification);
+                                int description = R.string.physicalDescription;
+                                final String type = "physical";
+                                handleGiftClick(description, type, notification);
                             }
                         });
                     }
@@ -111,6 +109,31 @@ public class GiveGiftFragment extends Fragment {
                     }
                 });
         return view;
+    }
+
+    private void handleGiftClick(int description, final String type, final EventNotification notification) {
+        String titleFormat = getResources().getString(R.string.confirmGiftTitle);
+        String typeStr = getResources().getString(description);
+        String title = String.format(titleFormat, notification.buddyName, typeStr, notification.eventName);
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.confirm_sent_gift);
+        ((TextView) dialog.findViewById(R.id.title)).setText(title);
+        ((TextView) dialog.findViewById(R.id.subtitle)).setText(notification.eventDescription);
+        dialog.findViewById(R.id.positive).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findAndCreateGift(type, notification);
+                EventBus.getInstance().post(new Events.GiftSentEvent());
+                dialog.dismiss();
+            }
+        });
+        dialog.findViewById(R.id.negative).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void findAndCreateGift(String type, EventNotification notification) {
@@ -133,6 +156,7 @@ public class GiveGiftFragment extends Fragment {
                 .child(Constants.SENT_GIFTS_CHILD)
                 .push();
         newItem.child("eventTitle").setValue(notification.eventTitle);
+        newItem.child("eventName").setValue(notification.eventName);
         newItem.child("giftText").setValue(foundGift.greeting);
         newItem.child("url").setValue(foundGift.url);
         newItem.child("recipientId").setValue(notification.buddyId);

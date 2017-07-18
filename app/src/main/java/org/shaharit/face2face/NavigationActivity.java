@@ -18,6 +18,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.squareup.otto.Subscribe;
+
+import org.shaharit.face2face.events.Events;
+import org.shaharit.face2face.utils.EventBus;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,17 +39,18 @@ public class NavigationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(org.shaharit.face2face.R.layout.activity_navigation);
-        Toolbar toolbar = (Toolbar) findViewById(org.shaharit.face2face.R.id.toolbar);
+        setContentView(R.layout.activity_navigation);
+        EventBus.getInstance().register(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(org.shaharit.face2face.R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, org.shaharit.face2face.R.string.navigation_drawer_open, org.shaharit.face2face.R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(org.shaharit.face2face.R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -71,7 +76,7 @@ public class NavigationActivity extends AppCompatActivity
             bundle.putString("userId", getIntent().getStringExtra("uid"));
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.replace(R.id.main_frame, fragment);
             ft.commit();
             return;
         }
@@ -81,7 +86,7 @@ public class NavigationActivity extends AppCompatActivity
             bundle.putString("notificationId", getIntent().getStringExtra("notificationId"));
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.replace(R.id.main_frame, fragment);
             ft.commit();
             return;
         }
@@ -91,7 +96,7 @@ public class NavigationActivity extends AppCompatActivity
             bundle.putString("giftId", getIntent().getStringExtra("giftId"));
             fragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.replace(R.id.main_frame, fragment);
             ft.commit();
             return;
         }
@@ -105,9 +110,9 @@ public class NavigationActivity extends AppCompatActivity
 
         // Init the default fragment
         if (mRedirectToFillProfile) {
-            displayView(org.shaharit.face2face.R.id.nav_choose_other);
+            displayView(R.id.nav_choose_other);
         } else if (savedInstanceState == null) {
-            displayView(org.shaharit.face2face.R.id.nav_default);
+            displayView(R.id.nav_default);
         }
 
         // Push token
@@ -116,7 +121,7 @@ public class NavigationActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(org.shaharit.face2face.R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -127,29 +132,32 @@ public class NavigationActivity extends AppCompatActivity
     public void displayView(int viewId) {
 
         Fragment fragment = null;
-        String title = getString(org.shaharit.face2face.R.string.app_name);
+        String title = getString(R.string.app_name);
 
-        if (viewId == org.shaharit.face2face.R.id.nav_default) {
+        if (viewId == R.id.nav_default) {
             fragment = new DefaultFragment() ;
-            title = getString(org.shaharit.face2face.R.string.nav_default);
-        } else if (viewId == org.shaharit.face2face.R.id.nav_choose_other) {
+            title = getString(R.string.nav_default);
+        } else if (viewId == R.id.nav_choose_other) {
             fragment = new OtherDefinitionFragment();
-            title  = getString(org.shaharit.face2face.R.string.nav_choose_other);
-        } else if (viewId == org.shaharit.face2face.R.id.nav_profile) {
+            title  = getString(R.string.nav_choose_other);
+        } else if (viewId == R.id.nav_profile) {
             fragment = new ProfileFragment();
-            title = getString(org.shaharit.face2face.R.string.nav_profile);
-        }  else if (viewId == org.shaharit.face2face.R.id.nav_who_am_I) {
+            title = getString(R.string.nav_profile);
+        }  else if (viewId == R.id.nav_who_am_I) {
             fragment = new SelfDefinitionFragment();
-            title  = getString(org.shaharit.face2face.R.string.nav_who_am_I);
-        }  else if (viewId == org.shaharit.face2face.R.id.nav_my_friends) {
+            title  = getString(R.string.nav_who_am_I);
+        }  else if (viewId == R.id.nav_my_friends) {
             fragment = new MyFriendsFragment();
-            title  = getString(org.shaharit.face2face.R.string.nav_my_friends);
+            title  = getString(R.string.nav_my_friends);
+        } else if (viewId == R.id.nav_my_sent_gifts) {
+            fragment = new SentGiftsFragment();
+            title  = getString(R.string.nav_my_sent_gifts);
         }
 
         // Set the fragment.
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
+            ft.replace(R.id.main_frame, fragment);
             ft.commit();
         }
 
@@ -158,7 +166,7 @@ public class NavigationActivity extends AppCompatActivity
             getSupportActionBar().setTitle(title);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(org.shaharit.face2face.R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
@@ -169,5 +177,14 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
         displayView(id);
         return true;
+    }
+
+    @Subscribe
+    public void handleGiftSentEvent(Events.GiftSentEvent event) {
+        Fragment fragment = new SentGiftsFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.main_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

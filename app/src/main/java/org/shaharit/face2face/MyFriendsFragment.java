@@ -66,7 +66,7 @@ public class MyFriendsFragment extends Fragment {
         ((TextView) view.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                launchGiveGiftFragment("-KpAUzlorh36c31IOFl_");
+                launchGiveGiftFragment("-KpAp7oEW1r_i7cfTpfV");
             }
         });
         ((TextView) view.findViewById(R.id.friend)).setOnClickListener(new View.OnClickListener() {
