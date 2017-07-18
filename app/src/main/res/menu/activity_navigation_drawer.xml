@@ -27,13 +27,9 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/nav_my_friends"/>
             <item
-                android:id="@+id/nav_my_received_gifts"
+                android:id="@+id/nav_gifts"
                 android:icon="@drawable/ic_menu_send"
-                android:title="@string/nav_my_received_gifts"/>
-            <item
-                android:id="@+id/nav_my_sent_gifts"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/nav_my_sent_gifts"/>
+                android:title="@string/nav_gifts"/>
         </menu>
     </item>
 

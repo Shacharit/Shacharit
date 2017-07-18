@@ -1,6 +1,5 @@
 package org.shaharit.face2face.gifts;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -47,8 +46,8 @@ public class GiftsFragment extends android.support.v4.app.Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new SentGiftsFragment(), getString(R.string.nav_my_sent_gifts));
         adapter.addFragment(new ReceivedGiftsFragment(), getString(R.string.nav_my_received_gifts));
+        adapter.addFragment(new SentGiftsFragment(), getString(R.string.nav_my_sent_gifts));
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {

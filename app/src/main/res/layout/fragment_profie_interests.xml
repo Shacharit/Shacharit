@@ -17,10 +17,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="הבא"
+                android:text="@string/next"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@null"
                 android:id="@+id/profile_interests_save_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/previous"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:background="@null"
+                android:id="@+id/buttonPrevious"
+                android:layout_toRightOf="@id/profile_interests_save_button"
+                android:layout_toEndOf="@id/profile_interests_save_button"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignParentBottom="true"/>
             <ProgressBar

@@ -3,6 +3,7 @@ package org.shaharit.face2face;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,14 @@ public class TvShowsFragment extends Fragment {
 
                     }
                 });
+        final Button buttonPrev = (Button) view.findViewById(R.id.buttonPrevious);
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTabHost tabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
+                tabHost.setCurrentTab(1);
+            }
+        });
 
         Button saveButton = (Button) view.findViewById(org.shaharit.face2face.R.id.profile_interests_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {

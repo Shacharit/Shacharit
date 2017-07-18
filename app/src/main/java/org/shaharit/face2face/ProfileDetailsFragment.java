@@ -98,6 +98,14 @@ public class ProfileDetailsFragment extends Fragment {
                     }
                 });
 
+        final Button buttonPrev = (Button) view.findViewById(R.id.buttonPrevious);
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NavigationActivity) getActivity()).displayView(R.id.nav_who_am_I);
+            }
+        });
+
         Button saveButton = (Button) view.findViewById(org.shaharit.face2face.R.id.profile_details_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,6 +25,7 @@
     <string name="nav_my_friends">החברים שלי</string>
     <string name="nav_my_received_gifts">מתנות שקיבלתי</string>
     <string name="nav_my_sent_gifts">מתנות ששלחתי</string>
+    <string name="nav_gifts">מתנות</string>
     <string name="otherLabel">את מי את/ה מחפש/ת</string>
     <string name="selfLabel">איך אתה מגדיר את עצמך</string>
 
@@ -78,6 +79,9 @@
     <string name="greetingDescription">ברכה</string>
     <string name="physicalDescription">מתנה</string>
     <string name="videoDescription">סרטון</string>
+
+    <string name="next">הבא</string>
+    <string name="previous">הקודם</string>
 
     <string name="giftUrl"><a href="%1$s">%2%s</a></string>
 </resources>

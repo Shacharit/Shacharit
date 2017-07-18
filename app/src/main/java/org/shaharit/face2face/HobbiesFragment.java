@@ -86,6 +86,14 @@ public class HobbiesFragment extends Fragment {
                     }
                 });
 
+        final Button buttonPrev = (Button) view.findViewById(R.id.buttonPrevious);
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mTabHost.setCurrentTab(0);
+            }
+        });
+
         Button saveButton = (Button) view.findViewById(org.shaharit.face2face.R.id.profile_interests_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

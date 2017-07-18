@@ -93,6 +93,13 @@ public class SelfDefinitionFragment extends Fragment {
         final FlowLayout flowContainer = (FlowLayout) view.findViewById(R.id.fragment_self_definition_flow_container);
         flowContainer.setMaxItems(NUM_OF_SELF_DEFINITIONS);
 
+        final Button buttonPrev = (Button) view.findViewById(R.id.buttonPrevious);
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NavigationActivity) getActivity()).displayView(R.id.nav_choose_other);
+            }
+        });
         // Add onClick binding to 'Next' button.
         final Button button = (Button) view.findViewById(R.id.fragment_self_definition_next_button);
         button.setOnClickListener(new View.OnClickListener() {

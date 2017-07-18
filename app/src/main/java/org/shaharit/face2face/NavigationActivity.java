@@ -154,12 +154,9 @@ public class NavigationActivity extends AppCompatActivity
         }  else if (viewId == R.id.nav_my_friends) {
             fragment = new MyFriendsFragment();
             title  = getString(R.string.nav_my_friends);
-        }  else if (viewId == R.id.nav_my_received_gifts) {
-            fragment = new HackFragment();
-            title  = getString(R.string.nav_my_received_gifts);
-        } else if (viewId == R.id.nav_my_sent_gifts) {
+        } else if (viewId == R.id.nav_gifts) {
             fragment = new GiftsFragment();
-            title  = getString(R.string.nav_my_sent_gifts);
+            title  = getString(R.string.nav_gifts);
         }
 
         // Set the fragment.
