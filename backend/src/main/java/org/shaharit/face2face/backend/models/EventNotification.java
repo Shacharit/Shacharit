@@ -24,7 +24,7 @@ public class EventNotification {
         this.buddyId = buddy.uid;
         this.buddyName = buddy.displayName;
         this.buddyImageUrl = buddy.imageUrl;
-        this.eventTitle = event.titleMap.get(buddy.gender);
+        this.eventTitle = event.titleMap.get(buddy.gender) + " " + buddy.displayName;
         this.eventDescription = event.description;
         this.giftSuggestions = fromGifts(event.gifts, user, buddy);
         this.buddyEmail = buddy.email;

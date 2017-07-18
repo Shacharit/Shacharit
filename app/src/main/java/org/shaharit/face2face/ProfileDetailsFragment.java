@@ -197,7 +197,7 @@ public class ProfileDetailsFragment extends Fragment {
                         mFirebaseDatabaseReference.child(Constants.USERS_CHILD).child(currentUser.getUid())
                                 .child(Constants.IMAGE_URL).setValue(imageUrl);
                         mImageView.setImageBitmap(bitmap);
-                        Toast.makeText(getContext(), org.shaharit.face2face.R.string.save_success, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), org.shaharit.face2face.R.string.save_success, Toast.LENGTH_SHORT).show();
                     }
                 });
             }

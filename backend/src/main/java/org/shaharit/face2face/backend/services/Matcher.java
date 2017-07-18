@@ -37,7 +37,7 @@ public class Matcher {
                     continue;
                 }
 
-                if(!firstUser.gender.equals(secondUser.gender)) {
+                if( (firstUser.gender != null && secondUser.gender != null) && !firstUser.gender.equals(secondUser.gender)) {
                     setMutualSummary(res,
                             new MatchSummary(MatchResult.NON_MATCHING_GENDER, null, null),
                             firstUser, secondUser);

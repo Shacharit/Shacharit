@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 public abstract class ShaharitServlet extends HttpServlet {
     // Firebase keys shared with client applications
     protected DatabaseReference firebase;
+    private static boolean hasBeenInitialized = false;
 
     @Override
     public void init(ServletConfig config) {
@@ -32,7 +33,6 @@ public abstract class ShaharitServlet extends HttpServlet {
     }
 
     private synchronized void initFirebase(FirebaseOptions options) {
-        boolean hasBeenInitialized=false;
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
         for(FirebaseApp app : firebaseApps){
             if(app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)){

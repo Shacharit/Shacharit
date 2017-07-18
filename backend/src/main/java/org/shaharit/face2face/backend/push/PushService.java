@@ -16,8 +16,13 @@ import java.util.Map;
 
 public class PushService {
     private static final Map<Gender, String> newBuddyMessage = new HashMap<Gender, String>() {{
-        put(Gender.MALE, "say hi to him");
-        put(Gender.FEMALE, "say hi to her");
+        put(Gender.MALE, "אמור לו שלום");
+        put(Gender.FEMALE, "אמור לה שלום");
+    }};
+
+    private static final Map<Gender, String> newBuddyTitle = new HashMap<Gender, String>() {{
+        put(Gender.MALE, "חבר חדש");
+        put(Gender.FEMALE, "חברה חדשה");
     }};
 
     private static final Map<Gender, String> gotGiftTitles = new HashMap<Gender, String>() {{
@@ -47,7 +52,7 @@ public class PushService {
                     continue;
                 }
 
-                messenger.sendMessage(regid, "new buddies", newBuddyMessage.get(newUser.gender),
+                messenger.sendMessage(regid, newBuddyTitle.get(newUser.gender), newBuddyMessage.get(newUser.gender),
                         extras);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,7 +86,7 @@ public class PushService {
         extras.put("eventTitle", eventTitle);
         extras.put("eventDescription", notification.eventDescription);
         extras.put("action", "give_gift");
-        extras.put("notificaitonId", notificationId);
+        extras.put("notificationId", notificationId);
 
 
         try {
