@@ -13,7 +13,7 @@
     <cron>
         <url>/send_gift</url>
         <description>GiftSendingServlet</description>
-        <schedule>every 5 minutes</schedule>
+        <schedule>every 2 minutes</schedule>
     </cron>
 
 </cronentries>
