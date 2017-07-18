@@ -34,7 +34,9 @@
                 android:background="@null"
                 android:id="@+id/fragment_self_definition_next_button"
                 android:layout_gravity="center_horizontal"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
             <Button
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
@@ -44,8 +46,8 @@
                 android:textColor="@color/colorPrimary"
                 android:background="@null"
                 android:id="@+id/buttonPrevious"
-                android:layout_toRightOf="@id/fragment_self_definition_next_button"
-                android:layout_toEndOf="@id/fragment_self_definition_next_button"
+                android:layout_toLeftOf="@id/fragment_self_definition_next_button"
+                android:layout_toStartOf="@id/fragment_self_definition_next_button"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignParentBottom="true"/>
             <ProgressBar
