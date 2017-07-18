@@ -9,6 +9,10 @@ public class GenderCommunications {
     }
 
     public String getCommunication(Gender sender, Gender recipient) {
+        if (recipient == null || sender ==null) {
+            return texts[Gender.MALE.ordinal()][Gender.MALE.ordinal()];
+        }
+
         return texts[sender.ordinal()][recipient.ordinal()];
     }
 }
