@@ -102,7 +102,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="10dp"
+                            android:padding="@dimen/buttonPadding"
                             android:src="@drawable/ic_message_white_24dp"
                             android:background="@drawable/circle_button_primary" />
 
@@ -137,7 +137,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="10dp"
+                            android:padding="@dimen/buttonPadding"
                             android:src="@drawable/ic_play_circle_filled_white_24dp"
                             android:background="@drawable/circle_button_primary" />
 
@@ -172,7 +172,7 @@
                         <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="10dp"
+                            android:padding="@dimen/buttonPadding"
                             android:src="@drawable/ic_card_giftcard_white_24dp"
                             android:background="@drawable/circle_button_primary" />
 

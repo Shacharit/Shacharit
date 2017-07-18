@@ -9,4 +9,6 @@
     <!-- Padding for the pills flow layout -->
     <dimen name="flowlayout_horizontal_padding">10dp</dimen>
     <dimen name="flowlayout_vertical_padding">10dp</dimen>
+
+    <dimen name="buttonPadding">10dp</dimen>
 </resources>

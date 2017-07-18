@@ -113,14 +113,14 @@
                         android:id="@+id/messageAction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
+                        android:padding="@dimen/buttonPadding"
                         android:src="@drawable/ic_message_white_24dp"
                         android:background="@drawable/circle_button_primary"
                         />
                     <ImageButton
                         android:id="@+id/giftAction"
                         android:layout_width="wrap_content"
-                        android:padding="10dp"
+                        android:padding="@dimen/buttonPadding"
                         android:layout_marginLeft="40dp"
                         android:layout_marginStart="40dp"
                         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                     <ImageButton
                         android:id="@+id/videoAction"
                         android:layout_width="wrap_content"
-                        android:padding="10dp"
+                        android:padding="@dimen/buttonPadding"
                         android:layout_marginLeft="40dp"
                         android:layout_marginStart="40dp"
                         android:layout_height="wrap_content"
