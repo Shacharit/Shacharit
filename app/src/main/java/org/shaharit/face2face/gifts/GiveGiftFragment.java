@@ -3,7 +3,11 @@ package org.shaharit.face2face.gifts;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,7 +123,22 @@ public class GiveGiftFragment extends Fragment {
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.confirm_sent_gift);
         ((TextView) dialog.findViewById(R.id.title)).setText(title);
-        ((TextView) dialog.findViewById(R.id.subtitle)).setText(notification.eventDescription);
+        GiftSuggestion foundGift = findGift(type, notification);
+        final String detailsStr = "פרטים";
+
+        final String url = foundGift.url;
+        final TextView dialogDetailsView = (TextView) dialog.findViewById(R.id.subtitle);
+
+        if (!TextUtils.isEmpty(url)) {
+            String value = String.format("<html><a href=%s>%s</a></html>", url,
+                    detailsStr);
+            dialogDetailsView.setMovementMethod(LinkMovementMethod.getInstance());
+            dialogDetailsView.setText(Html.fromHtml(value));
+        } else {
+            dialogDetailsView.setVisibility(View.GONE);
+        }
+
+
         dialog.findViewById(R.id.positive).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +157,13 @@ public class GiveGiftFragment extends Fragment {
     }
 
     private void findAndCreateGift(String type, EventNotification notification) {
+        GiftSuggestion foundGift = findGift(type, notification);
+        if (foundGift == null) return;
+        createSentGift(foundGift, notification, type);
+    }
+
+    @Nullable
+    private GiftSuggestion findGift(String type, EventNotification notification) {
         GiftSuggestion foundGift = null;
         for(GiftSuggestion gift : notification.giftSuggestions) {
             if (gift.type.equals(type)) {
@@ -147,9 +173,9 @@ public class GiveGiftFragment extends Fragment {
         }
         if (foundGift == null) {
             Log.e(TAG, "Cannot find gift: " + type);
-            return;
+            return null;
         }
-        createSentGift(foundGift, notification, type);
+        return foundGift;
     }
 
     private void createSentGift(GiftSuggestion foundGift, EventNotification notification, String type) {
