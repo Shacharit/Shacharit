@@ -76,7 +76,7 @@ public class PushService {
 
         extras.put("recipientId", buddy.uid);
         extras.put("recipientName", buddy.displayName);
-        extras.put("recipientGender", buddy.gender.toString());
+        extras.put("recipientGender", buddy.gender != null ? buddy.gender.toString() : Gender.MALE.toString());
         extras.put("recipientImageUrl", buddy.imageUrl);
         extras.put("senderGender", user.gender.toString());
         extras.put("senderName", user.displayName);
