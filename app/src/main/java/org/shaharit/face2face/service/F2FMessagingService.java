@@ -10,10 +10,8 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import org.shaharit.face2face.BuddyEventActivity;
-import org.shaharit.face2face.MatchFragment;
 import org.shaharit.face2face.NavigationActivity;
-import org.shaharit.face2face.ReceiveGiftActivity;
+import org.shaharit.face2face.gifts.ReceiveGiftActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

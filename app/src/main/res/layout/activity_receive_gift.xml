@@ -4,7 +4,7 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context="org.shaharit.face2face.ReceiveGiftActivity">
+tools:context="org.shaharit.face2face.gifts.ReceiveGiftActivity">
 
 <LinearLayout
     android:id="@+id/contact"

@@ -1,4 +1,4 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

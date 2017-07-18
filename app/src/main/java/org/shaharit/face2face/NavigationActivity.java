@@ -21,6 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.squareup.otto.Subscribe;
 
 import org.shaharit.face2face.events.Events;
+import org.shaharit.face2face.friends.MyFriendsFragment;
+import org.shaharit.face2face.gifts.GiveGiftFragment;
+import org.shaharit.face2face.gifts.GotGiftFragment;
+import org.shaharit.face2face.gifts.ReceiveGiftActivity;
+import org.shaharit.face2face.gifts.SentGiftsFragment;
 import org.shaharit.face2face.utils.EventBus;
 
 public class NavigationActivity extends AppCompatActivity
@@ -147,7 +152,7 @@ public class NavigationActivity extends AppCompatActivity
             fragment = new SelfDefinitionFragment();
             title  = getString(R.string.nav_who_am_I);
         }  else if (viewId == R.id.nav_my_friends) {
-            fragment = new HackFragment();
+            fragment = new MyFriendsFragment();
             title  = getString(R.string.nav_my_friends);
         }  else if (viewId == R.id.nav_my_received_gifts) {
             fragment = new HackFragment();
@@ -187,6 +192,17 @@ public class NavigationActivity extends AppCompatActivity
         Fragment fragment = new SentGiftsFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_frame, fragment);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+    @Subscribe
+    public void handleFriendClickedEvent(Events.FriendClickedEvent event) {
+        Fragment fragment = new MatchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", event.userId);
+        fragment.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(org.shaharit.face2face.R.id.main_frame, fragment);
         ft.addToBackStack(null);
         ft.commit();
     }

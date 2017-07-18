@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    tools:context="org.shaharit.face2face.OtherDefinitionFragment">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/photo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/ic_account_circle_black_36dp"
+        android:contentDescription="@string/buddy_image_description"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:textColor="#333"
+        android:textSize="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        />
+</LinearLayout>

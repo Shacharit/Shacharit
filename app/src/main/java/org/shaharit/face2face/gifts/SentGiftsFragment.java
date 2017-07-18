@@ -1,4 +1,4 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.shaharit.face2face.R;
 
 /**
  * Created by kalisky on 7/18/17.

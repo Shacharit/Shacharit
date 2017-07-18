@@ -1,8 +1,10 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import org.shaharit.face2face.R;
 
 public class ReceiveGiftActivity extends AppCompatActivity {
     private TextView textView;

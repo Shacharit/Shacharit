@@ -1,4 +1,4 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.shaharit.face2face.R;
 import org.shaharit.face2face.model.Buddy;
 import org.shaharit.face2face.service.VolleySingleton;
 

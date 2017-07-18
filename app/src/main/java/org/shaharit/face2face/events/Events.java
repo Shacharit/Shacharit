@@ -6,4 +6,7 @@ package org.shaharit.face2face.events;
 
 public class Events {
     public static class GiftSentEvent {}
+    public static class FriendClickedEvent {
+        public String userId;
+    }
 }

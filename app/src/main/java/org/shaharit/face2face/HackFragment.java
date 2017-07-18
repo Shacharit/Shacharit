@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.shaharit.face2face.gifts.GiveGiftFragment;
+import org.shaharit.face2face.gifts.GotGiftFragment;
+
 import java.util.Map;
 
 /**

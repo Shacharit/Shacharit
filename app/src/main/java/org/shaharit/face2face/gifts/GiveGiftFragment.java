@@ -1,4 +1,4 @@
-package org.shaharit.face2face;
+package org.shaharit.face2face.gifts;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.otto.Bus;
 
+import org.shaharit.face2face.Constants;
+import org.shaharit.face2face.R;
 import org.shaharit.face2face.events.Events;
 import org.shaharit.face2face.model.EventNotification;
 import org.shaharit.face2face.model.Gift;
@@ -49,10 +51,10 @@ public class GiveGiftFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final EventNotification notification = dataSnapshot.getValue(EventNotification.class);
-                        NetworkImageView buddyImg = (NetworkImageView) view.findViewById(R.id.buddy_image);
-                        if (buddyImg == null || notification == null) {
+                        if (notification == null) {
                             return;
                         }
+                        NetworkImageView buddyImg = (NetworkImageView) view.findViewById(R.id.buddy_image);
                         buddyImg.setImageUrl(notification.buddyImageUrl,
                                 VolleySingleton.getInstance(getContext()).getImageLoader());
                         ((TextView) view.findViewById(R.id.buddyName)).setText(notification.buddyName);
@@ -148,10 +150,10 @@ public class GiveGiftFragment extends Fragment {
             Log.e(TAG, "Cannot find gift: " + type);
             return;
         }
-        createSentGift(foundGift, notification);
+        createSentGift(foundGift, notification, type);
     }
 
-    private void createSentGift(Gift foundGift, EventNotification notification) {
+    private void createSentGift(Gift foundGift, EventNotification notification, String type) {
         DatabaseReference newItem = mFirebaseDatabaseReference
                 .child(Constants.SENT_GIFTS_CHILD)
                 .push();
@@ -161,5 +163,6 @@ public class GiveGiftFragment extends Fragment {
         newItem.child("url").setValue(foundGift.url);
         newItem.child("recipientId").setValue(notification.buddyId);
         newItem.child("senderUid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        newItem.child("type").setValue(type);
     }
 }

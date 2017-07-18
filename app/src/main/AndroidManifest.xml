@@ -42,7 +42,7 @@
         </service>
 
         <activity android:name="org.shaharit.face2face.BuddyEventActivity" />
-        <activity android:name="org.shaharit.face2face.ReceiveGiftActivity" />
+        <activity android:name="org.shaharit.face2face.gifts.ReceiveGiftActivity" />
         <activity android:name="org.shaharit.face2face.MatchFragment"></activity>
     </application>
 
