@@ -33,10 +33,11 @@ public abstract class ShaharitServlet extends HttpServlet {
     }
 
     private synchronized void initFirebase(FirebaseOptions options) {
+        logger.info("Looking for initialized firebase app");
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
         for(FirebaseApp app : firebaseApps){
             if(app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)){
-                hasBeenInitialized=true;
+                markAppInitialized();
             }
         }
 
@@ -49,11 +50,30 @@ public abstract class ShaharitServlet extends HttpServlet {
                 logger.info("Exception on firebase init. Assuming already initialized");
                 logger.info(e.getMessage());
             } finally {
-                logger.info("Marking app as initialized for instance: " + this.toString());
-                hasBeenInitialized = true;
+                markAppInitialized();
             }
         }
 
 
+    }
+
+    private void markAppInitialized() {
+        logger.info("Marking app as initialized for instance: " + this.toString());
+        hasBeenInitialized = true;
+    }
+
+    protected synchronized void verifyFirebaseInitialized() {
+        boolean isInitialized = false;
+        logger.info("Making sure firebase is initialized");
+        List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
+        for(FirebaseApp app : firebaseApps){
+            if(app.getName().equals(FirebaseApp.DEFAULT_APP_NAME)){
+                isInitialized = true;
+            }
+        }
+
+        if (!isInitialized) {
+            throw new RuntimeException("Firebase is not initialized");
+        }
     }
 }

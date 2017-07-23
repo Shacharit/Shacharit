@@ -8,7 +8,7 @@ import org.shaharit.face2face.backend.servlets.ShaharitServlet;
 import java.util.logging.Logger;
 
 public class FirebaseMatchingLog implements MatchingLog {
-    private static final Logger logger = Logger.getLogger(ShaharitServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(FirebaseMatchingLog.class.getName());
 
     private static final String LOGS = "logs";
     private final DatabaseReference firebase;

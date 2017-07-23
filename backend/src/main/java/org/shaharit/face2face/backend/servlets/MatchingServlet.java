@@ -18,6 +18,7 @@ public class MatchingServlet extends ShaharitServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
         logger.info("in matching-servlet doGet");
         doPost(req, resp);
     }
@@ -26,6 +27,9 @@ public class MatchingServlet extends ShaharitServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         logger.info("in matching-servlet doPost");
+
+        verifyFirebaseInitialized();
+
         logger.info("Running matching task at " + Long.toString(System.currentTimeMillis()));
         new MatchingTask(new FirebaseUserDb(firebase),
                 new PushService(new FcmMessenger()),
