@@ -5,11 +5,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.shaharit.face2face.backend.FirebaseInitializer;
-import org.shaharit.face2face.backend.tasks.MatchingTask;
-
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
@@ -46,14 +42,18 @@ public abstract class ShaharitServlet extends HttpServlet {
 
         if (!hasBeenInitialized) {
             try {
+                logger.info("Initializing firebase app");
                 FirebaseApp.initializeApp(options);
+                logger.info("App initialized");
             } catch (Exception e) {
                 logger.info("Exception on firebase init. Assuming already initialized");
                 logger.info(e.getMessage());
             } finally {
+                logger.info("Marking app as initialized for instance: " + this.toString());
                 hasBeenInitialized = true;
             }
-
         }
+
+
     }
 }

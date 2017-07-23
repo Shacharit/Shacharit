@@ -3,8 +3,13 @@ package org.shaharit.face2face.backend.services;
 import com.google.firebase.database.DatabaseReference;
 
 import org.shaharit.face2face.backend.models.User;
+import org.shaharit.face2face.backend.servlets.ShaharitServlet;
+
+import java.util.logging.Logger;
 
 public class FirebaseMatchingLog implements MatchingLog {
+    private static final Logger logger = Logger.getLogger(ShaharitServlet.class.getName());
+
     private static final String LOGS = "logs";
     private final DatabaseReference firebase;
 
@@ -23,6 +28,7 @@ public class FirebaseMatchingLog implements MatchingLog {
 
     @Override
     public void logTrace(String tag, String msg) {
+        logger.info(String.format("logging msg: \"%s\" under tag\"%s\"", msg, tag));
         getLogsRef().child(tag).setValue(msg);
     }
 }
