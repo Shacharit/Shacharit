@@ -82,7 +82,7 @@ public class EventNotificationTaskPushTest {
         UserBuddyPair userBuddyPair = triggerEventNotification(mockMessenger, event,
                 new UserBuilder(), new UserBuilder().withDisplayName("רפי").withFemaleGender());
 
-        String expectedEventTitle = "מציין את יום הזיכרון לשואה והגבורה";
+        String expectedEventTitle = "רפי מציין את יום הזיכרון לשואה והגבורה";
         verify(mockMessenger).sendMessage(eq(userBuddyPair.theUser.regId), eq("שלח לחבר מתנה"),
                 eq(expectedEventTitle),
                 argThat(hasExtrasWithEventInfo(expectedEventTitle, description)));
@@ -184,6 +184,7 @@ public class EventNotificationTaskPushTest {
             this.user = user;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;
@@ -204,6 +205,7 @@ public class EventNotificationTaskPushTest {
             this.description = description;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;
@@ -226,6 +228,7 @@ public class EventNotificationTaskPushTest {
             this.type = type;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;

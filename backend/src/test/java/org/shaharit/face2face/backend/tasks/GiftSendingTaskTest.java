@@ -27,34 +27,36 @@ public class GiftSendingTaskTest {
 
     @Test
     public void sendsUnsentGiftForExistingRecipient() throws Exception {
+        User sender = new UserBuilder().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
-        Gift gift = new GiftBuilder(recipient.uid).build();
+        Gift gift = new GiftBuilder(recipient.uid).withSenderDetails(sender).build();
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
         new GiftSendingTask(mockGiftDb, userDb, new PushService(mockMessenger)).execute();
 
-        assertTrue("Gift was not marked as sent", mockGiftDb.wasGiftMarkedAsSent(gift.id));
+        assertTrue("Gift was marked as sent", mockGiftDb.wasGiftMarkedAsSent(gift.id));
         verify(mockMessenger).sendMessage(eq(recipient.regId), anyString(), anyString(),
                 argThat(hasExtrasForPushAction("receive_gift")));
     }
 
     @Test
     public void doesNotSendUnsentGiftForNotFoundRecipient() throws Exception {
+        User sender = new UserBuilder().build();
         User recipient = new UserBuilder().build();
 
-        // Let's say the user does not exist in our DB
+        // Let's say the users do not exist in our DB
         InMemoryUserDb userDb = new InMemoryUserDb(new ArrayList<User>());
 
-        Gift gift = new GiftBuilder(recipient.uid).build();
+        Gift gift = new GiftBuilder(recipient.uid).withSenderDetails(sender).build();
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
         new GiftSendingTask(mockGiftDb, userDb, new PushService(mockMessenger)).execute();
 
-        assertTrue("Gift was not marked as sent", mockGiftDb.wasGiftMarkedAsSent(gift.id));
+        assertFalse("Gift was not marked as sent", mockGiftDb.wasGiftMarkedAsSent(gift.id));
         verify(mockMessenger, never()).sendMessage(eq(recipient.regId), anyString(), anyString(),
                 argThat(hasExtrasForPushAction("receive_gift")));
     }

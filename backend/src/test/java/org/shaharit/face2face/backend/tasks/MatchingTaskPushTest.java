@@ -22,9 +22,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class MatchingTaskPushTest {
-
-    private static final String EXPECTED_PUSH_TITLE = "new buddies";
-
     @Test
     public void whenUserGetsMatchedWithUserHeGetsAPush() throws Exception {
         final User user1 = new UserBuilder().build();
@@ -95,8 +92,8 @@ public class MatchingTaskPushTest {
                 .build()
                 .execute();
 
-        verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
-                eq("say hi to him"),
+        verify(mockMessenger).sendMessage(eq(user1.regId), eq("חבר חדש"),
+                eq("אמור לו שלום"),
                 argThat(isExtrasForNewBuddy(user2)));
     }
 
@@ -116,8 +113,8 @@ public class MatchingTaskPushTest {
                 .build()
                 .execute();
 
-        verify(mockMessenger).sendMessage(eq(user1.regId), eq(EXPECTED_PUSH_TITLE),
-                eq("say hi to her"),
+        verify(mockMessenger).sendMessage(eq(user1.regId), eq("חברה חדשה"),
+                eq("אמור לה שלום"),
                 argThat(isExtrasForNewBuddy(user2)));
     }
 
@@ -132,6 +129,7 @@ public class MatchingTaskPushTest {
             this.user = user;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;

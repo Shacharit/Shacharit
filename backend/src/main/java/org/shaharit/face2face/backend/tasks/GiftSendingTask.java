@@ -1,5 +1,6 @@
 package org.shaharit.face2face.backend.tasks;
 
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 import com.google.appengine.repackaged.com.google.common.base.Function;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import jdk.nashorn.internal.ir.annotations.Ignore;
 
 public class GiftSendingTask implements Task {
 
@@ -50,20 +53,23 @@ public class GiftSendingTask implements Task {
                 public void processResult(Map<String, String> uidToRegIdMap) {
                     for (final Gift gift : gifts) {
                         final String recipientRegId = uidToRegIdMap.get(gift.recipientUid);
+
+                        if (Strings.isNullOrEmpty(recipientRegId)) {
+                            // We skip gifts for not found users
+                            // only send gift push if we have reg ID for the user
+                            continue;
+                        }
+
                         userDb.getUser(gift.senderUid, new UserDb.UsersHandler() {
 
                             @Override
                             public void processResult(List<User> result) {
                                 User user = result.get(0);
 
-                                if (recipientRegId != null) {
-                                    // Only send gift push if we have reg ID for the user
-                                    // TODO: Ask Michael if mark as sent or not
-                                    final String giftId = userDb.addGift(gift.recipientUid, gift,
-                                            user.displayName, user.imageUrl, user.email);
-                                    pushService.sendPushAboutGift(recipientRegId, gift, giftId,
-                                            user.displayName, user.imageUrl, user.email, user.gender);
-                                }
+                                final String giftId = userDb.addGift(gift.recipientUid, gift,
+                                        user.displayName, user.imageUrl, user.email);
+                                pushService.sendPushAboutGift(recipientRegId, gift, giftId,
+                                        user.displayName, user.imageUrl, user.email, user.gender);
 
                                 giftDb.markGiftAsSent(user.uid ,gift.id);
                             }

@@ -27,12 +27,14 @@ import static org.shaharit.face2face.backend.testhelpers.ExtrasForPushAction.has
 public class GiftSendingTaskPushTest {
     @Test
     public void sendsCorrectTitleForMaleSender() throws Exception {
+        User sender = new UserBuilder().withDisplayName("רפי").withMaleGender().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
         Gift gift = new GiftBuilder(recipient.uid)
-                .withSenderName("רפי")
-                .withSenderGender(Gender.MALE).build();
+                .withSenderDetails(sender)
+                .build();
+
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
@@ -45,13 +47,14 @@ public class GiftSendingTaskPushTest {
 
     @Test
     public void sendsCorrectTitleForFemaleSender() throws Exception {
+        User sender = new UserBuilder().withDisplayName("יפה").withFemaleGender().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
         Gift gift = new GiftBuilder(recipient.uid)
-                .withSenderGender(Gender.FEMALE)
-                .withSenderName("יפה")
+                .withSenderDetails(sender)
                 .build();
+
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
@@ -64,12 +67,16 @@ public class GiftSendingTaskPushTest {
 
     @Test
     public void sendsMessageBasedOnGiftText() throws Exception {
-        String giftId = "1";
+        User sender = new UserBuilder().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
         String giftText = "Happy Easter";
-        Gift gift = new GiftBuilder(recipient.uid).withGiftText(giftText).build();
+        Gift gift = new GiftBuilder(recipient.uid)
+                .withSenderDetails(sender)
+                .withGiftText(giftText)
+                .build();
+
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
 
         FcmMessenger mockMessenger = mock(FcmMessenger.class);
@@ -82,13 +89,12 @@ public class GiftSendingTaskPushTest {
 
     @Test
     public void sendsRelevantSenderInformation() throws Exception {
+        User sender = new UserBuilder().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
-        String displayName = "Jason";
-        String imageUrl = "https:/1.jpg";
         Gift gift = new GiftBuilder(recipient.uid)
-                .withSenderDetails(displayName, imageUrl)
+                .withSenderDetails(sender)
                 .build();
 
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
@@ -97,17 +103,19 @@ public class GiftSendingTaskPushTest {
         new GiftSendingTask(mockGiftDb, userDb, new PushService(mockMessenger)).execute();
 
         verify(mockMessenger).sendMessage(eq(recipient.regId), anyString(), anyString(),
-                argThat(hasExtrasForGiftSender(displayName, imageUrl)));
+                argThat(hasExtrasForGiftSender(sender.displayName, sender.imageUrl)));
     }
 
     @Test
     public void sendsRelevantEventInformation() throws Exception {
+        User sender = new UserBuilder().build();
         User recipient = new UserBuilder().build();
-        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient));
+        InMemoryUserDb userDb = new InMemoryUserDb(Lists.newArrayList(recipient, sender));
 
         String eventTitle = "The greatest event ever";
         Gift gift = new GiftBuilder(recipient.uid)
                 .withEventTitle(eventTitle)
+                .withSenderDetails(sender)
                 .build();
 
         MockGiftDb mockGiftDb = new MockGiftDb(Lists.newArrayList(gift));
@@ -130,6 +138,7 @@ public class GiftSendingTaskPushTest {
             this.title = title;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;
@@ -152,6 +161,7 @@ public class GiftSendingTaskPushTest {
             this.imageUrl = imageUrl;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public boolean matches(Object argument) {
             Map<String, String> extras = (Map<String, String>) argument;

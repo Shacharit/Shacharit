@@ -18,9 +18,10 @@ public class EventBuilder {
     private String dateStr = "24-Dec-2016";
     private ArrayList<String> selfDefinitions = Lists.newArrayList("Def");
     private String description = "some desc";
+    private String name = "Dummy event";
 
     public Event build() {
-        return new Event(dateStr, selfDefinitions, titleMap, description, gifts);
+        return new Event(dateStr, selfDefinitions, titleMap, description, gifts,name);
     }
 
     public EventBuilder withDescription(String description) {

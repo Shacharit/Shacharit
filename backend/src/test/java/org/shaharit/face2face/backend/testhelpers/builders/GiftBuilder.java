@@ -3,6 +3,7 @@ package org.shaharit.face2face.backend.testhelpers.builders;
 import org.shaharit.face2face.backend.models.Gender;
 import org.shaharit.face2face.backend.models.Gift;
 import org.shaharit.face2face.backend.models.GiftSender;
+import org.shaharit.face2face.backend.models.User;
 
 public class GiftBuilder {
 
@@ -12,6 +13,8 @@ public class GiftBuilder {
     private String name;
     private String imageUrl;
     private String eventTitle;
+    private String giftType = "greeting";
+    private String senderUid;
 
     public GiftBuilder(String uid) {
         this.recipientUid = uid;
@@ -19,7 +22,7 @@ public class GiftBuilder {
 
     public Gift build() {
         return new Gift("1", giftText, eventTitle , recipientUid,
-                new GiftSender(name, imageUrl, senderGender));
+                senderUid, giftText, giftType, imageUrl);
     }
 
     public GiftBuilder withSenderGender(Gender gender) {
@@ -45,6 +48,13 @@ public class GiftBuilder {
 
     public GiftBuilder withSenderName(String displayName) {
         this.name = displayName;
+        return this;
+    }
+
+    public GiftBuilder withSenderDetails(User sender) {
+        this.name = sender.displayName;
+        this.imageUrl = sender.imageUrl;
+        this.senderUid = sender.uid;
         return this;
     }
 }
