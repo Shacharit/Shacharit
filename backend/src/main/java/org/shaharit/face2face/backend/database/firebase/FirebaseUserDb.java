@@ -30,7 +30,7 @@ public class FirebaseUserDb implements UserDb {
     private static final String DISPLAY_NAME = "display_name";
     private static final String USERS = "users";
     private static final String EMAIL = "email_address";
-    public static final String GIFT_INFO = "giftInfo";
+    private static final String GIFT_INFO = "giftInfo";
 
 
     private final DatabaseReference firebase;
@@ -56,6 +56,7 @@ public class FirebaseUserDb implements UserDb {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                throw new RuntimeException("Database error: " + databaseError.getMessage() + " with details: " + databaseError.getDetails());
             }
         });
     }
